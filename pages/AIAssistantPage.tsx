@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import type { ChatMessage } from '../types';
 import { getVetAssistantResponse } from '../services/geminiService';
-import { CatIcon, SendIcon, XIcon, CopyIcon, CheckCircleIcon } from '../components/icons';
+import { CatIcon, SendIcon, XIcon, CopyIcon, CheckCircleIcon, TrashIcon } from '../components/icons';
+
+const CHAT_HISTORY_KEY = 'catwaala_ai_chat_history';
 
 const CopyButton = ({ textToCopy }: { textToCopy: string }) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -29,7 +31,15 @@ const CopyButton = ({ textToCopy }: { textToCopy: string }) => {
 };
 
 const AIAssistantPage: React.FC = () => {
-  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
+  const [chatHistory, setChatHistory] = useState<ChatMessage[]>(() => {
+    try {
+        const savedHistory = sessionStorage.getItem(CHAT_HISTORY_KEY);
+        return savedHistory ? JSON.parse(savedHistory) : [];
+    } catch (error) {
+        console.error("Failed to parse chat history from sessionStorage", error);
+        return [];
+    }
+  });
   const [userInput, setUserInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isWarningVisible, setIsWarningVisible] = useState(false);
@@ -44,6 +54,14 @@ const AIAssistantPage: React.FC = () => {
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [chatHistory]);
+
+  useEffect(() => {
+    try {
+        sessionStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(chatHistory));
+    } catch (error) {
+        console.error("Failed to save chat history to sessionStorage", error);
+    }
   }, [chatHistory]);
   
   const handleDismissWarning = useCallback(() => {
@@ -73,6 +91,13 @@ const AIAssistantPage: React.FC = () => {
       setIsLoading(false);
     }
   }, [userInput, isLoading]);
+
+  const handleClearChat = useCallback(() => {
+    if (window.confirm("Are you sure you want to clear the entire chat history? This action cannot be undone.")) {
+        setChatHistory([]);
+        sessionStorage.removeItem(CHAT_HISTORY_KEY);
+    }
+  }, []);
 
   return (
     <div className="flex flex-col flex-grow container mx-auto p-4 max-w-3xl">
@@ -143,6 +168,17 @@ const AIAssistantPage: React.FC = () => {
         </div>
         <div className="p-4 bg-slate-500/10 border-t border-white/20 dark:border-slate-700/50">
           <form onSubmit={handleSubmit} className="flex items-center space-x-3">
+            {chatHistory.length > 0 && (
+                <button
+                    type="button"
+                    onClick={handleClearChat}
+                    disabled={isLoading}
+                    className="p-3 text-slate-500 dark:text-slate-400 hover:bg-red-500/10 hover:text-red-500 rounded-full transition-colors disabled:opacity-50"
+                    aria-label="Clear chat history"
+                >
+                    <TrashIcon className="w-6 h-6" />
+                </button>
+            )}
             <input
               type="text"
               value={userInput}
