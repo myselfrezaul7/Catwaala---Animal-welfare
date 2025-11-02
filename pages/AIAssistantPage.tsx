@@ -49,7 +49,7 @@ const AIAssistantPage: React.FC = () => {
   }, [userInput, isLoading]);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-150px)] sm:h-[calc(100vh-88px)] container mx-auto p-4 max-w-3xl">
+    <div className="flex flex-col flex-grow container mx-auto p-4 max-w-3xl">
        {isWarningVisible && (
          <div className="relative bg-red-500/10 border-l-4 border-red-500 text-red-800 dark:text-red-200 p-4 rounded-r-lg mb-6">
             <h2 className="font-bold pr-6">Important: For First Aid Guidance Only</h2>

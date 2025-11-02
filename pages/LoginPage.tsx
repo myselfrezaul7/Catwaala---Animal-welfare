@@ -101,7 +101,7 @@ const LoginPage: React.FC = () => {
                     />
                     <span className="ml-2">Remember me</span>
                 </label>
-                <a href="#" className="text-sm font-semibold text-orange-600 dark:text-orange-400 hover:underline">Forgot password?</a>
+                <button type="button" onClick={() => alert('Password reset functionality is not implemented in this demo.')} className="text-sm font-semibold text-orange-600 dark:text-orange-400 hover:underline">Forgot password?</button>
               </div>
               <div>
                 <button type="submit" disabled={isLoading} className="w-full bg-orange-500 text-white font-bold py-3 px-4 rounded-lg text-lg hover:bg-orange-600 transition-colors disabled:bg-orange-300">

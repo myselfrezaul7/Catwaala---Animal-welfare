@@ -11,10 +11,10 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window !== 'undefined') {
-        const storedTheme = window.localStorage.getItem('catwaala_theme') as Theme | null;
-        // If a theme is stored, use it. Otherwise, default to 'light'.
-        return storedTheme || 'light';
+    // Read the theme from the class set on the <html> element by the inline script in index.html.
+    // This ensures the React state is in sync with the DOM from the very first render, preventing hydration mismatches.
+    if (typeof window !== 'undefined' && window.document.documentElement.classList.contains('dark')) {
+      return 'dark';
     }
     return 'light';
   });
