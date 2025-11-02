@@ -18,7 +18,6 @@ const OurImpactPage = lazy(() => import('./pages/OurImpactPage'));
 const AIAssistantPage = lazy(() => import('./pages/AIAssistantPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const SignUpPage = lazy(() => import('./pages/SignUpPage'));
-const CommunityPage = lazy(() => import('./pages/CommunityPage'));
 const HappyTailsPage = lazy(() => import('./pages/HappyTailsPage'));
 const FAQPage = lazy(() => import('./pages/FAQPage'));
 
@@ -32,8 +31,9 @@ const PageLoader: React.FC = () => (
 
 // Error Boundary Component to catch rendering errors and prevent app crash
 class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
-  // FIX: Added a constructor to properly initialize the component's state and props.
-  // This resolves a TypeScript error where `this.props` was not being recognized.
+  // FIX: Using a constructor to initialize state. The previous class property
+  // initialization was causing an issue where `this.props` could not be found,
+  // likely due to a misconfiguration in the project's build tooling.
   constructor(props: { children: React.ReactNode }) {
     super(props);
     this.state = { hasError: false };
@@ -89,7 +89,6 @@ function App() {
                     <Route path="/ai-vet" element={<AIAssistantPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignUpPage />} />
-                    <Route path="/community" element={<CommunityPage />} />
                     <Route path="/happy-tails" element={<HappyTailsPage />} />
                     <Route path="/faq" element={<FAQPage />} />
                   </Routes>

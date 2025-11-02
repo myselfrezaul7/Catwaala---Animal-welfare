@@ -22,12 +22,22 @@ const HomePage: React.FC = () => {
             <p className="mt-4 text-lg md:text-xl max-w-2xl mx-auto drop-shadow-lg">
               At CATWAALA, we believe every animal deserves a loving home. Join us in our mission to rescue, rehabilitate, and rehome animals in need.
             </p>
-            <Link
-              to="/adopt"
-              className="mt-8 inline-block bg-orange-500 text-white font-bold py-3 px-10 rounded-full text-lg hover:bg-orange-600 transition-all transform hover:scale-105 duration-300 shadow-lg"
-            >
-              Meet Our Animals
-            </Link>
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                to="/adopt"
+                className="inline-block bg-orange-500 text-white font-bold py-3 px-10 rounded-full text-lg hover:bg-orange-600 transition-all transform hover:scale-105 duration-300 shadow-lg"
+              >
+                Meet Our Animals
+              </Link>
+              <a
+                href="https://www.petbhai.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-transparent border-2 border-orange-500 text-white font-bold py-3 px-10 rounded-full text-lg hover:bg-orange-500 transition-all transform hover:scale-105 duration-300 shadow-lg"
+              >
+                Pet Shop
+              </a>
+            </div>
           </div>
         </section>
 

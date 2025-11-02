@@ -16,16 +16,16 @@ const Footer: React.FC = () => {
         </div>
         
         <div className="flex justify-center items-center space-x-6">
-          <a href="#" aria-label="Facebook" className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+          <a href="https://www.facebook.com/Catwaalaa/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
             <FacebookIcon className="w-7 h-7" />
           </a>
-          <a href="#" aria-label="Instagram" className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+          <a href="https://www.instagram.com/cat_waala/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
             <InstagramIcon className="w-7 h-7" />
           </a>
-          <a href="#" aria-label="YouTube" className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+          <a href="https://www.youtube.com/@catwaala" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
             <YouTubeIcon className="w-7 h-7" />
           </a>
-          <a href="#" aria-label="TikTok" className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+          <a href="https://www.tiktok.com/@catwaala" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
             <TikTokIcon className="w-7 h-7" />
           </a>
         </div>

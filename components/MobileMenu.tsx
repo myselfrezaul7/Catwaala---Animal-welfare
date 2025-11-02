@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { LogoIcon } from './icons';
+import { CatPawIcon } from './icons';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -38,14 +38,14 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
             onClick={(e) => e.stopPropagation()}
         >
             <div className="flex items-center space-x-2 text-2xl font-bold text-slate-800 dark:text-slate-100 mb-10">
-                <LogoIcon className="w-8 h-8 text-orange-500" />
+                <CatPawIcon className="w-8 h-8 text-orange-500" />
                 <span>CATWAALA</span>
             </div>
 
             <nav className="flex flex-col space-y-2 text-lg font-medium flex-grow">
                 <NavLink to="/" onClick={onClose} className={({ isActive }) => `px-4 py-3 rounded-lg ${isActive ? activeLinkClass : inactiveLinkClass}`}>Home</NavLink>
                 <NavLink to="/adopt" onClick={onClose} className={({ isActive }) => `px-4 py-3 rounded-lg ${isActive ? activeLinkClass : inactiveLinkClass}`}>Adopt</NavLink>
-                <NavLink to="/community" onClick={onClose} className={({ isActive }) => `px-4 py-3 rounded-lg ${isActive ? activeLinkClass : inactiveLinkClass}`}>Community</NavLink>
+                <a href="https://www.facebook.com/groups/catwaala/" target="_blank" rel="noopener noreferrer" onClick={onClose} className={`px-4 py-3 rounded-lg ${inactiveLinkClass}`}>Community</a>
                 <NavLink to="/report" onClick={onClose} className={({ isActive }) => `px-4 py-3 rounded-lg ${isActive ? activeLinkClass : inactiveLinkClass}`}>Report Rescue</NavLink>
                 <NavLink to="/online-vet" onClick={onClose} className={({ isActive }) => `px-4 py-3 rounded-lg ${isActive ? activeLinkClass : inactiveLinkClass}`}>Find a Vet</NavLink>
                 <NavLink to="/ai-vet" onClick={onClose} className={({ isActive }) => `px-4 py-3 rounded-lg ${isActive ? activeLinkClass : inactiveLinkClass}`}>AI Vet</NavLink>

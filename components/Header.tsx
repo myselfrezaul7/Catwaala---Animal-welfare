@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LogoIcon, SearchIcon, SunIcon, MoonIcon, MenuIcon } from './icons';
+import { CatPawIcon, SearchIcon, SunIcon, MoonIcon, MenuIcon } from './icons';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
 import SearchModal from './SearchModal';
@@ -27,14 +27,14 @@ const Header: React.FC = () => {
       <header className="bg-slate-100/30 dark:bg-slate-900/30 shadow-sm sticky top-0 z-30 backdrop-blur-xl border-b border-white/20 dark:border-slate-800/40">
         <nav className="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
           <NavLink to="/" className="flex items-center space-x-2 text-2xl font-bold text-slate-800 dark:text-slate-100">
-            <LogoIcon className="w-8 h-8 text-orange-500" />
+            <CatPawIcon className="w-8 h-8 text-orange-500" />
             <span>CATWAALA</span>
           </NavLink>
           
           <ul className="hidden md:flex items-center space-x-6 text-base font-medium">
             <li><NavLink to="/" className={({ isActive }) => (isActive ? activeLinkClass : inactiveLinkClass)}>Home</NavLink></li>
             <li><NavLink to="/adopt" className={({ isActive }) => (isActive ? activeLinkClass : inactiveLinkClass)}>Adopt</NavLink></li>
-            <li><NavLink to="/community" className={({ isActive }) => (isActive ? activeLinkClass : inactiveLinkClass)}>Community</NavLink></li>
+            <li><a href="https://www.facebook.com/groups/catwaala/" target="_blank" rel="noopener noreferrer" className={inactiveLinkClass}>Community</a></li>
             <li><NavLink to="/report" className={({ isActive }) => (isActive ? activeLinkClass : inactiveLinkClass)}>Report Rescue</NavLink></li>
             <li><NavLink to="/online-vet" className={({ isActive }) => (isActive ? activeLinkClass : inactiveLinkClass)}>Find a Vet</NavLink></li>
             <li><NavLink to="/ai-vet" className={({ isActive }) => (isActive ? activeLinkClass : inactiveLinkClass)}>AI Vet</NavLink></li>
