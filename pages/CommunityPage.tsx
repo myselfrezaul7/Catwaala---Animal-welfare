@@ -5,6 +5,7 @@ import PostCard from '../components/PostCard';
 import { useAuth } from '../contexts/AuthContext';
 import { MOCK_POSTS } from '../constants';
 import type { Post } from '../types';
+import PostCardSkeleton from '../components/PostCardSkeleton';
 
 const POSTS_STORAGE_KEY = 'catwaala_posts';
 
@@ -26,15 +27,27 @@ const getInitialPosts = (): Post[] => {
 
 const CommunityPage: React.FC = () => {
   const { isAuthenticated } = useAuth();
-  const [posts, setPosts] = useState<Post[]>(getInitialPosts);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    try {
-        window.localStorage.setItem(POSTS_STORAGE_KEY, JSON.stringify(posts));
-    } catch (error) {
-        console.error("Error writing posts to localStorage", error);
+    // Simulate fetching posts to show loading state
+    setLoading(true);
+    setTimeout(() => {
+        setPosts(getInitialPosts());
+        setLoading(false);
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+        try {
+            window.localStorage.setItem(POSTS_STORAGE_KEY, JSON.stringify(posts));
+        } catch (error) {
+            console.error("Error writing posts to localStorage", error);
+        }
     }
-  }, [posts]);
+  }, [posts, loading]);
 
   const handleAddPost = (newPost: Post) => {
     setPosts(prevPosts => [newPost, ...prevPosts]);
@@ -61,9 +74,16 @@ const CommunityPage: React.FC = () => {
       )}
 
       <div className="space-y-8">
-        {posts.map(post => (
-          <PostCard key={post.id} post={post} />
-        ))}
+        {loading ? (
+          <>
+            <PostCardSkeleton />
+            <PostCardSkeleton />
+          </>
+        ) : (
+          posts.map(post => (
+            <PostCard key={post.id} post={post} />
+          ))
+        )}
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { GoogleIcon } from '../components/icons';
+import Alert from '../components/Alert';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -49,7 +50,7 @@ const LoginPage: React.FC = () => {
       <div className="w-full max-w-md bg-slate-100/30 dark:bg-slate-800/30 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 p-8 md:p-10 rounded-2xl shadow-xl">
         <h1 className="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6">Welcome Back!</h1>
         
-        {error && <p className="bg-red-100 text-red-700 p-3 rounded-lg text-center mb-4">{error}</p>}
+        {error && <Alert type="error" title="Login Failed" message={error} className="mb-4" />}
 
         <div className="space-y-4">
             <button 

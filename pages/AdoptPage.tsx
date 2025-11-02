@@ -1,10 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AnimalCard from '../components/AnimalCard';
 import { MOCK_ANIMALS } from '../constants';
 import { SparklesIcon } from '../components/icons';
+import type { Animal } from '../types';
+
+// A simple skeleton component for the animal card
+const AnimalCardSkeleton: React.FC = () => (
+    <div className="bg-slate-100/30 dark:bg-slate-800/30 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 rounded-2xl shadow-xl overflow-hidden flex flex-col animate-pulse">
+      <div className="w-full h-56 bg-slate-300 dark:bg-slate-700"></div>
+      <div className="p-6 flex flex-col flex-grow">
+        <div className="h-7 bg-slate-300 dark:bg-slate-700 rounded w-3/4 mb-2"></div>
+        <div className="h-4 bg-slate-300 dark:bg-slate-700 rounded w-1/2 mb-4"></div>
+        <div className="h-4 bg-slate-300 dark:bg-slate-700 rounded mt-4"></div>
+        <div className="h-4 bg-slate-300 dark:bg-slate-700 rounded mt-2 w-5/6"></div>
+      </div>
+       <div className="p-4 bg-slate-500/10 border-t border-white/20 dark:border-slate-700/50 mt-auto">
+          <div className="h-6 bg-slate-300 dark:bg-slate-700 rounded w-1/2 mx-auto"></div>
+        </div>
+    </div>
+);
+
 
 const AdoptPage: React.FC = () => {
+  const [animals, setAnimals] = useState<Animal[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+      setLoading(true);
+      // Simulate API call
+      setTimeout(() => {
+          setAnimals(MOCK_ANIMALS);
+          setLoading(false);
+      }, 1000);
+  }, []);
+
   return (
     <div className="container mx-auto px-6 py-16">
       <h1 className="text-4xl md:text-5xl font-bold text-center text-slate-800 dark:text-slate-100 mb-4">Find Your New Best Friend</h1>
@@ -30,9 +60,20 @@ const AdoptPage: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        {MOCK_ANIMALS.map(animal => (
-          <AnimalCard key={animal.id} animal={animal} />
-        ))}
+        {loading ? (
+          <>
+            <AnimalCardSkeleton />
+            <AnimalCardSkeleton />
+            <AnimalCardSkeleton />
+            <AnimalCardSkeleton />
+            <AnimalCardSkeleton />
+            <AnimalCardSkeleton />
+          </>
+        ) : (
+          animals.map(animal => (
+            <AnimalCard key={animal.id} animal={animal} />
+          ))
+        )}
       </div>
     </div>
   );

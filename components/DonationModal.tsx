@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { XIcon, BkashIcon, NagadIcon, BankIcon } from './icons';
+import { XIcon, BkashIcon, NagadIcon, BankIcon, HealthIcon } from './icons';
 
 interface DonationModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-type PaymentMethod = 'bkash' | 'nagad' | 'bank';
+type PaymentMethod = 'bkash' | 'nagad' | 'bank' | 'medicine';
 
 const CopyButton: React.FC<{ textToCopy: string }> = ({ textToCopy }) => {
   const [copied, setCopied] = useState(false);
@@ -71,6 +71,34 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
             </div>
           </div>
         );
+      case 'medicine':
+        return (
+          <div>
+            <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Donate Essential Medicines</h3>
+            <p className="text-slate-600 dark:text-slate-400">
+                Your contribution of medical supplies can make a world of difference for an animal in recovery. We are always in need of:
+            </p>
+            <ul className="list-disc list-inside my-4 text-slate-700 dark:text-slate-300 space-y-1">
+                <li>Flea, tick, and worm treatments</li>
+                <li>Antiseptic sprays and wound care supplies</li>
+                <li>Cat-safe pain relief medication</li>
+                <li>Vitamins and supplements</li>
+            </ul>
+            <p className="text-slate-600 dark:text-slate-400">
+                To arrange a drop-off or for more details, please contact us at:
+            </p>
+            <div className="mt-4 p-4 bg-slate-200/50 dark:bg-slate-700/50 rounded-lg space-y-2">
+                <div className="flex items-center justify-between">
+                    <span className="font-semibold">Phone:</span>
+                    <a href="tel:01700000001" className="font-mono text-slate-800 dark:text-slate-200 hover:text-orange-600 dark:hover:text-orange-400 hover:underline">01700000001</a>
+                </div>
+                <div className="flex items-center justify-between">
+                    <span className="font-semibold">Email:</span>
+                    <a href="mailto:catwaala@gmail.com" className="font-mono text-slate-800 dark:text-slate-200 hover:text-orange-600 dark:hover:text-orange-400 hover:underline">catwaala@gmail.com</a>
+                </div>
+            </div>
+          </div>
+        );
       default:
         return null;
     }
@@ -98,6 +126,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
               <button onClick={() => setActiveTab('bkash')} className={getTabClass('bkash')}><BkashIcon className="w-5 h-5" /> bKash</button>
               <button onClick={() => setActiveTab('nagad')} className={getTabClass('nagad')}><NagadIcon className="w-5 h-5" /> Nagad</button>
               <button onClick={() => setActiveTab('bank')} className={getTabClass('bank')}><BankIcon className="w-5 h-5" /> Bank</button>
+              <button onClick={() => setActiveTab('medicine')} className={getTabClass('medicine')}><HealthIcon className="w-5 h-5" /> Medicine</button>
             </nav>
           </div>
 

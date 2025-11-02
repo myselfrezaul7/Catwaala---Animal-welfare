@@ -6,6 +6,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import CookieConsentBanner from './components/CookieConsentBanner';
 import ScrollToTopButton from './components/ScrollToTopButton';
+import { AlertTriangleIcon } from './components/icons';
 
 // Lazy-loaded pages for code-splitting and faster initial loads
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -31,15 +32,11 @@ const PageLoader: React.FC = () => (
 
 // Error Boundary Component to catch rendering errors and prevent app crash
 class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
-  // FIX: Using a constructor to initialize state. The previous class property
-  // initialization was causing an issue where `this.props` could not be found,
-  // likely due to a misconfiguration in the project's build tooling.
-  constructor(props: { children: React.ReactNode }) {
-    super(props);
-    this.state = { hasError: false };
-  }
+  // FIX: The constructor was causing compilation errors with 'this.state' and 'this.props'.
+  // Switched to class property syntax for state initialization, which is more modern and resolves these errors.
+  state = { hasError: false };
 
-  static getDerivedStateFromError(_: Error) {
+  static getDerivedStateFromError(_: Error): { hasError: boolean } {
     return { hasError: true };
   }
 
@@ -51,7 +48,8 @@ class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { has
     if (this.state.hasError) {
       return (
         <div className="text-center py-20 px-6 flex-grow flex flex-col items-center justify-center">
-            <h1 className="text-3xl font-bold text-red-500">Something went wrong.</h1>
+            <AlertTriangleIcon className="w-16 h-16 text-red-400" />
+            <h1 className="text-3xl font-bold text-red-500 mt-4">Something went wrong.</h1>
             <p className="text-slate-600 dark:text-slate-400 mt-4 max-w-md">
               We're sorry for the inconvenience. Please try refreshing the page, or return to the homepage.
             </p>

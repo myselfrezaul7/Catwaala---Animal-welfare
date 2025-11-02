@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { CatPawIcon } from './icons';
+import { CatPawIcon, XIcon } from './icons';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -12,7 +12,18 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
   const { isAuthenticated, currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
-  if (!isOpen) return null;
+  // Prevent body from scrolling when the menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    // Cleanup function to restore scrolling when component unmounts
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
 
   const handleLinkClick = useCallback((path: string) => {
     navigate(path);
@@ -30,16 +41,23 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
 
   return (
     <div 
-        className="fixed inset-0 bg-slate-100/50 dark:bg-slate-900/50 backdrop-blur-2xl z-40 md:hidden"
+        className={`fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         onClick={onClose}
+        aria-modal="true"
+        role="dialog"
     >
         <div 
-            className="fixed top-0 right-0 h-full w-4/5 max-w-sm bg-slate-100/70 dark:bg-slate-900/70 shadow-2xl p-6 flex flex-col"
+            className={`fixed top-0 right-0 h-full w-4/5 max-w-sm bg-slate-100 dark:bg-slate-800 shadow-2xl p-6 flex flex-col transition-transform duration-300 ease-in-out transform ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
             onClick={(e) => e.stopPropagation()}
         >
-            <div className="flex items-center space-x-2 text-2xl font-bold text-slate-800 dark:text-slate-100 mb-10">
-                <CatPawIcon className="w-8 h-8 text-orange-500" />
-                <span>CATWAALA</span>
+            <div className="flex items-center justify-between mb-10">
+                <div className="flex items-center space-x-2 text-2xl font-bold text-slate-800 dark:text-slate-100">
+                    <CatPawIcon className="w-8 h-8 text-orange-500" />
+                    <span>CATWAALA</span>
+                </div>
+                 <button onClick={onClose} className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-500/10" aria-label="Close menu">
+                    <XIcon className="w-6 h-6" />
+                </button>
             </div>
 
             <nav className="flex flex-col space-y-2 text-lg font-medium flex-grow">

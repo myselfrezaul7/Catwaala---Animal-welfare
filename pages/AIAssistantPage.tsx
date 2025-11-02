@@ -1,7 +1,32 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import type { ChatMessage } from '../types';
 import { getVetAssistantResponse } from '../services/geminiService';
-import { CatIcon, SendIcon, XIcon } from '../components/icons';
+import { CatIcon, SendIcon, XIcon, CopyIcon, CheckCircleIcon } from '../components/icons';
+
+const CopyButton = ({ textToCopy }: { textToCopy: string }) => {
+  const [isCopied, setIsCopied] = useState(false);
+
+  const handleCopy = useCallback(() => {
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    });
+  }, [textToCopy]);
+
+  return (
+    <button
+      onClick={handleCopy}
+      className="absolute top-2 right-2 p-1.5 bg-slate-300/50 dark:bg-slate-800/50 rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-400/50 dark:hover:bg-slate-600/50 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all duration-200"
+      aria-label="Copy response"
+    >
+      {isCopied ? (
+        <CheckCircleIcon className="w-4 h-4 text-green-500" />
+      ) : (
+        <CopyIcon className="w-4 h-4" />
+      )}
+    </button>
+  );
+};
 
 const AIAssistantPage: React.FC = () => {
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
@@ -41,7 +66,8 @@ const AIAssistantPage: React.FC = () => {
       const newAiMessage: ChatMessage = { sender: 'ai', text: aiResponseText };
       setChatHistory(prev => [...prev, newAiMessage]);
     } catch (error) {
-      const errorMessage: ChatMessage = { sender: 'ai', text: "Oops! Something went wrong. Please try again." };
+      const errorMessageText = error instanceof Error ? error.message : "Oops! Something went wrong. Please try again.";
+      const errorMessage: ChatMessage = { sender: 'ai', text: errorMessageText };
       setChatHistory(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
@@ -74,8 +100,9 @@ const AIAssistantPage: React.FC = () => {
               <div className="bg-orange-500 p-2 rounded-full text-white flex-shrink-0">
                   <CatIcon className="w-6 h-6" />
               </div>
-              <div className="bg-slate-200/50 dark:bg-slate-700/50 p-4 rounded-xl rounded-tl-none max-w-lg">
+              <div className="relative group bg-slate-200/50 dark:bg-slate-700/50 p-4 rounded-xl rounded-tl-none max-w-lg">
                 <p className="text-slate-800 dark:text-slate-200">Hello! I'm CATWAALA's AI Vet. Please remember my advice is for first aid guidance only. How can I help you with your cat today?</p>
+                <CopyButton textToCopy="Hello! I'm CATWAALA's AI Vet. Please remember my advice is for first aid guidance only. How can I help you with your cat today?" />
               </div>
             </div>
 
@@ -86,12 +113,13 @@ const AIAssistantPage: React.FC = () => {
                     <CatIcon className="w-6 h-6" />
                   </div>
                 )}
-                <div className={`p-4 rounded-xl max-w-lg whitespace-pre-wrap ${
+                <div className={`relative group p-4 rounded-xl max-w-lg whitespace-pre-wrap ${
                   message.sender === 'user' 
                   ? 'bg-orange-500 text-white rounded-br-none' 
                   : 'bg-slate-200/50 dark:bg-slate-700/50 text-slate-800 dark:text-slate-200 rounded-tl-none'
                 }`}>
                   <p>{message.text}</p>
+                  {message.sender === 'ai' && <CopyButton textToCopy={message.text} />}
                 </div>
               </div>
             ))}

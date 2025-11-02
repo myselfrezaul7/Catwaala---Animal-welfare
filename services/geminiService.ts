@@ -7,11 +7,6 @@ if (!process.env.API_KEY) {
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
-const handleError = (error: unknown) => {
-    console.error("Error generating content from Gemini:", error);
-    return "I'm sorry, but I'm having trouble connecting to my knowledge base right now. Please try again later.";
-}
-
 export const getVetAssistantResponse = async (prompt: string): Promise<string> => {
   const SYSTEM_INSTRUCTION = `You are an AI Vet for CATWAALA, a cat welfare organization. Your primary purpose is to provide immediate, preliminary first aid guidance and general advice on cat care. Always start your response with a disclaimer: 'Disclaimer: I am an AI assistant and not a substitute for professional veterinary advice. Please consult a licensed veterinarian for any health concerns.' Your advice should empower users to take immediate, safe steps while strongly encouraging them to seek professional help. Do not provide any diagnosis or prescribe medication. Keep your answers concise and easy to understand for a general audience.`;
 
@@ -25,7 +20,8 @@ export const getVetAssistantResponse = async (prompt: string): Promise<string> =
     });
     return response.text;
   } catch (error) {
-    return handleError(error);
+    console.error("Error in getVetAssistantResponse:", error);
+    throw new Error("The AI assistant is currently unavailable. Please try again later.");
   }
 };
 
@@ -47,7 +43,8 @@ export const analyzeAnimalImage = async (base64ImageData: string): Promise<strin
         });
         return response.text;
     } catch (error) {
-        return handleError(error);
+        console.error("Error in analyzeAnimalImage:", error);
+        throw new Error("Could not analyze the image due to an AI service error. Please check your connection and try again.");
     }
 };
 
@@ -91,6 +88,7 @@ export const getPerfectMatch = async (preferences: string, animals: Animal[]): P
         });
         return response.text;
     } catch (error) {
-        return handleError(error);
+        console.error("Error in getPerfectMatch:", error);
+        throw new Error("Could not find a match due to an AI service error. Please try again.");
     }
 };

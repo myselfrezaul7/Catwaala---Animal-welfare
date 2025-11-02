@@ -1,14 +1,23 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { MapPinIcon, ImageIcon } from '../components/icons';
 import { analyzeAnimalImage } from '../services/geminiService';
+import Alert from '../components/Alert';
 
 const ReportPage: React.FC = () => {
   const [location, setLocation] = useState('');
+  const [condition, setCondition] = useState('');
+  const [animalType, setAnimalType] = useState('Cat');
   const [status, setStatus] = useState('');
   const [isLocating, setIsLocating] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageBase64, setImageBase64] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionStatus, setSubmissionStatus] = useState<{
+    type: 'success' | 'error' | 'info';
+    title: string;
+    message: string | React.ReactNode;
+  } | null>(null);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
 
@@ -40,7 +49,6 @@ const ReportPage: React.FC = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result as string);
-        // "data:image/jpeg;base64,"
         const base64String = (reader.result as string).split(',')[1];
         setImageBase64(base64String);
       };
@@ -48,19 +56,54 @@ const ReportPage: React.FC = () => {
     }
   }, []);
 
+  const resetForm = () => {
+      setLocation('');
+      setCondition('');
+      setAnimalType('Cat');
+      setImagePreview(null);
+      setImageBase64(null);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+  }
+
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmissionStatus(null);
     
-    let aiDescription = "No image provided.";
-    if (imageBase64) {
-      aiDescription = await analyzeAnimalImage(imageBase64);
-    }
+    let aiDescription = "No image was provided, or AI analysis was skipped.";
+    try {
+      if (imageBase64) {
+        setSubmissionStatus({ type: 'info', title: 'Processing...', message: 'Analyzing image with AI...' });
+        aiDescription = await analyzeAnimalImage(imageBase64);
+      }
+      
+      // Here you would typically send the form data to a server.
+      // We simulate this with a timeout to represent a network request.
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-    alert(`Thank you! Your rescue report has been submitted. Our team will look into it shortly.\n\nAI Initial Assessment: ${aiDescription}`);
-    // Here you would typically send the form data and AI description to a server
-    setIsSubmitting(false);
-  }, [imageBase64]);
+      setSubmissionStatus({
+        type: 'success',
+        title: 'Report Submitted!',
+        message: (
+            <>
+                <p>Thank you! Your rescue report has been submitted. Our team will look into it shortly.</p>
+                <p className="mt-2 text-xs p-2 bg-slate-200 dark:bg-slate-700 rounded"><strong>AI Initial Assessment:</strong> {aiDescription}</p>
+            </>
+        )
+      });
+      resetForm();
+      
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';
+        setSubmissionStatus({
+            type: 'error',
+            title: 'Submission Failed',
+            message: `${errorMessage} Please try submitting again.`
+        });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [imageBase64, location, condition, animalType]);
   
   const inputStyles = "w-full p-3 bg-transparent border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500";
 
@@ -72,10 +115,13 @@ const ReportPage: React.FC = () => {
         <p className="text-lg text-center text-slate-600 dark:text-slate-400 mb-10">
           See an animal that needs help? Fill out the form below, and our rescue team will be alerted.
         </p>
+        
+        {submissionStatus && !isSubmitting && <Alert type={submissionStatus.type} title={submissionStatus.title} message={submissionStatus.message} className="mb-6" />}
+        
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="animal-type" className="block text-base font-semibold text-slate-700 dark:text-slate-300 mb-2">Type of Animal</label>
-            <select id="animal-type" required className={inputStyles}>
+            <select id="animal-type" required value={animalType} onChange={e => setAnimalType(e.target.value)} className={inputStyles}>
               <option className="text-black">Cat</option>
               <option className="text-black">Dog</option>
               <option className="text-black">Bird</option>
@@ -85,7 +131,7 @@ const ReportPage: React.FC = () => {
 
           <div>
             <label htmlFor="condition" className="block text-base font-semibold text-slate-700 dark:text-slate-300 mb-2">Description of Condition</label>
-            <textarea id="condition" rows={4} required placeholder="e.g., Injured leg, looks lost and scared, etc." className={inputStyles}></textarea>
+            <textarea id="condition" rows={4} required value={condition} onChange={e => setCondition(e.target.value)} placeholder="e.g., Injured leg, looks lost and scared, etc." className={inputStyles}></textarea>
           </div>
 
           <div>
@@ -130,8 +176,8 @@ const ReportPage: React.FC = () => {
           </div>
 
           <div>
-            <button type="submit" disabled={isSubmitting} className="w-full bg-orange-500 text-white font-bold py-4 px-4 rounded-lg text-lg hover:bg-orange-600 transition-colors transform hover:scale-105 disabled:bg-orange-300 disabled:scale-100">
-              {isSubmitting ? 'Analyzing & Submitting...' : 'Submit Rescue Report'}
+            <button type="submit" disabled={isSubmitting} className="w-full bg-orange-500 text-white font-bold py-4 px-4 rounded-lg text-lg hover:bg-orange-600 transition-colors transform hover:scale-105 disabled:bg-orange-300 disabled:scale-100 disabled:cursor-not-allowed">
+              {isSubmitting ? 'Submitting...' : 'Submit Rescue Report'}
             </button>
           </div>
         </form>

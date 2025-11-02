@@ -5,6 +5,7 @@ import { MOCK_ANIMALS } from '../constants';
 import type { Animal } from '../types';
 import AnimalCard from '../components/AnimalCard';
 import { SparklesIcon } from '../components/icons';
+import Alert from '../components/Alert';
 
 interface MatchResult {
     animalId: number;
@@ -60,7 +61,8 @@ const PerfectMatchQuizPage: React.FC = () => {
             }
         } catch (err) {
             console.error(err);
-            setError("Sorry, an error occurred while finding your match. Please try again.");
+            const errorMessage = err instanceof Error ? err.message : "Sorry, an error occurred while finding your match. Please try again.";
+            setError(errorMessage);
         } finally {
             setIsLoading(false);
         }
@@ -128,8 +130,7 @@ const PerfectMatchQuizPage: React.FC = () => {
                     
                     {error && !isLoading && (
                          <div className="text-center py-10">
-                            <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100">Oops!</h2>
-                            <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">{error}</p>
+                            <Alert type="error" title="An Error Occurred" message={error} />
                             <div className="mt-8 flex justify-center gap-4">
                                 <button onClick={handleRestart} className="bg-orange-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-orange-600">Try Again</button>
                                 <Link to="/adopt" className="font-semibold text-slate-600 dark:text-slate-300 hover:text-orange-600 dark:hover:text-orange-400 py-3 px-8 rounded-full hover:bg-slate-500/10">Browse All</Link>
