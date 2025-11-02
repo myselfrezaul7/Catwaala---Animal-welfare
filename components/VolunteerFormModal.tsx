@@ -27,14 +27,16 @@ const VolunteerFormModal: React.FC<VolunteerFormModalProps> = ({ isOpen, onClose
   const checkboxInputStyles = "mr-2 h-4 w-4 text-orange-600 focus:ring-orange-500 border-slate-400 rounded";
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center p-4 transition-opacity duration-300" onClick={onClose}>
-      <div className="bg-slate-100/70 dark:bg-slate-800/70 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+    <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center p-0 sm:p-4 transition-opacity duration-300" onClick={onClose}>
+      <div className="bg-slate-100/70 dark:bg-slate-800/70 backdrop-blur-lg border-white/20 dark:border-slate-700/50 w-full h-full sm:rounded-2xl shadow-2xl sm:max-w-2xl sm:max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         {isSuccess ? (
-          <div className="p-8 text-center">
-            <Alert type="success" title="Application Received!" message="Thank you for your interest in volunteering! We've received your application and will be in touch with you soon." />
-            <button onClick={onClose} className="mt-6 bg-orange-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-orange-600">
-                Close
-            </button>
+          <div className="p-8 text-center flex flex-col justify-center items-center h-full">
+            <div>
+                <Alert type="success" title="Application Received!" message="Thank you for your interest in volunteering! We've received your application and will be in touch with you soon." />
+                <button onClick={onClose} className="mt-6 bg-orange-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-orange-600">
+                    Close
+                </button>
+            </div>
           </div>
         ) : (
           <div className="p-8">

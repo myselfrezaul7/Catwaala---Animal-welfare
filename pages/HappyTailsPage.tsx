@@ -6,12 +6,12 @@ const HappyTailsPage: React.FC = () => {
   return (
     <div className="container mx-auto px-6 py-16">
       <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-100">Happy Tails</h1>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-100">Happy Tails</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mt-4">
           Every adoption is a new beginning. Here are some of our beloved alumni thriving in their forever homes, all thanks to supporters like you.
         </p>
       </div>
-      <div className="columns-2 md:columns-2 lg:columns-3 gap-8 space-y-8">
+      <div className="columns-1 sm:columns-2 lg:columns-3 gap-8 space-y-8">
         {MOCK_HAPPY_TAILS.map(tail => (
           <div key={tail.id} className="break-inside-avoid bg-slate-100/30 dark:bg-slate-800/30 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 rounded-2xl shadow-xl overflow-hidden group">
             <img src={tail.imageUrl} alt={tail.animalName} className="w-full h-auto object-cover" />

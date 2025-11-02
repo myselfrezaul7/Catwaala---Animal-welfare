@@ -21,7 +21,7 @@ const OnlineVetPage: React.FC = () => {
     <>
       <div className="container mx-auto px-6 py-16">
         <div className="text-center mb-12 max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-100">Find a Vet in Your District</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-100">Find a Vet in Your District</h1>
             <p className="text-lg text-slate-600 dark:text-slate-400 mt-4">
               Need to find a veterinarian or a clinic near you? Select your district from the list below to find local services in your area.
             </p>

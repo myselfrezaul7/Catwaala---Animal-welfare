@@ -105,7 +105,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
   };
 
   const getTabClass = (tab: PaymentMethod) => {
-    return `flex-1 py-3 px-2 text-center font-bold border-b-4 transition-colors duration-300 flex items-center justify-center gap-2 ${
+    return `flex-1 p-2 text-sm sm:text-base sm:py-3 text-center font-bold border-b-4 transition-colors duration-300 flex items-center justify-center gap-2 ${
       activeTab === tab 
       ? 'border-orange-500 text-orange-600 dark:text-orange-400' 
       : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'

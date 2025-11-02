@@ -13,7 +13,7 @@ const FAQPage: React.FC = () => {
   return (
     <div className="container mx-auto px-6 py-16">
       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-100">Frequently Asked Questions</h1>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-100">Frequently Asked Questions</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mt-4">
           Have questions? We've got answers. If you can't find what you're looking for, feel free to contact us.
         </p>

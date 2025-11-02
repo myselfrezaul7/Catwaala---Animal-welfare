@@ -46,13 +46,13 @@ const AdoptPage: React.FC = () => {
         <Link to="/perfect-match" className="block bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-2xl shadow-xl p-8 md:p-10 transform hover:scale-105 transition-transform duration-300">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="flex items-center space-x-4">
-                  <SparklesIcon className="w-16 h-16 flex-shrink-0" />
+                  <SparklesIcon className="w-12 h-12 md:w-16 md:h-16 flex-shrink-0" />
                   <div>
-                      <h2 className="text-3xl font-bold">Not sure where to start?</h2>
+                      <h2 className="text-2xl md:text-3xl font-bold">Not sure where to start?</h2>
                       <p className="text-lg mt-1 opacity-90">Take our AI-powered quiz to find your perfect match!</p>
                   </div>
               </div>
-              <div className="bg-white text-orange-600 font-bold py-3 px-8 rounded-full text-lg hover:bg-orange-100 transition-colors whitespace-nowrap">
+              <div className="bg-white text-orange-600 font-bold py-3 px-8 rounded-full text-lg hover:bg-orange-100 transition-colors whitespace-nowrap mt-4 md:mt-0">
                   Find My Match
               </div>
           </div>

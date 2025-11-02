@@ -68,7 +68,7 @@ const AnimalDetailPage: React.FC = () => {
             </div>
             <div className="p-8 md:p-12 md:w-1/2 flex flex-col justify-between">
                 <div>
-                    <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 dark:text-slate-100">{animal.name}</h1>
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-800 dark:text-slate-100">{animal.name}</h1>
                     <p className="text-xl text-slate-600 dark:text-slate-400 font-semibold mt-2">{animal.breed}</p>
                     <div className="mt-4 text-lg text-gray-500 dark:text-gray-400 flex items-center space-x-4">
                         <span>{animal.age} old</span>

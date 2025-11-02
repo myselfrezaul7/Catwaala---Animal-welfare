@@ -21,8 +21,8 @@ const VetBookingModal: React.FC<VetBookingModalProps> = ({ vet, isOpen, onClose 
 
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center p-4 transition-opacity duration-300" onClick={onClose}>
-      <div className="bg-slate-100/70 dark:bg-slate-800/70 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 rounded-2xl shadow-2xl w-full max-w-lg" onClick={(e) => e.stopPropagation()}>
+    <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center p-0 sm:p-4 transition-opacity duration-300" onClick={onClose}>
+      <div className="bg-slate-100/70 dark:bg-slate-800/70 backdrop-blur-lg border-white/20 dark:border-slate-700/50 w-full h-full sm:rounded-2xl shadow-2xl sm:max-w-lg sm:h-auto" onClick={(e) => e.stopPropagation()}>
         <div className="p-8">
           <div className="flex justify-between items-start mb-4">
             <div>

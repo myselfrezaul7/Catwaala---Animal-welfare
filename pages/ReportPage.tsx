@@ -111,7 +111,7 @@ const ReportPage: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-12 flex-grow flex items-center justify-center">
       <div className="w-full max-w-2xl bg-slate-100/30 dark:bg-slate-800/30 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 p-8 md:p-12 rounded-2xl shadow-xl">
-        <h1 className="text-4xl font-bold text-center text-slate-800 dark:text-slate-100 mb-4">Report an Animal in Need</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-center text-slate-800 dark:text-slate-100 mb-4">Report an Animal in Need</h1>
         <p className="text-lg text-center text-slate-600 dark:text-slate-400 mb-10">
           See an animal that needs help? Fill out the form below, and our rescue team will be alerted.
         </p>

@@ -97,7 +97,7 @@ const PerfectMatchQuizPage: React.FC = () => {
                     {results.length === 0 && !isLoading && !error && (
                         <>
                             <div className="text-center mb-8">
-                                <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-100">Find Your Perfect Match</h1>
+                                <h1 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100">Find Your Perfect Match</h1>
                                 <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">Answer a few questions to let our AI find the best cat for you.</p>
                                 <div className="w-full bg-slate-200/50 dark:bg-slate-700/50 rounded-full h-2.5 mt-6">
                                     <div className="bg-orange-500 h-2.5 rounded-full" style={{ width: `${((step + 1) / quizQuestions.length) * 100}%`, transition: 'width 0.3s ease-in-out' }}></div>
@@ -141,7 +141,7 @@ const PerfectMatchQuizPage: React.FC = () => {
                     {!isLoading && results.length > 0 && (
                         <div>
                             <div className="text-center mb-10">
-                                <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-100">Here are your perfect matches!</h1>
+                                <h1 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100">Here are your perfect matches!</h1>
                                 <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">Based on your answers, our AI thinks you'll get along great with these friends.</p>
                             </div>
                             <div className="space-y-8">

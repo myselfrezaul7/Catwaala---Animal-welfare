@@ -10,7 +10,7 @@ const StatCard: React.FC<{ value: number, label: string, icon: React.ReactNode }
     return (
         <div className="bg-slate-100/30 dark:bg-slate-800/30 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 rounded-2xl shadow-xl p-6 text-center flex flex-col items-center justify-center">
             <div className="text-orange-500 mb-3">{icon}</div>
-            <p className="text-5xl font-extrabold text-slate-800 dark:text-slate-100">{count.toLocaleString()}</p>
+            <p className="text-4xl sm:text-5xl font-extrabold text-slate-800 dark:text-slate-100">{count.toLocaleString()}</p>
             <p className="text-lg font-semibold text-slate-600 dark:text-slate-400 mt-1">{label}</p>
         </div>
     );

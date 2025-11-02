@@ -90,7 +90,7 @@ const AIAssistantPage: React.FC = () => {
         </div>
        )}
       <div className="text-center mb-6">
-        <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-100">AI Vet</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100">AI Vet</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 mt-1">Ask for preliminary first aid and general cat care advice.</p>
       </div>
       <div className="flex-grow bg-slate-100/30 dark:bg-slate-800/30 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 rounded-2xl shadow-xl flex flex-col overflow-hidden">
