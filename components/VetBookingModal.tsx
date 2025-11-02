@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import type { Vet } from '../types';
 
 interface VetBookingModalProps {
@@ -10,11 +10,11 @@ interface VetBookingModalProps {
 const VetBookingModal: React.FC<VetBookingModalProps> = ({ vet, isOpen, onClose }) => {
   if (!isOpen || !vet) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     alert(`Appointment request sent for ${vet.name}! You will receive a confirmation shortly.`);
     onClose();
-  };
+  }, [vet, onClose]);
 
   const inputStyles = "mt-1 block w-full p-2 bg-transparent border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500";
   const labelStyles = "block text-sm font-medium text-slate-600 dark:text-slate-300";

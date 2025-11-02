@@ -40,3 +40,30 @@ export interface Vet {
   imageUrl: string;
   isOnline: boolean;
 }
+
+export interface ImpactStats {
+  rescuedThisYear: number;
+  successfulAdoptions: number;
+  mealsProvided: number;
+  shelterFundGoal: number;
+  shelterFundCurrent: number;
+}
+
+export interface HappyTail {
+  id: number;
+  animalName: string;
+  adopterName: string;
+  story: string;
+  imageUrl: string;
+}
+
+export interface LocalVet {
+  id: number;
+  name: string;
+  address: string;
+  phone: string;
+  district: string;
+  googleMapsUrl: string;
+  services?: string[];
+  hours?: string;
+}

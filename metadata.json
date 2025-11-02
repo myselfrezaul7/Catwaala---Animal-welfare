@@ -1,7 +1,8 @@
 {
   "name": "CATWAALA",
-  "description": "A web application for the CATWAALA animal welfare organization, focusing on cat adoption, reporting cats in need, and an AI-powered vet assistant to answer your feline-related questions.",
+  "description": "A web application for the CATWAALA animal welfare organization, focusing on cat adoption, reporting cats in need, finding local vets across Bangladesh, and an AI-powered vet assistant to answer your feline-related questions.",
   "requestFramePermissions": [
-    "geolocation"
+    "geolocation",
+    "camera"
   ]
 }

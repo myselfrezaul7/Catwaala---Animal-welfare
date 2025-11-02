@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import type { Animal } from '../types';
 
@@ -30,4 +30,4 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal }) => {
   );
 };
 
-export default AnimalCard;
+export default memo(AnimalCard);

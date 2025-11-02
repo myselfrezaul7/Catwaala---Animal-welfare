@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect, useCallback, useMemo } from 'react';
 import type { User } from '../types';
 import { MOCK_USERS } from '../constants';
 
@@ -59,7 +59,7 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({ children }
     }
   }, [currentUser]);
 
-  const login = async (email: string, password: string): Promise<User> => {
+  const login = useCallback(async (email: string, password: string): Promise<User> => {
     const users = getInitialUsers();
     const user = users.find(u => u.email === email && u.password === password);
     if (user) {
@@ -69,13 +69,13 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({ children }
     } else {
       throw new Error("Invalid email or password");
     }
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setCurrentUser(null);
-  };
+  }, []);
 
-  const signup = async (name: string, email: string, password: string): Promise<User> => {
+  const signup = useCallback(async (name: string, email: string, password: string): Promise<User> => {
     const users = getInitialUsers();
     if (users.some(u => u.email === email)) {
       throw new Error("User with this email already exists");
@@ -87,15 +87,15 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({ children }
     const { password: _, ...userWithoutPassword } = newUser;
     setCurrentUser(userWithoutPassword);
     return userWithoutPassword;
-  };
+  }, []);
 
-  const value = {
+  const value = useMemo(() => ({
     currentUser,
     isAuthenticated: !!currentUser,
     login,
     logout,
     signup,
-  };
+  }), [currentUser, login, logout, signup]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

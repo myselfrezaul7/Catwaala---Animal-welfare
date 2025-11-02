@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import type { Animal } from '../types';
 
 interface AdoptionFormProps {
@@ -10,11 +10,11 @@ interface AdoptionFormProps {
 const AdoptionForm: React.FC<AdoptionFormProps> = ({ animal, isOpen, onClose }) => {
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     alert(`Thank you for your interest in adopting ${animal.name}! Your application has been submitted.`);
     onClose();
-  };
+  }, [animal.name, onClose]);
   
   const inputStyles = "mt-1 block w-full p-2 bg-transparent border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500";
   const labelStyles = "block text-sm font-medium text-slate-600 dark:text-slate-300";

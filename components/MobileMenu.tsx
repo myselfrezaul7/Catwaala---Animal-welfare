@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { CatIcon } from './icons';
+import { LogoIcon } from './icons';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -14,16 +14,16 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
-  const handleLinkClick = (path: string) => {
+  const handleLinkClick = useCallback((path: string) => {
     navigate(path);
     onClose();
-  };
+  }, [navigate, onClose]);
   
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     logout();
     onClose();
     navigate('/');
-  };
+  }, [logout, onClose, navigate]);
 
   const activeLinkClass = 'bg-orange-500/20 text-orange-600 dark:text-orange-400';
   const inactiveLinkClass = 'text-slate-700 dark:text-slate-300 hover:bg-slate-500/10';
@@ -38,17 +38,17 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
             onClick={(e) => e.stopPropagation()}
         >
             <div className="flex items-center space-x-2 text-2xl font-bold text-slate-800 dark:text-slate-100 mb-10">
-                <CatIcon className="w-8 h-8 text-orange-500" />
+                <LogoIcon className="w-8 h-8 text-orange-500" />
                 <span>CATWAALA</span>
             </div>
 
-            <nav className="flex flex-col space-y-4 text-lg font-medium flex-grow">
+            <nav className="flex flex-col space-y-2 text-lg font-medium flex-grow">
                 <NavLink to="/" onClick={onClose} className={({ isActive }) => `px-4 py-3 rounded-lg ${isActive ? activeLinkClass : inactiveLinkClass}`}>Home</NavLink>
                 <NavLink to="/adopt" onClick={onClose} className={({ isActive }) => `px-4 py-3 rounded-lg ${isActive ? activeLinkClass : inactiveLinkClass}`}>Adopt</NavLink>
                 <NavLink to="/community" onClick={onClose} className={({ isActive }) => `px-4 py-3 rounded-lg ${isActive ? activeLinkClass : inactiveLinkClass}`}>Community</NavLink>
-                <NavLink to="/report" onClick={onClose} className={({ isActive }) => `px-4 py-3 rounded-lg ${isActive ? activeLinkClass : inactiveLinkClass}`}>Report</NavLink>
-                <NavLink to="/online-vet" onClick={onClose} className={({ isActive }) => `px-4 py-3 rounded-lg ${isActive ? activeLinkClass : inactiveLinkClass}`}>Online Vet</NavLink>
-                <NavLink to="/ai-assistant" onClick={onClose} className={({ isActive }) => `px-4 py-3 rounded-lg ${isActive ? activeLinkClass : inactiveLinkClass}`}>AI Assistant</NavLink>
+                <NavLink to="/report" onClick={onClose} className={({ isActive }) => `px-4 py-3 rounded-lg ${isActive ? activeLinkClass : inactiveLinkClass}`}>Report Rescue</NavLink>
+                <NavLink to="/online-vet" onClick={onClose} className={({ isActive }) => `px-4 py-3 rounded-lg ${isActive ? activeLinkClass : inactiveLinkClass}`}>Find a Vet</NavLink>
+                <NavLink to="/ai-vet" onClick={onClose} className={({ isActive }) => `px-4 py-3 rounded-lg ${isActive ? activeLinkClass : inactiveLinkClass}`}>AI Vet</NavLink>
             </nav>
 
             <div className="mt-auto border-t border-slate-300 dark:border-slate-700 pt-6">

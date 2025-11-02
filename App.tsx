@@ -1,18 +1,71 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import HomePage from './pages/HomePage';
-import AdoptPage from './pages/AdoptPage';
-import ReportPage from './pages/ReportPage';
-import AIAssistantPage from './pages/AIAssistantPage';
-import AnimalDetailPage from './pages/AnimalDetailPage';
-import CommunityPage from './pages/CommunityPage';
-import LoginPage from './pages/LoginPage';
-import SignUpPage from './pages/SignUpPage';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
-import OnlineVetPage from './pages/OnlineVetPage';
+import CookieConsentBanner from './components/CookieConsentBanner';
+import ScrollToTopButton from './components/ScrollToTopButton';
+
+// Lazy-loaded pages for code-splitting and faster initial loads
+const HomePage = lazy(() => import('./pages/HomePage'));
+const AdoptPage = lazy(() => import('./pages/AdoptPage'));
+const AnimalDetailPage = lazy(() => import('./pages/AnimalDetailPage'));
+const PerfectMatchQuizPage = lazy(() => import('./pages/PerfectMatchQuizPage'));
+const ReportPage = lazy(() => import('./pages/ReportPage'));
+const OnlineVetPage = lazy(() => import('./pages/OnlineVetPage'));
+const OurImpactPage = lazy(() => import('./pages/OurImpactPage'));
+const AIAssistantPage = lazy(() => import('./pages/AIAssistantPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const SignUpPage = lazy(() => import('./pages/SignUpPage'));
+const CommunityPage = lazy(() => import('./pages/CommunityPage'));
+const HappyTailsPage = lazy(() => import('./pages/HappyTailsPage'));
+const FAQPage = lazy(() => import('./pages/FAQPage'));
+
+
+// Component for suspense fallback during lazy loading
+const PageLoader: React.FC = () => (
+  <div className="flex-grow flex items-center justify-center p-8">
+    <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-orange-500" aria-label="Loading page"></div>
+  </div>
+);
+
+// Error Boundary Component to catch rendering errors and prevent app crash
+class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
+  // FIX: Replaced the constructor with class property initialization for state.
+  // This is the modern and recommended approach in React class components, which
+  // resolves the TypeScript errors by ensuring `this.state` and `this.props` are
+  // correctly typed from the base `React.Component`.
+  state = { hasError: false };
+
+  static getDerivedStateFromError(_: Error) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error("Uncaught error in ErrorBoundary:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="text-center py-20 px-6 flex-grow flex flex-col items-center justify-center">
+            <h1 className="text-3xl font-bold text-red-500">Something went wrong.</h1>
+            <p className="text-slate-600 dark:text-slate-400 mt-4 max-w-md">
+              We're sorry for the inconvenience. Please try refreshing the page, or return to the homepage.
+            </p>
+            <button
+              onClick={() => window.location.reload()}
+              className="mt-8 bg-orange-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-orange-600 transition-colors"
+            >
+              Refresh Page
+            </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 function App() {
   return (
@@ -21,20 +74,30 @@ function App() {
         <HashRouter>
           <div className="min-h-screen flex flex-col bg-transparent text-slate-800 dark:text-slate-200">
             <Header />
-            <main className="flex-grow">
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/adopt" element={<AdoptPage />} />
-                <Route path="/adopt/:id" element={<AnimalDetailPage />} />
-                <Route path="/community" element={<CommunityPage />} />
-                <Route path="/report" element={<ReportPage />} />
-                <Route path="/online-vet" element={<OnlineVetPage />} />
-                <Route path="/ai-assistant" element={<AIAssistantPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/signup" element={<SignUpPage />} />
-              </Routes>
+            <main className="flex-grow flex flex-col">
+              <ErrorBoundary>
+                <Suspense fallback={<PageLoader />}>
+                  <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/adopt" element={<AdoptPage />} />
+                    <Route path="/adopt/:id" element={<AnimalDetailPage />} />
+                    <Route path="/perfect-match" element={<PerfectMatchQuizPage />} />
+                    <Route path="/report" element={<ReportPage />} />
+                    <Route path="/online-vet" element={<OnlineVetPage />} />
+                    <Route path="/our-impact" element={<OurImpactPage />} />
+                    <Route path="/ai-vet" element={<AIAssistantPage />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/signup" element={<SignUpPage />} />
+                    <Route path="/community" element={<CommunityPage />} />
+                    <Route path="/happy-tails" element={<HappyTailsPage />} />
+                    <Route path="/faq" element={<FAQPage />} />
+                  </Routes>
+                </Suspense>
+              </ErrorBoundary>
             </main>
             <Footer />
+            <ScrollToTopButton />
+            <CookieConsentBanner />
           </div>
         </HashRouter>
       </AuthProvider>

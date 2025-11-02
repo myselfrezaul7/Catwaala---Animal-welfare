@@ -9,6 +9,28 @@ interface SearchModalProps {
   onClose: () => void;
 }
 
+const HighlightMatch: React.FC<{ text: string; highlight: string }> = ({ text, highlight }) => {
+  if (!highlight.trim()) {
+    return <>{text}</>;
+  }
+  const regex = new RegExp(`(${highlight})`, 'gi');
+  const parts = text.split(regex);
+  return (
+    <>
+      {parts.map((part, i) =>
+        part.toLowerCase() === highlight.toLowerCase() ? (
+          <span key={i} className="bg-orange-200 dark:bg-orange-500/30 rounded">
+            {part}
+          </span>
+        ) : (
+          part
+        )
+      )}
+    </>
+  );
+};
+
+
 const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState<Animal[]>([]);
@@ -61,8 +83,12 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                     <Link to={`/adopt/${animal.id}`} onClick={onClose} className="flex items-center space-x-4 p-3 rounded-lg hover:bg-orange-500/20 transition-colors duration-200">
                       <img src={animal.imageUrl} alt={animal.name} className="w-16 h-16 rounded-md object-cover" />
                       <div>
-                        <p className="font-bold text-slate-800 dark:text-slate-100 text-lg">{animal.name}</p>
-                        <p className="text-slate-600 dark:text-slate-400">{animal.breed}</p>
+                        <p className="font-bold text-slate-800 dark:text-slate-100 text-lg">
+                          <HighlightMatch text={animal.name} highlight={searchTerm} />
+                        </p>
+                        <p className="text-slate-600 dark:text-slate-400">
+                          <HighlightMatch text={animal.breed} highlight={searchTerm} />
+                        </p>
                       </div>
                     </Link>
                   </li>
