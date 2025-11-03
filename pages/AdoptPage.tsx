@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AnimalCard from '../components/AnimalCard';
 import { MOCK_ANIMALS } from '../constants';
-import { SparklesIcon } from '../components/icons';
+import { SparklesIcon, EnvelopeIcon } from '../components/icons';
 import type { Animal } from '../types';
 
 // A simple skeleton component for the animal card
@@ -75,6 +75,21 @@ const AdoptPage: React.FC = () => {
           ))
         )}
       </div>
+
+      <section className="mt-24 bg-slate-100/30 dark:bg-slate-800/30 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 rounded-2xl shadow-xl p-8 md:p-12 text-center">
+        <EnvelopeIcon className="w-16 h-16 text-orange-500 mx-auto mb-4" />
+        <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100 mb-6">Need to Rehome Your Cat?</h2>
+        <p className="max-w-3xl mx-auto text-lg text-slate-700 dark:text-slate-300 leading-relaxed mb-8">
+            We understand that circumstances change. If you need to find a new, loving home for your cat, we can help. Please email us high-quality, clear photos (no videos, please!) and a detailed description of your pet's personality, needs, and history. Our team will review your submission to be featured on our adoption page.
+        </p>
+        <a 
+          href="mailto:catwaala@gmail.com?subject=Cat Rehoming Inquiry"
+          className="inline-flex items-center justify-center gap-2 bg-orange-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-orange-600 transition-transform transform hover:scale-105 duration-300 shadow-lg"
+        >
+          <EnvelopeIcon className="w-5 h-5" />
+          <span>Email Us Your Request</span>
+        </a>
+      </section>
     </div>
   );
 };

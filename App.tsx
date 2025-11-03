@@ -32,8 +32,11 @@ const PageLoader: React.FC = () => (
 
 // Error Boundary Component to catch rendering errors and prevent app crash
 class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
-  // FIX: Initialize state using a class property to resolve issues with 'this.state' and 'this.props' not being recognized.
-  state = { hasError: false };
+  // FIX: Replaced the class property for state initialization with a constructor. Explicitly calling `super(props)` ensures the component's props are set up correctly, resolving the error where `this.props` was not recognized.
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
 
   static getDerivedStateFromError(_: Error): { hasError: boolean } {
     return { hasError: true };
