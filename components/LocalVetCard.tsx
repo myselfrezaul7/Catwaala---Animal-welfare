@@ -1,3 +1,4 @@
+
 import React from 'react';
 import type { LocalVet } from '../types';
 import { MapPinIcon, PhoneIcon } from './icons';
@@ -8,17 +9,21 @@ interface LocalVetCardProps {
 
 const LocalVetCard: React.FC<LocalVetCardProps> = ({ vet }) => {
   return (
-    <div className="bg-slate-100/30 dark:bg-slate-800/30 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 rounded-2xl shadow-xl p-6 flex flex-col justify-between transform hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+    <div className="bg-white/30 dark:bg-slate-900/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-3xl shadow-lg p-6 flex flex-col justify-between transform hover:shadow-2xl hover:shadow-orange-500/10 hover:-translate-y-1 transition-all duration-300 group">
       <div>
-        <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">{vet.name}</h3>
+        <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">{vet.name}</h3>
         <div className="mt-4 space-y-3 text-slate-600 dark:text-slate-300">
           <div className="flex items-start gap-3">
-            <MapPinIcon className="w-5 h-5 mt-1 flex-shrink-0 text-slate-500 dark:text-slate-400" />
-            <p>{vet.address}</p>
+            <div className="p-2 bg-white/40 dark:bg-white/10 rounded-full backdrop-blur-sm shadow-sm">
+                <MapPinIcon className="w-4 h-4 text-orange-500" />
+            </div>
+            <p className="text-sm font-medium leading-relaxed">{vet.address}</p>
           </div>
           <div className="flex items-center gap-3">
-            <PhoneIcon className="w-5 h-5 flex-shrink-0 text-slate-500 dark:text-slate-400" />
-            <a href={`tel:${vet.phone}`} className="hover:underline">{vet.phone}</a>
+            <div className="p-2 bg-white/40 dark:bg-white/10 rounded-full backdrop-blur-sm shadow-sm">
+                <PhoneIcon className="w-4 h-4 text-orange-500" />
+            </div>
+            <a href={`tel:${vet.phone}`} className="text-sm font-medium hover:underline decoration-orange-500">{vet.phone}</a>
           </div>
         </div>
       </div>
@@ -27,7 +32,7 @@ const LocalVetCard: React.FC<LocalVetCardProps> = ({ vet }) => {
           href={vet.googleMapsUrl} 
           target="_blank" 
           rel="noopener noreferrer"
-          className="w-full block text-center bg-orange-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-orange-600 transition-colors"
+          className="w-full block text-center bg-orange-500/90 text-white font-bold py-3 px-4 rounded-xl hover:bg-orange-600 hover:shadow-lg hover:shadow-orange-500/30 transition-all backdrop-blur-sm"
         >
           View on Map
         </a>

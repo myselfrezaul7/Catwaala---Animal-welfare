@@ -1,3 +1,4 @@
+
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import type { Animal } from '../types';
@@ -11,24 +12,35 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal }) => {
   const { t } = useLanguage();
 
   return (
-    <Link to={`/adopt/${animal.id}`} className="block bg-slate-100/30 dark:bg-slate-800/30 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 rounded-2xl shadow-xl overflow-hidden transform hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 ease-in-out flex flex-col group">
-      <div className="relative">
-        <img src={animal.imageUrl} alt={animal.name} className="w-full h-56 object-cover" />
-        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
-            <p className="text-white text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 tracking-wider">{t('animalCard.learnMore')}</p>
+    <Link to={`/adopt/${animal.id}`} className="group block bg-white/40 dark:bg-black/30 backdrop-blur-xl rounded-3xl overflow-hidden shadow-lg border border-white/30 dark:border-white/10 hover:shadow-2xl hover:shadow-orange-500/20 transition-all duration-500 ease-out transform hover:-translate-y-2 h-full flex flex-col">
+      <div className="relative overflow-hidden h-44 sm:h-56 md:h-64">
+        <img 
+            src={animal.imageUrl} 
+            alt={animal.name} 
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80"></div>
+        <div className="absolute bottom-3 left-4 right-4">
+             <h3 className="text-2xl md:text-3xl font-bold text-white drop-shadow-lg">{animal.name}</h3>
         </div>
       </div>
-      <div className="p-6 flex flex-col flex-grow">
-        <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100">{animal.name}</h3>
-        <p className="text-slate-600 dark:text-slate-400 font-medium">{animal.breed}</p>
-        <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm">{animal.age} old &bull; {animal.gender}</p>
-        <p className="text-slate-700 dark:text-slate-300 mt-4 flex-grow text-base line-clamp-3">{animal.description}</p>
-      </div>
-       <div className="p-4 bg-slate-500/10 border-t border-white/20 dark:border-slate-700/50 mt-auto">
-          <p className="text-center font-semibold text-orange-600 dark:text-orange-400 group-hover:text-orange-700 dark:group-hover:text-orange-300">
+      
+      <div className="p-5 md:p-6 flex flex-col flex-grow relative">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3 gap-2">
+             <span className="self-start bg-orange-100/80 dark:bg-orange-900/50 backdrop-blur-sm text-orange-700 dark:text-orange-300 text-[10px] md:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-orange-200/50 dark:border-orange-700/50 truncate max-w-full">{animal.breed}</span>
+             <span className="text-slate-600 dark:text-slate-300 text-xs md:text-sm font-medium bg-white/30 dark:bg-black/20 px-2 py-0.5 rounded-lg backdrop-blur-sm">{animal.age}</span>
+        </div>
+        
+        <p className="text-slate-700 dark:text-slate-300 text-xs md:text-sm leading-relaxed mb-6 line-clamp-3 flex-grow hidden sm:block font-medium">
+            {animal.description}
+        </p>
+
+        <div className="mt-auto pt-4 border-t border-slate-200/50 dark:border-white/10">
+          <div className="w-full bg-white/50 dark:bg-white/10 backdrop-blur-md text-slate-700 dark:text-slate-200 font-semibold py-3 rounded-2xl text-xs md:text-base text-center group-hover:bg-orange-500 group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-orange-500/30">
             {t('animalCard.viewDetails')}
-          </p>
+          </div>
         </div>
+      </div>
     </Link>
   );
 };

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import type { Post } from '../types';
 import { UserIcon, ThumbsUpIcon, ChatBubbleIcon } from './icons';
@@ -24,32 +25,32 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   }
 
   return (
-    <div className="bg-slate-100/30 dark:bg-slate-800/30 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 rounded-2xl shadow-xl overflow-hidden">
+    <div className="bg-white/40 dark:bg-black/30 backdrop-blur-2xl border border-white/40 dark:border-white/10 rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300">
       <div className="p-6">
         <div className="flex items-center space-x-4 mb-4">
-          <div className="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center flex-shrink-0">
-            <UserIcon className="w-7 h-7 text-slate-600 dark:text-slate-300" />
+          <div className="w-12 h-12 rounded-full bg-white/50 dark:bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center flex-shrink-0 shadow-sm">
+            <UserIcon className="w-6 h-6 text-slate-600 dark:text-slate-300" />
           </div>
           <div>
             <p className="font-bold text-slate-800 dark:text-slate-100 text-lg">{post.author.name}</p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">{timeSince(post.timestamp)}</p>
+            <p className="text-sm text-slate-500 dark:text-slate-400">{timeSince(post.timestamp)}</p>
           </div>
         </div>
-        <p className="text-slate-700 dark:text-slate-300 text-base mb-4 whitespace-pre-wrap">{post.content}</p>
+        <p className="text-slate-700 dark:text-slate-200 text-base mb-4 whitespace-pre-wrap leading-relaxed">{post.content}</p>
       </div>
 
       {post.imageUrl && (
-        <div className="bg-slate-500/10">
+        <div className="bg-slate-500/5">
           <img src={post.imageUrl} alt="Post content" className="w-full max-h-[500px] object-cover" />
         </div>
       )}
 
-      <div className="px-6 py-3 border-t border-white/20 dark:border-slate-700/50 flex justify-around">
-        <button className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 font-semibold transition-colors rounded-lg px-4 py-2 hover:bg-orange-500/10">
+      <div className="px-6 py-4 border-t border-white/20 dark:border-white/5 flex justify-around bg-white/10 dark:bg-black/10 backdrop-blur-sm">
+        <button className="flex items-center space-x-2 text-slate-600 dark:text-slate-300 hover:text-orange-600 dark:hover:text-orange-400 font-semibold transition-all rounded-xl px-4 py-2 hover:bg-white/40 dark:hover:bg-white/10">
           <ThumbsUpIcon className="w-5 h-5" />
           <span>Like ({post.likes})</span>
         </button>
-        <button className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 font-semibold transition-colors rounded-lg px-4 py-2 hover:bg-orange-500/10">
+        <button className="flex items-center space-x-2 text-slate-600 dark:text-slate-300 hover:text-orange-600 dark:hover:text-orange-400 font-semibold transition-all rounded-xl px-4 py-2 hover:bg-white/40 dark:hover:bg-white/10">
           <ChatBubbleIcon className="w-5 h-5" />
           <span>Comment ({post.comments.length})</span>
         </button>

@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 import type { Animal } from '../types';
 
@@ -22,7 +21,15 @@ const getAiClient = (): GoogleGenAI => {
 };
 
 export const getVetAssistantResponse = async (prompt: string, disclaimer: string): Promise<string> => {
-  const SYSTEM_INSTRUCTION = `${disclaimer} You are an expert AI Vet for CATWAALA, a cat welfare organization. Your primary purpose is to provide immediate, preliminary first aid guidance and general advice on cat care. Your advice should empower users to take immediate, safe steps while strongly encouraging them to seek professional help. Do not provide any diagnosis or prescribe medication. Keep your answers concise, empathetic, and easy to understand for a general audience.`;
+  const SYSTEM_INSTRUCTION = `${disclaimer} You are an expert AI Vet for CATWAALA, a premier cat welfare organization. 
+  Your primary purpose is to provide immediate, calming, and accurate preliminary first aid guidance and general advice on cat care.
+  
+  Guidelines:
+  1. **Empower the user:** Give clear, actionable steps they can take immediately.
+  2. **Safety First:** Strongly encourage seeking professional help if symptoms suggest an emergency.
+  3. **Tone:** Be empathetic, concise, professional, yet warm. Avoid jargon.
+  4. **Limitations:** Do not diagnose specific diseases or prescribe medication dosages.
+  `;
 
   try {
     const ai = getAiClient();
@@ -31,7 +38,8 @@ export const getVetAssistantResponse = async (prompt: string, disclaimer: string
       contents: prompt,
       config: {
         systemInstruction: SYSTEM_INSTRUCTION,
-        thinkingConfig: { thinkingBudget: 2048 },
+        // Increased budget slightly for more complex reasoning on symptoms
+        thinkingConfig: { thinkingBudget: 2048 }, 
       },
     });
     return response.text || "";
@@ -52,7 +60,7 @@ export const analyzeAnimalImage = async (base64ImageData: string): Promise<strin
         },
     };
     const textPart = {
-        text: 'You are a vet assistant. Briefly describe this animal (breed, color) and its apparent condition. Note any visible signs of injury or distress. Keep the description to 2-3 sentences.'
+        text: 'Analyze this image for a rescue report. Briefly identify the animal (breed estimation if possible), its color, and crucially, assess its apparent physical condition. Look for signs of injury, distress, malnutrition, or skin conditions. Keep the description professional, objective, and under 4 sentences.'
     };
 
     try {
@@ -60,6 +68,11 @@ export const analyzeAnimalImage = async (base64ImageData: string): Promise<strin
         const response = await ai.models.generateContent({
             model: 'gemini-3-pro-preview',
             contents: { parts: [imagePart, textPart] },
+            // Gemini 3 Pro is excellent at vision, usually doesn't need high thinking budget for basic description
+            // but we allow some for medical assessment reasoning.
+            config: {
+                 thinkingConfig: { thinkingBudget: 1024 }, 
+            }
         });
         return response.text || "";
     } catch (error) {
@@ -72,16 +85,24 @@ export const analyzeAnimalImage = async (base64ImageData: string): Promise<strin
 };
 
 export const getPerfectMatch = async (preferences: string, animals: Animal[]): Promise<string> => {
-    const animalList = animals.map(a => `ID: ${a.id}, Name: ${a.name}, Breed: ${a.breed}, Age: ${a.age}, Gender: ${a.gender}, Description: ${a.description}`).join('\n');
+    // Enrich context with all available data points
+    const animalList = animals.map(a => 
+        `ID: ${a.id}, Name: ${a.name}, Breed: ${a.breed}, Age: ${a.age}, Gender: ${a.gender}, Description: ${a.description}`
+    ).join('\n');
+
     const prompt = `
         User Preferences: "${preferences}"
         
         Available Cats:
         ${animalList}
         
-        Analyze the user's preferences and the available cats. Recommend the top 3 most suitable cats based on personality, age, and breed compatibility. For each recommendation, provide the cat's ID and a brief, one-sentence explanation for why it's a good match.
+        Task: Analyze the user's specific lifestyle, energy levels, and household composition against the available cats. 
+        Select exactly the top 3 most suitable matches.
+        
+        For each match, explain *specifically* why their personality traits (from description/breed) fit the user's needs.
     `;
-    const SYSTEM_INSTRUCTION = `You are an expert cat adoption counselor for CATWAALA. Your goal is to create successful, lasting adoptions by matching cats with the right owners.`;
+    
+    const SYSTEM_INSTRUCTION = `You are an expert cat adoption counselor for CATWAALA. Your goal is to create successful, lasting adoptions. You are insightful and consider nuances in personality compatibility.`;
 
     try {
         const ai = getAiClient();
@@ -90,7 +111,7 @@ export const getPerfectMatch = async (preferences: string, animals: Animal[]): P
             contents: prompt,
             config: {
                 systemInstruction: SYSTEM_INSTRUCTION,
-                thinkingConfig: { thinkingBudget: 2048 },
+                thinkingConfig: { thinkingBudget: 4096 }, // Higher budget for complex matching logic
                 responseMimeType: 'application/json',
                 responseSchema: {
                     type: Type.OBJECT,

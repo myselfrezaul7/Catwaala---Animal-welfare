@@ -1,5 +1,5 @@
-import React, { Component, Suspense, lazy, type ErrorInfo, type ReactNode } from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import React, { Component, Suspense, lazy, useEffect, type ErrorInfo, type ReactNode } from 'react';
+import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { AuthProvider } from './contexts/AuthContext';
@@ -72,9 +72,21 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 }
 
+// Automatically scrolls to top when the route path changes
+const ScrollToTop: React.FC = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
+
 const AppContent: React.FC = () => {
     return (
         <div className="min-h-screen flex flex-col bg-transparent text-slate-800 dark:text-slate-200">
+            <ScrollToTop />
             <Header />
             <main className="flex-grow flex flex-col animate-[fadeIn_0.5s_ease-in-out]">
                 <style>{`

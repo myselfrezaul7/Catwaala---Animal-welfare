@@ -1,3 +1,4 @@
+
 import type { Animal, User, Post, Vet, ImpactStats, HappyTail, LocalVet } from './types';
 
 export const MOCK_ANIMALS: Animal[] = [
@@ -185,14 +186,84 @@ export const getDistricts = (lang: 'en' | 'bn') => {
 
 
 export const MOCK_LOCAL_VETS: LocalVet[] = [
+    // Dhaka
     { id: 1, name: 'Central Veterinary Hospital', address: '48, Kazi Alauddin Road, Dhaka-1000', phone: '02-9563588', district: 'Dhaka', googleMapsUrl: 'https://maps.google.com/?q=Central+Veterinary+Hospital,Dhaka' },
     { id: 2, name: 'PAW Life Care', address: 'House-20, Road-1, Block-A, Niketon, Gulshan-1, Dhaka', phone: '01626-612042', district: 'Dhaka', googleMapsUrl: 'https://maps.google.com/?q=PAW+Life+Care,Dhaka' },
-    { id: 3, name: 'Chattogram Veterinary and Animal Sciences University Hospital', address: 'Khulshi, Chattogram', phone: '031-659093', district: 'Chattogram', googleMapsUrl: 'https://maps.google.com/?q=CVASU+Hospital,Chattogram' },
-    { id: 4, name: 'The Pet Vet', address: '14/A, M. M. Ali Road, Chattogram', phone: '01711-123456', district: 'Chattogram', googleMapsUrl: 'https://maps.google.com/?q=The+Pet+Vet,Chattogram' },
-    { id: 5, name: 'Sylhet Animal Aid', address: 'House 5, Road 8, Block B, Shahjalal Uposhohor, Sylhet', phone: '01712-987654', district: 'Sylhet', googleMapsUrl: 'https://maps.google.com/?q=Sylhet+Animal+Aid' },
-    { id: 6, name: 'Khulna Pet Clinic', address: '55, Khan Jahan Ali Road, Khulna', phone: '01911-555666', district: 'Khulna', googleMapsUrl: 'https://maps.google.com/?q=Khulna+Pet+Clinic' },
-    { id: 7, name: 'Rajshahi Pet Care', address: 'Ranibazar, Rajshahi', phone: '01715-112233', district: 'Rajshahi', googleMapsUrl: 'https://maps.google.com/?q=Rajshahi+Pet+Care' },
-    { id: 8, name: 'Barishal Pet Hospital', address: 'Sadar Road, Barishal', phone: '01819-444555', district: 'Barishal', googleMapsUrl: 'https://maps.google.com/?q=Barishal+Pet+Hospital' },
-    { id: 9, name: 'Rangpur Pet Zone', address: 'Dhap, Rangpur', phone: '01556-778899', district: 'Rangpur', googleMapsUrl: 'https://maps.google.com/?q=Rangpur+Pet+Zone' },
-    { id: 10, name: 'Mymensingh Animal Clinic', address: 'Charpara, Mymensingh', phone: '01678-102030', district: 'Mymensingh', googleMapsUrl: 'https://maps.google.com/?q=Mymensingh+Animal+Clinic' },
+    { id: 3, name: 'Care for Paws (C4P)', address: 'House 39, Road 15, Block D, Banani, Dhaka', phone: '01711-223344', district: 'Dhaka', googleMapsUrl: 'https://maps.google.com/?q=Care+for+Paws,Banani' },
+    { id: 4, name: 'Gulshan Pet Clinic', address: 'House 10, Road 113, Gulshan-2, Dhaka', phone: '01819-123456', district: 'Dhaka', googleMapsUrl: 'https://maps.google.com/?q=Gulshan+Pet+Clinic' },
+    { id: 5, name: 'Uttara Vet Care', address: 'Sector 7, Road 18, House 5, Uttara, Dhaka', phone: '01912-345678', district: 'Dhaka', googleMapsUrl: 'https://maps.google.com/?q=Uttara+Vet+Care' },
+    { id: 6, name: 'Dhanmondi Vet Clinic', address: 'Road 27, House 42, Dhanmondi, Dhaka', phone: '01678-901234', district: 'Dhaka', googleMapsUrl: 'https://maps.google.com/?q=Dhanmondi+Vet+Clinic' },
+    
+    // Chattogram
+    { id: 7, name: 'Chattogram Veterinary and Animal Sciences University Hospital', address: 'Khulshi, Chattogram', phone: '031-659093', district: 'Chattogram', googleMapsUrl: 'https://maps.google.com/?q=CVASU+Hospital,Chattogram' },
+    { id: 8, name: 'The Pet Vet', address: '14/A, M. M. Ali Road, Chattogram', phone: '01711-123456', district: 'Chattogram', googleMapsUrl: 'https://maps.google.com/?q=The+Pet+Vet,Chattogram' },
+    { id: 9, name: 'Paws & Claws Vet Clinic', address: 'GEC Circle, Chattogram', phone: '01811-223344', district: 'Chattogram', googleMapsUrl: 'https://maps.google.com/?q=Paws+Claws+Chattogram' },
+    { id: 10, name: 'Chittagong Pet Care', address: 'Halishahar, Block B, Chattogram', phone: '01911-223344', district: 'Chattogram', googleMapsUrl: 'https://maps.google.com/?q=Chittagong+Pet+Care' },
+
+    // Sylhet
+    { id: 11, name: 'Sylhet Animal Aid', address: 'House 5, Road 8, Block B, Shahjalal Uposhohor, Sylhet', phone: '01712-987654', district: 'Sylhet', googleMapsUrl: 'https://maps.google.com/?q=Sylhet+Animal+Aid' },
+    { id: 12, name: 'Sylhet Vet Clinic', address: 'Zindabazar, Sylhet', phone: '01812-345678', district: 'Sylhet', googleMapsUrl: 'https://maps.google.com/?q=Sylhet+Vet+Clinic' },
+    { id: 13, name: 'Pet Lovers Sylhet', address: 'Amborkhana, Sylhet', phone: '01611-223344', district: 'Sylhet', googleMapsUrl: 'https://maps.google.com/?q=Pet+Lovers+Sylhet' },
+
+    // Khulna
+    { id: 14, name: 'Khulna Pet Clinic', address: '55, Khan Jahan Ali Road, Khulna', phone: '01911-555666', district: 'Khulna', googleMapsUrl: 'https://maps.google.com/?q=Khulna+Pet+Clinic' },
+    { id: 15, name: 'Khulna Sadar Vet Hospital', address: 'Sher-e-Bangla Road, Khulna', phone: '041-720123', district: 'Khulna', googleMapsUrl: 'https://maps.google.com/?q=Khulna+Sadar+Vet+Hospital' },
+    { id: 16, name: 'Animal Care Khulna', address: 'Sonadanga, Khulna', phone: '01712-345678', district: 'Khulna', googleMapsUrl: 'https://maps.google.com/?q=Animal+Care+Khulna' },
+
+    // Rajshahi
+    { id: 17, name: 'Rajshahi Pet Care', address: 'Ranibazar, Rajshahi', phone: '01715-112233', district: 'Rajshahi', googleMapsUrl: 'https://maps.google.com/?q=Rajshahi+Pet+Care' },
+    { id: 18, name: 'Rajshahi University Vet Clinic', address: 'Rajshahi University Campus, Rajshahi', phone: '0721-750041', district: 'Rajshahi', googleMapsUrl: 'https://maps.google.com/?q=Rajshahi+University+Vet' },
+    { id: 19, name: 'Padma Vet Service', address: 'Shaheb Bazar, Rajshahi', phone: '01911-223344', district: 'Rajshahi', googleMapsUrl: 'https://maps.google.com/?q=Padma+Vet+Service' },
+
+    // Barishal
+    { id: 20, name: 'Barishal Pet Hospital', address: 'Sadar Road, Barishal', phone: '01819-444555', district: 'Barishal', googleMapsUrl: 'https://maps.google.com/?q=Barishal+Pet+Hospital' },
+    { id: 21, name: 'Kirtankhola Vet Service', address: 'Nathullabad, Barishal', phone: '01711-556677', district: 'Barishal', googleMapsUrl: 'https://maps.google.com/?q=Kirtankhola+Vet' },
+
+    // Rangpur
+    { id: 22, name: 'Rangpur Pet Zone', address: 'Dhap, Rangpur', phone: '01556-778899', district: 'Rangpur', googleMapsUrl: 'https://maps.google.com/?q=Rangpur+Pet+Zone' },
+    { id: 23, name: 'Rangpur Sadar Vet Hospital', address: 'Medical Moor, Rangpur', phone: '0521-62345', district: 'Rangpur', googleMapsUrl: 'https://maps.google.com/?q=Rangpur+Sadar+Vet' },
+
+    // Mymensingh
+    { id: 24, name: 'Mymensingh Animal Clinic', address: 'Charpara, Mymensingh', phone: '01678-102030', district: 'Mymensingh', googleMapsUrl: 'https://maps.google.com/?q=Mymensingh+Animal+Clinic' },
+    { id: 25, name: 'BAU Veterinary Teaching Hospital', address: 'Bangladesh Agricultural University, Mymensingh', phone: '091-55695', district: 'Mymensingh', googleMapsUrl: 'https://maps.google.com/?q=BAU+Vet+Teaching+Hospital' },
+
+    // Cumilla
+    { id: 26, name: 'Cumilla Pet Care Center', address: 'Kandirpar, Cumilla', phone: '01819-223344', district: 'Cumilla', googleMapsUrl: 'https://maps.google.com/?q=Cumilla+Pet+Care' },
+    { id: 27, name: 'Gomati Vet Services', address: 'Police Line, Cumilla', phone: '01712-334455', district: 'Cumilla', googleMapsUrl: 'https://maps.google.com/?q=Gomati+Vet+Services' },
+
+    // Gazipur
+    { id: 28, name: 'Gazipur Vet Station', address: 'Joydebpur, Gazipur', phone: '01911-889900', district: 'Gazipur', googleMapsUrl: 'https://maps.google.com/?q=Gazipur+Vet+Station' },
+    { id: 29, name: 'Tongi Pet Clinic', address: 'Cherag Ali Market, Tongi, Gazipur', phone: '01611-223344', district: 'Gazipur', googleMapsUrl: 'https://maps.google.com/?q=Tongi+Pet+Clinic' },
+
+    // Narayanganj
+    { id: 30, name: 'Narayanganj Animal Hospital', address: 'Chashara, Narayanganj', phone: '01711-998877', district: 'Narayanganj', googleMapsUrl: 'https://maps.google.com/?q=Narayanganj+Animal+Hospital' },
+    { id: 31, name: 'Shitalakhya Vet Care', address: '2 No. Rail Gate, Narayanganj', phone: '01812-334455', district: 'Narayanganj', googleMapsUrl: 'https://maps.google.com/?q=Shitalakhya+Vet' },
+
+    // Bogura
+    { id: 32, name: 'Bogura Pet Lovers', address: 'Shatmatha, Bogura', phone: '01715-667788', district: 'Bogura', googleMapsUrl: 'https://maps.google.com/?q=Bogura+Pet+Lovers' },
+    { id: 33, name: 'North Bengal Vet Clinic', address: 'Sherpur Road, Bogura', phone: '01913-445566', district: 'Bogura', googleMapsUrl: 'https://maps.google.com/?q=North+Bengal+Vet' },
+
+    // Cox's Bazar
+    { id: 34, name: 'Cox\'s Bazar Vet Service', address: 'Hotel Motel Zone, Cox\'s Bazar', phone: '01818-112233', district: 'Cox\'s Bazar', googleMapsUrl: 'https://maps.google.com/?q=Coxs+Bazar+Vet' },
+
+    // Jashore
+    { id: 35, name: 'Jashore Pet Clinic', address: 'Doratana, Jashore', phone: '01716-223344', district: 'Jashore', googleMapsUrl: 'https://maps.google.com/?q=Jashore+Pet+Clinic' },
+    
+    // Pabna
+    { id: 36, name: 'Pabna Animal Welfare', address: 'Abdul Hamid Road, Pabna', phone: '01717-334455', district: 'Pabna', googleMapsUrl: 'https://maps.google.com/?q=Pabna+Animal+Welfare' },
+
+    // Dinajpur
+    { id: 37, name: 'Dinajpur Vet Care', address: 'Station Road, Dinajpur', phone: '01718-445566', district: 'Dinajpur', googleMapsUrl: 'https://maps.google.com/?q=Dinajpur+Vet+Care' },
+
+    // Tangail
+    { id: 38, name: 'Tangail Pet Hospital', address: 'Nirala Mor, Tangail', phone: '01719-556677', district: 'Tangail', googleMapsUrl: 'https://maps.google.com/?q=Tangail+Pet+Hospital' },
+
+    // Faridpur
+    { id: 39, name: 'Faridpur Vet Clinic', address: 'Mujib Sarak, Faridpur', phone: '01720-667788', district: 'Faridpur', googleMapsUrl: 'https://maps.google.com/?q=Faridpur+Vet+Clinic' },
+
+    // Noakhali
+    { id: 40, name: 'Noakhali Animal Care', address: 'Maijdee Court, Noakhali', phone: '01821-778899', district: 'Noakhali', googleMapsUrl: 'https://maps.google.com/?q=Noakhali+Animal+Care' },
+    
+    // Kushtia
+    { id: 41, name: 'Kushtia Vet Services', address: 'Mazampur, Kushtia', phone: '01722-889900', district: 'Kushtia', googleMapsUrl: 'https://maps.google.com/?q=Kushtia+Vet+Services' },
 ];
