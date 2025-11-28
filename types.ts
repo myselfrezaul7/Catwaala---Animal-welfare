@@ -1,7 +1,9 @@
 export interface Animal {
   id: number;
   name: string;
+  nameBn?: string; // Bangla name for search
   breed: string;
+  breedBn?: string; // Bangla breed for search
   age: string;
   gender: 'Male' | 'Female';
   description: string;

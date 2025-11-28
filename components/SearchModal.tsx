@@ -14,7 +14,16 @@ const HighlightMatch: React.FC<{ text: string; highlight: string }> = ({ text, h
   if (!highlight.trim()) {
     return <>{text}</>;
   }
-  const regex = new RegExp(`(${highlight})`, 'gi');
+  // Escape special regex characters to prevent errors
+  const safeHighlight = highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(`(${safeHighlight})`, 'gi');
+  
+  // If the text doesn't contain the highlight (e.g., searching "সিম্বা" in "Simba"), 
+  // just return the text without trying to split/highlight.
+  if (!regex.test(text)) {
+      return <>{text}</>;
+  }
+
   const parts = text.split(regex);
   return (
     <>
@@ -42,9 +51,13 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
       setResults([]);
       return;
     }
+    const lowerTerm = searchTerm.toLowerCase();
+    
     const filteredAnimals = MOCK_ANIMALS.filter(animal =>
-      animal.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      animal.breed.toLowerCase().includes(searchTerm.toLowerCase())
+      animal.name.toLowerCase().includes(lowerTerm) ||
+      animal.breed.toLowerCase().includes(lowerTerm) ||
+      (animal.nameBn && animal.nameBn.includes(searchTerm)) ||
+      (animal.breedBn && animal.breedBn.includes(searchTerm))
     );
     setResults(filteredAnimals);
   }, [searchTerm]);

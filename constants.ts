@@ -4,7 +4,9 @@ export const MOCK_ANIMALS: Animal[] = [
   {
     id: 1,
     name: 'Simba',
+    nameBn: 'সিম্বা',
     breed: 'Persian',
+    breedBn: 'পার্সিয়ান',
     age: '2 years',
     gender: 'Male',
     description: 'Simba is a majestic Persian with a calm and affectionate nature. He loves lounging in sunbeams and being gently brushed.',
@@ -13,7 +15,9 @@ export const MOCK_ANIMALS: Animal[] = [
   {
     id: 2,
     name: 'Luna',
+    nameBn: 'লুনা',
     breed: 'Siamese',
+    breedBn: 'সিয়ামিজ',
     age: '1 year',
     gender: 'Female',
     description: 'Luna is a vocal and intelligent Siamese. She is very playful and enjoys interactive toys and conversations with her humans.',
@@ -22,7 +26,9 @@ export const MOCK_ANIMALS: Animal[] = [
   {
     id: 3,
     name: 'Leo',
+    nameBn: 'লিও',
     breed: 'Local Crossbreed',
+    breedBn: 'দেশি বিড়াল',
     age: '6 months',
     gender: 'Male',
     description: 'Leo is a curious and adventurous kitten with a lot of love to give. He gets along well with other cats and is very playful.',
@@ -31,7 +37,9 @@ export const MOCK_ANIMALS: Animal[] = [
   {
     id: 4,
     name: 'Nala',
+    nameBn: 'নালা',
     breed: 'Bengal',
+    breedBn: 'বেঙ্গল',
     age: '3 years',
     gender: 'Female',
     description: 'Nala is a stunning Bengal with a wild look but a sweet heart. She is active, loves to climb, and needs a stimulating environment.',
@@ -40,7 +48,9 @@ export const MOCK_ANIMALS: Animal[] = [
   {
     id: 5,
     name: 'Milo',
+    nameBn: 'মাইলো',
     breed: 'British Shorthair',
+    breedBn: 'ব্রিটিশ শর্টহেয়ার',
     age: '1.5 years',
     gender: 'Male',
     description: 'Milo is a chill and easygoing British Shorthair. He is a gentle giant who enjoys a good nap and quiet companionship.',
@@ -49,7 +59,9 @@ export const MOCK_ANIMALS: Animal[] = [
   {
     id: 6,
     name: 'Cleo',
+    nameBn: 'ক্লিও',
     breed: 'Sphynx',
+    breedBn: 'স্ফিংক্স',
     age: '4 years',
     gender: 'Female',
     description: 'Cleo is a unique and loving Sphynx. She craves attention and warmth, often seeking out laps and cozy blankets.',
