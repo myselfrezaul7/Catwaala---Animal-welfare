@@ -172,98 +172,187 @@ export const MOCK_HAPPY_TAILS: HappyTail[] = [
   },
 ];
 
-const BANGLADESH_DISTRICTS_EN = [
-    'Bagerhat', 'Bandarban', 'Barguna', 'Barishal', 'Bhola', 'Bogura', 'Brahmanbaria', 'Chandpur', 'Chapainawabganj', 'Chattogram', 'Chuadanga', 'Cox\'s Bazar', 'Cumilla', 'Dhaka', 'Dinajpur', 'Faridpur', 'Feni', 'Gaibandha', 'Gazipur', 'Gopalganj', 'Habiganj', 'Jamalpur', 'Jashore', 'Jhalokati', 'Jhenaidah', 'Joypurhat', 'Khagrachari', 'Khulna', 'Kishoreganj', 'Kurigram', 'Kushtia', 'Lakshmipur', 'Lalmonirhat', 'Madaripur', 'Magura', 'Manikganj', 'Meherpur', 'Moulvibazar', 'Munshganj', 'Mymensingh', 'Naogaon', 'Narail', 'Narayanganj', 'Narsingdi', 'Natore', 'Netrokona', 'Nilphamari', 'Noakhali', 'Pabna', 'Panchagarh', 'Patuakhali', 'Pirojpur', 'Rajbari', 'Rajshahi', 'Rangamati', 'Rangpur', 'Satkhira', 'Shariatpur', 'Sherpur', 'Sirajganj', 'Sunamganj', 'Sylhet', 'Tangail', 'Thakurgaon'
-].sort();
-
-const BANGLADESH_DISTRICTS_BN = [
-    'বাগেরহাট', 'বান্দরবান', 'বরগুনা', 'বরিশাল', 'ভোলা', 'বগুড়া', 'ব্রাহ্মণবাড়িয়া', 'চাঁদপুর', 'চাপাইনবাবগঞ্জ', 'চট্টগ্রাম', 'চুয়াডাঙ্গা', 'কক্সবাজার', 'কুমিল্লা', 'ঢাকা', 'দিনাজপুর', 'ফরিদপুর', 'ফেনী', 'গাইবান্ধা', 'গাজীপুর', 'গোপালগঞ্জ', 'হবিগঞ্জ', 'জামালপুর', 'যশোর', 'ঝালকাঠি', 'ঝিনাইদহ', 'জয়পুরহাট', 'খাগড়াছড়ি', 'খুলনা', 'কিশোরগঞ্জ', 'কুড়িগ্রাম', 'কুষ্টিয়া', 'লক্ষ্মীপুর', 'লালমনিরহাট', 'মাদারীপুর', 'মাগুরা', 'মানিকগঞ্জ', 'মেহেরপুর', 'মৌলভীবাজার', 'মুন্সিগঞ্জ', 'ময়মনসিংহ', 'নওগাঁ', 'নড়াইল', 'নারায়ণগঞ্জ', 'নরসিংদী', 'নাটোর', 'নেত্রকোনা', 'নীলফামারী', 'নোয়াখালী', 'পাবনা', 'পঞ্চগড়', 'পটুয়াখালী', 'পিরোজপুর', 'রাজবাড়ী', 'রাজশাহী', 'রাঙ্গামাটি', 'রংপুর', 'সাতক্ষীরা', 'শরীয়তপুর', 'শেরপুর', 'সিরাজগঞ্জ', 'সুনামগঞ্জ', 'সিলেট', 'টাঙ্গাইল', 'ঠাকুরগাঁও'
-].sort((a, b) => a.localeCompare(b, 'bn'));
+const DISTRICT_DATA = [
+    { en: 'Bagerhat', bn: 'বাগেরহাট' },
+    { en: 'Bandarban', bn: 'বান্দরবান' },
+    { en: 'Barguna', bn: 'বরগুনা' },
+    { en: 'Barishal', bn: 'বরিশাল' },
+    { en: 'Bhola', bn: 'ভোলা' },
+    { en: 'Bogura', bn: 'বগুড়া' },
+    { en: 'Brahmanbaria', bn: 'ব্রাহ্মণবাড়িয়া' },
+    { en: 'Chandpur', bn: 'চাঁদপুর' },
+    { en: 'Chapainawabganj', bn: 'চাপাইনবাবগঞ্জ' },
+    { en: 'Chattogram', bn: 'চট্টগ্রাম' },
+    { en: 'Chuadanga', bn: 'চুয়াডাঙ্গা' },
+    { en: "Cox's Bazar", bn: 'কক্সবাজার' },
+    { en: 'Cumilla', bn: 'কুমিল্লা' },
+    { en: 'Dhaka', bn: 'ঢাকা' },
+    { en: 'Dinajpur', bn: 'দিনাজপুর' },
+    { en: 'Faridpur', bn: 'ফরিদপুর' },
+    { en: 'Feni', bn: 'ফেনী' },
+    { en: 'Gaibandha', bn: 'গাইবান্ধা' },
+    { en: 'Gazipur', bn: 'গাজীপুর' },
+    { en: 'Gopalganj', bn: 'গোপালগঞ্জ' },
+    { en: 'Habiganj', bn: 'হবিগঞ্জ' },
+    { en: 'Jamalpur', bn: 'জামালপুর' },
+    { en: 'Jashore', bn: 'যশোর' },
+    { en: 'Jhalokati', bn: 'ঝালকাঠি' },
+    { en: 'Jhenaidah', bn: 'ঝিনাইদহ' },
+    { en: 'Joypurhat', bn: 'জয়পুরহাট' },
+    { en: 'Khagrachari', bn: 'খাগড়াছড়ি' },
+    { en: 'Khulna', bn: 'খুলনা' },
+    { en: 'Kishoreganj', bn: 'কিশোরগঞ্জ' },
+    { en: 'Kurigram', bn: 'কুড়িগ্রাম' },
+    { en: 'Kushtia', bn: 'কুষ্টিয়া' },
+    { en: 'Lakshmipur', bn: 'লক্ষ্মীপুর' },
+    { en: 'Lalmonirhat', bn: 'লালমনিরহাট' },
+    { en: 'Madaripur', bn: 'মাদারীপুর' },
+    { en: 'Magura', bn: 'মাগুরা' },
+    { en: 'Manikganj', bn: 'মানিকগঞ্জ' },
+    { en: 'Meherpur', bn: 'মেহেরপুর' },
+    { en: 'Moulvibazar', bn: 'মৌলভীবাজার' },
+    { en: 'Munshiganj', bn: 'মুন্সিগঞ্জ' },
+    { en: 'Mymensingh', bn: 'ময়মনসিংহ' },
+    { en: 'Naogaon', bn: 'নওগাঁ' },
+    { en: 'Narail', bn: 'নড়াইল' },
+    { en: 'Narayanganj', bn: 'নারায়ণগঞ্জ' },
+    { en: 'Narsingdi', bn: 'নরসিংদী' },
+    { en: 'Natore', bn: 'নাটোর' },
+    { en: 'Netrokona', bn: 'নেত্রকোনা' },
+    { en: 'Nilphamari', bn: 'নীলফামারী' },
+    { en: 'Noakhali', bn: 'নোয়াখালী' },
+    { en: 'Pabna', bn: 'পাবনা' },
+    { en: 'Panchagarh', bn: 'পঞ্চগড়' },
+    { en: 'Patuakhali', bn: 'পটুয়াখালী' },
+    { en: 'Pirojpur', bn: 'পিরোজপুর' },
+    { en: 'Rajbari', bn: 'রাজবাড়ী' },
+    { en: 'Rajshahi', bn: 'রাজশাহী' },
+    { en: 'Rangamati', bn: 'রাঙ্গামাটি' },
+    { en: 'Rangpur', bn: 'রংপুর' },
+    { en: 'Satkhira', bn: 'সাতক্ষীরা' },
+    { en: 'Shariatpur', bn: 'শরীয়তপুর' },
+    { en: 'Sherpur', bn: 'শেরপুর' },
+    { en: 'Sirajganj', bn: 'সিরাজগঞ্জ' },
+    { en: 'Sunamganj', bn: 'সুনামগঞ্জ' },
+    { en: 'Sylhet', bn: 'সিলেট' },
+    { en: 'Tangail', bn: 'টাঙ্গাইল' },
+    { en: 'Thakurgaon', bn: 'ঠাকুরগাঁও' }
+];
 
 export const getDistricts = (lang: 'en' | 'bn') => {
-    return lang === 'bn' ? BANGLADESH_DISTRICTS_BN : BANGLADESH_DISTRICTS_EN;
+    return DISTRICT_DATA.map(d => d[lang]).sort((a, b) => a.localeCompare(b, lang === 'bn' ? 'bn' : 'en'));
 };
 
+export const getDistrictEn = (name: string) => {
+    const found = DISTRICT_DATA.find(d => d.en === name || d.bn === name);
+    return found ? found.en : undefined;
+};
 
 export const MOCK_LOCAL_VETS: LocalVet[] = [
-    // Dhaka
+    // Existing Private Clinics
     { id: 1, name: 'Central Veterinary Hospital', address: '48, Kazi Alauddin Road, Dhaka-1000', phone: '02-9563588', district: 'Dhaka', googleMapsUrl: 'https://maps.google.com/?q=Central+Veterinary+Hospital,Dhaka' },
     { id: 2, name: 'PAW Life Care', address: 'House-20, Road-1, Block-A, Niketon, Gulshan-1, Dhaka', phone: '01626-612042', district: 'Dhaka', googleMapsUrl: 'https://maps.google.com/?q=PAW+Life+Care,Dhaka' },
     { id: 3, name: 'Care for Paws (C4P)', address: 'House 39, Road 15, Block D, Banani, Dhaka', phone: '01711-223344', district: 'Dhaka', googleMapsUrl: 'https://maps.google.com/?q=Care+for+Paws,Banani' },
     { id: 4, name: 'Gulshan Pet Clinic', address: 'House 10, Road 113, Gulshan-2, Dhaka', phone: '01819-123456', district: 'Dhaka', googleMapsUrl: 'https://maps.google.com/?q=Gulshan+Pet+Clinic' },
     { id: 5, name: 'Uttara Vet Care', address: 'Sector 7, Road 18, House 5, Uttara, Dhaka', phone: '01912-345678', district: 'Dhaka', googleMapsUrl: 'https://maps.google.com/?q=Uttara+Vet+Care' },
     { id: 6, name: 'Dhanmondi Vet Clinic', address: 'Road 27, House 42, Dhanmondi, Dhaka', phone: '01678-901234', district: 'Dhaka', googleMapsUrl: 'https://maps.google.com/?q=Dhanmondi+Vet+Clinic' },
-    
-    // Chattogram
     { id: 7, name: 'Chattogram Veterinary and Animal Sciences University Hospital', address: 'Khulshi, Chattogram', phone: '031-659093', district: 'Chattogram', googleMapsUrl: 'https://maps.google.com/?q=CVASU+Hospital,Chattogram' },
     { id: 8, name: 'The Pet Vet', address: '14/A, M. M. Ali Road, Chattogram', phone: '01711-123456', district: 'Chattogram', googleMapsUrl: 'https://maps.google.com/?q=The+Pet+Vet,Chattogram' },
     { id: 9, name: 'Paws & Claws Vet Clinic', address: 'GEC Circle, Chattogram', phone: '01811-223344', district: 'Chattogram', googleMapsUrl: 'https://maps.google.com/?q=Paws+Claws+Chattogram' },
     { id: 10, name: 'Chittagong Pet Care', address: 'Halishahar, Block B, Chattogram', phone: '01911-223344', district: 'Chattogram', googleMapsUrl: 'https://maps.google.com/?q=Chittagong+Pet+Care' },
-
-    // Sylhet
     { id: 11, name: 'Sylhet Animal Aid', address: 'House 5, Road 8, Block B, Shahjalal Uposhohor, Sylhet', phone: '01712-987654', district: 'Sylhet', googleMapsUrl: 'https://maps.google.com/?q=Sylhet+Animal+Aid' },
     { id: 12, name: 'Sylhet Vet Clinic', address: 'Zindabazar, Sylhet', phone: '01812-345678', district: 'Sylhet', googleMapsUrl: 'https://maps.google.com/?q=Sylhet+Vet+Clinic' },
     { id: 13, name: 'Pet Lovers Sylhet', address: 'Amborkhana, Sylhet', phone: '01611-223344', district: 'Sylhet', googleMapsUrl: 'https://maps.google.com/?q=Pet+Lovers+Sylhet' },
-
-    // Khulna
     { id: 14, name: 'Khulna Pet Clinic', address: '55, Khan Jahan Ali Road, Khulna', phone: '01911-555666', district: 'Khulna', googleMapsUrl: 'https://maps.google.com/?q=Khulna+Pet+Clinic' },
-    { id: 15, name: 'Khulna Sadar Vet Hospital', address: 'Sher-e-Bangla Road, Khulna', phone: '041-720123', district: 'Khulna', googleMapsUrl: 'https://maps.google.com/?q=Khulna+Sadar+Vet+Hospital' },
     { id: 16, name: 'Animal Care Khulna', address: 'Sonadanga, Khulna', phone: '01712-345678', district: 'Khulna', googleMapsUrl: 'https://maps.google.com/?q=Animal+Care+Khulna' },
-
-    // Rajshahi
     { id: 17, name: 'Rajshahi Pet Care', address: 'Ranibazar, Rajshahi', phone: '01715-112233', district: 'Rajshahi', googleMapsUrl: 'https://maps.google.com/?q=Rajshahi+Pet+Care' },
     { id: 18, name: 'Rajshahi University Vet Clinic', address: 'Rajshahi University Campus, Rajshahi', phone: '0721-750041', district: 'Rajshahi', googleMapsUrl: 'https://maps.google.com/?q=Rajshahi+University+Vet' },
     { id: 19, name: 'Padma Vet Service', address: 'Shaheb Bazar, Rajshahi', phone: '01911-223344', district: 'Rajshahi', googleMapsUrl: 'https://maps.google.com/?q=Padma+Vet+Service' },
-
-    // Barishal
     { id: 20, name: 'Barishal Pet Hospital', address: 'Sadar Road, Barishal', phone: '01819-444555', district: 'Barishal', googleMapsUrl: 'https://maps.google.com/?q=Barishal+Pet+Hospital' },
     { id: 21, name: 'Kirtankhola Vet Service', address: 'Nathullabad, Barishal', phone: '01711-556677', district: 'Barishal', googleMapsUrl: 'https://maps.google.com/?q=Kirtankhola+Vet' },
-
-    // Rangpur
     { id: 22, name: 'Rangpur Pet Zone', address: 'Dhap, Rangpur', phone: '01556-778899', district: 'Rangpur', googleMapsUrl: 'https://maps.google.com/?q=Rangpur+Pet+Zone' },
-    { id: 23, name: 'Rangpur Sadar Vet Hospital', address: 'Medical Moor, Rangpur', phone: '0521-62345', district: 'Rangpur', googleMapsUrl: 'https://maps.google.com/?q=Rangpur+Sadar+Vet' },
-
-    // Mymensingh
     { id: 24, name: 'Mymensingh Animal Clinic', address: 'Charpara, Mymensingh', phone: '01678-102030', district: 'Mymensingh', googleMapsUrl: 'https://maps.google.com/?q=Mymensingh+Animal+Clinic' },
     { id: 25, name: 'BAU Veterinary Teaching Hospital', address: 'Bangladesh Agricultural University, Mymensingh', phone: '091-55695', district: 'Mymensingh', googleMapsUrl: 'https://maps.google.com/?q=BAU+Vet+Teaching+Hospital' },
-
-    // Cumilla
     { id: 26, name: 'Cumilla Pet Care Center', address: 'Kandirpar, Cumilla', phone: '01819-223344', district: 'Cumilla', googleMapsUrl: 'https://maps.google.com/?q=Cumilla+Pet+Care' },
     { id: 27, name: 'Gomati Vet Services', address: 'Police Line, Cumilla', phone: '01712-334455', district: 'Cumilla', googleMapsUrl: 'https://maps.google.com/?q=Gomati+Vet+Services' },
-
-    // Gazipur
     { id: 28, name: 'Gazipur Vet Station', address: 'Joydebpur, Gazipur', phone: '01911-889900', district: 'Gazipur', googleMapsUrl: 'https://maps.google.com/?q=Gazipur+Vet+Station' },
     { id: 29, name: 'Tongi Pet Clinic', address: 'Cherag Ali Market, Tongi, Gazipur', phone: '01611-223344', district: 'Gazipur', googleMapsUrl: 'https://maps.google.com/?q=Tongi+Pet+Clinic' },
-
-    // Narayanganj
     { id: 30, name: 'Narayanganj Animal Hospital', address: 'Chashara, Narayanganj', phone: '01711-998877', district: 'Narayanganj', googleMapsUrl: 'https://maps.google.com/?q=Narayanganj+Animal+Hospital' },
     { id: 31, name: 'Shitalakhya Vet Care', address: '2 No. Rail Gate, Narayanganj', phone: '01812-334455', district: 'Narayanganj', googleMapsUrl: 'https://maps.google.com/?q=Shitalakhya+Vet' },
-
-    // Bogura
     { id: 32, name: 'Bogura Pet Lovers', address: 'Shatmatha, Bogura', phone: '01715-667788', district: 'Bogura', googleMapsUrl: 'https://maps.google.com/?q=Bogura+Pet+Lovers' },
     { id: 33, name: 'North Bengal Vet Clinic', address: 'Sherpur Road, Bogura', phone: '01913-445566', district: 'Bogura', googleMapsUrl: 'https://maps.google.com/?q=North+Bengal+Vet' },
-
-    // Cox's Bazar
     { id: 34, name: 'Cox\'s Bazar Vet Service', address: 'Hotel Motel Zone, Cox\'s Bazar', phone: '01818-112233', district: 'Cox\'s Bazar', googleMapsUrl: 'https://maps.google.com/?q=Coxs+Bazar+Vet' },
-
-    // Jashore
     { id: 35, name: 'Jashore Pet Clinic', address: 'Doratana, Jashore', phone: '01716-223344', district: 'Jashore', googleMapsUrl: 'https://maps.google.com/?q=Jashore+Pet+Clinic' },
-    
-    // Pabna
     { id: 36, name: 'Pabna Animal Welfare', address: 'Abdul Hamid Road, Pabna', phone: '01717-334455', district: 'Pabna', googleMapsUrl: 'https://maps.google.com/?q=Pabna+Animal+Welfare' },
-
-    // Dinajpur
     { id: 37, name: 'Dinajpur Vet Care', address: 'Station Road, Dinajpur', phone: '01718-445566', district: 'Dinajpur', googleMapsUrl: 'https://maps.google.com/?q=Dinajpur+Vet+Care' },
-
-    // Tangail
     { id: 38, name: 'Tangail Pet Hospital', address: 'Nirala Mor, Tangail', phone: '01719-556677', district: 'Tangail', googleMapsUrl: 'https://maps.google.com/?q=Tangail+Pet+Hospital' },
-
-    // Faridpur
     { id: 39, name: 'Faridpur Vet Clinic', address: 'Mujib Sarak, Faridpur', phone: '01720-667788', district: 'Faridpur', googleMapsUrl: 'https://maps.google.com/?q=Faridpur+Vet+Clinic' },
-
-    // Noakhali
     { id: 40, name: 'Noakhali Animal Care', address: 'Maijdee Court, Noakhali', phone: '01821-778899', district: 'Noakhali', googleMapsUrl: 'https://maps.google.com/?q=Noakhali+Animal+Care' },
-    
-    // Kushtia
     { id: 41, name: 'Kushtia Vet Services', address: 'Mazampur, Kushtia', phone: '01722-889900', district: 'Kushtia', googleMapsUrl: 'https://maps.google.com/?q=Kushtia+Vet+Services' },
+    { id: 42, name: 'District Veterinary Hospital, Munshiganj', address: 'Courtgaon, Munshiganj Sadar', phone: '01309-123456', district: 'Munshiganj', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Munshiganj' },
+
+    // Government District Veterinary Hospitals (Comprehensive List)
+    { id: 100, name: 'District Veterinary Hospital, Bagerhat', address: 'Old Court Road, Bagerhat Sadar', phone: '01711-456789', district: 'Bagerhat', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Bagerhat' },
+    { id: 101, name: 'District Veterinary Hospital, Bandarban', address: 'Bandarban Sadar, Bandarban', phone: '0361-62233', district: 'Bandarban', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Bandarban' },
+    { id: 102, name: 'District Veterinary Hospital, Barguna', address: 'Barguna Sadar, Barguna', phone: '0448-62345', district: 'Barguna', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Barguna' },
+    { id: 103, name: 'District Veterinary Hospital, Barishal', address: 'Band Road, Barishal Sadar', phone: '0431-2173456', district: 'Barishal', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Barishal' },
+    { id: 104, name: 'District Veterinary Hospital, Bhola', address: 'Bhola Sadar, Bhola', phone: '0491-62456', district: 'Bhola', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Bhola' },
+    { id: 105, name: 'District Veterinary Hospital, Bogura', address: 'Sherpur Road, Bogura Sadar', phone: '051-66789', district: 'Bogura', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Bogura' },
+    { id: 106, name: 'District Veterinary Hospital, Brahmanbaria', address: 'Kautoli, Brahmanbaria Sadar', phone: '0851-57890', district: 'Brahmanbaria', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Brahmanbaria' },
+    { id: 107, name: 'District Veterinary Hospital, Chandpur', address: 'Stadium Road, Chandpur Sadar', phone: '0841-63456', district: 'Chandpur', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Chandpur' },
+    { id: 108, name: 'District Veterinary Hospital, Chapainawabganj', address: 'Chapainawabganj Sadar', phone: '0781-55678', district: 'Chapainawabganj', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Chapainawabganj' },
+    { id: 109, name: 'District Veterinary Hospital, Chattogram', address: 'Double Mooring, Chattogram', phone: '031-2523456', district: 'Chattogram', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Chattogram' },
+    { id: 110, name: 'District Veterinary Hospital, Chuadanga', address: 'Chuadanga Sadar', phone: '0761-62567', district: 'Chuadanga', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Chuadanga' },
+    { id: 111, name: 'District Veterinary Hospital, Cox\'s Bazar', address: 'Hospital Road, Cox\'s Bazar Sadar', phone: '0341-63456', district: 'Cox\'s Bazar', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Coxs+Bazar' },
+    { id: 112, name: 'District Veterinary Hospital, Cumilla', address: 'Judge Court Road, Cumilla Sadar', phone: '081-65789', district: 'Cumilla', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Cumilla' },
+    { id: 113, name: 'Central Veterinary Hospital (Govt), Dhaka', address: '48 Kazi Alauddin Rd, Dhaka 1000', phone: '02-9563588', district: 'Dhaka', googleMapsUrl: 'https://maps.google.com/?q=Central+Veterinary+Hospital+Dhaka' },
+    { id: 114, name: 'District Veterinary Hospital, Dinajpur', address: 'Balubari, Dinajpur Sadar', phone: '0531-63456', district: 'Dinajpur', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Dinajpur' },
+    { id: 115, name: 'District Veterinary Hospital, Faridpur', address: 'Goalchamot, Faridpur Sadar', phone: '0631-63567', district: 'Faridpur', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Faridpur' },
+    { id: 116, name: 'District Veterinary Hospital, Feni', address: 'Trunk Road, Feni Sadar', phone: '0331-73456', district: 'Feni', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Feni' },
+    { id: 117, name: 'District Veterinary Hospital, Gaibandha', address: 'Gaibandha Sadar', phone: '0541-61567', district: 'Gaibandha', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Gaibandha' },
+    { id: 118, name: 'District Veterinary Hospital, Gazipur', address: 'Joydebpur, Gazipur Sadar', phone: '02-9263456', district: 'Gazipur', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Gazipur' },
+    { id: 119, name: 'District Veterinary Hospital, Gopalganj', address: 'Gopalganj Sadar', phone: '02-6685456', district: 'Gopalganj', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Gopalganj' },
+    { id: 120, name: 'District Veterinary Hospital, Habiganj', address: 'Habiganj Sadar', phone: '0831-52345', district: 'Habiganj', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Habiganj' },
+    { id: 121, name: 'District Veterinary Hospital, Jamalpur', address: 'Jamalpur Sadar', phone: '0981-63234', district: 'Jamalpur', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Jamalpur' },
+    { id: 122, name: 'District Veterinary Hospital, Jashore', address: 'Railgate, Jashore Sadar', phone: '0421-68901', district: 'Jashore', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Jashore' },
+    { id: 123, name: 'District Veterinary Hospital, Jhalokati', address: 'Jhalokati Sadar', phone: '0498-63456', district: 'Jhalokati', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Jhalokati' },
+    { id: 124, name: 'District Veterinary Hospital, Jhenaidah', address: 'Jhenaidah Sadar', phone: '0451-62345', district: 'Jhenaidah', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Jhenaidah' },
+    { id: 125, name: 'District Veterinary Hospital, Joypurhat', address: 'Joypurhat Sadar', phone: '0571-62567', district: 'Joypurhat', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Joypurhat' },
+    { id: 126, name: 'District Veterinary Hospital, Khagrachari', address: 'Khagrachari Sadar', phone: '0371-61567', district: 'Khagrachari', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Khagrachari' },
+    { id: 127, name: 'District Veterinary Hospital, Khulna', address: 'Boyra, Khulna Sadar', phone: '041-760345', district: 'Khulna', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Khulna' },
+    { id: 128, name: 'District Veterinary Hospital, Kishoreganj', address: 'Kishoreganj Sadar', phone: '0941-61567', district: 'Kishoreganj', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Kishoreganj' },
+    { id: 129, name: 'District Veterinary Hospital, Kurigram', address: 'Kurigram Sadar', phone: '0581-61567', district: 'Kurigram', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Kurigram' },
+    { id: 130, name: 'District Veterinary Hospital, Kushtia', address: 'Kushtia Sadar', phone: '071-62567', district: 'Kushtia', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Kushtia' },
+    { id: 131, name: 'District Veterinary Hospital, Lakshmipur', address: 'Lakshmipur Sadar', phone: '0381-62567', district: 'Lakshmipur', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Lakshmipur' },
+    { id: 132, name: 'District Veterinary Hospital, Lalmonirhat', address: 'Lalmonirhat Sadar', phone: '0591-61567', district: 'Lalmonirhat', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Lalmonirhat' },
+    { id: 133, name: 'District Veterinary Hospital, Madaripur', address: 'Madaripur Sadar', phone: '0661-61567', district: 'Madaripur', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Madaripur' },
+    { id: 134, name: 'District Veterinary Hospital, Magura', address: 'Magura Sadar', phone: '0488-62567', district: 'Magura', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Magura' },
+    { id: 135, name: 'District Veterinary Hospital, Manikganj', address: 'Manikganj Sadar', phone: '02-7710456', district: 'Manikganj', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Manikganj' },
+    { id: 136, name: 'District Veterinary Hospital, Meherpur', address: 'Meherpur Sadar', phone: '0791-62567', district: 'Meherpur', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Meherpur' },
+    { id: 137, name: 'District Veterinary Hospital, Moulvibazar', address: 'Moulvibazar Sadar', phone: '0861-52345', district: 'Moulvibazar', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Moulvibazar' },
+    { id: 138, name: 'District Veterinary Hospital, Mymensingh', address: 'Mymensingh Sadar', phone: '091-65789', district: 'Mymensingh', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Mymensingh' },
+    { id: 139, name: 'District Veterinary Hospital, Naogaon', address: 'Naogaon Sadar', phone: '0741-62567', district: 'Naogaon', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Naogaon' },
+    { id: 140, name: 'District Veterinary Hospital, Narail', address: 'Narail Sadar', phone: '0481-62567', district: 'Narail', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Narail' },
+    { id: 141, name: 'District Veterinary Hospital, Narayanganj', address: 'Narayanganj Sadar', phone: '02-7645678', district: 'Narayanganj', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Narayanganj' },
+    { id: 142, name: 'District Veterinary Hospital, Narsingdi', address: 'Narsingdi Sadar', phone: '02-9463456', district: 'Narsingdi', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Narsingdi' },
+    { id: 143, name: 'District Veterinary Hospital, Natore', address: 'Natore Sadar', phone: '0771-62567', district: 'Natore', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Natore' },
+    { id: 144, name: 'District Veterinary Hospital, Netrokona', address: 'Netrokona Sadar', phone: '0951-61567', district: 'Netrokona', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Netrokona' },
+    { id: 145, name: 'District Veterinary Hospital, Nilphamari', address: 'Nilphamari Sadar', phone: '0551-61567', district: 'Nilphamari', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Nilphamari' },
+    { id: 146, name: 'District Veterinary Hospital, Noakhali', address: 'Maijdee, Noakhali', phone: '0321-61567', district: 'Noakhali', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Noakhali' },
+    { id: 147, name: 'District Veterinary Hospital, Pabna', address: 'Pabna Sadar', phone: '0731-65789', district: 'Pabna', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Pabna' },
+    { id: 148, name: 'District Veterinary Hospital, Panchagarh', address: 'Panchagarh Sadar', phone: '0568-61567', district: 'Panchagarh', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Panchagarh' },
+    { id: 149, name: 'District Veterinary Hospital, Patuakhali', address: 'Patuakhali Sadar', phone: '0441-62567', district: 'Patuakhali', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Patuakhali' },
+    { id: 150, name: 'District Veterinary Hospital, Pirojpur', address: 'Pirojpur Sadar', phone: '0461-62567', district: 'Pirojpur', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Pirojpur' },
+    { id: 151, name: 'District Veterinary Hospital, Rajbari', address: 'Rajbari Sadar', phone: '0641-65567', district: 'Rajbari', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Rajbari' },
+    { id: 152, name: 'District Veterinary Hospital, Rajshahi', address: 'Rajshahi Sadar', phone: '0721-772345', district: 'Rajshahi', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Rajshahi' },
+    { id: 153, name: 'District Veterinary Hospital, Rangamati', address: 'Rangamati Sadar', phone: '0351-62567', district: 'Rangamati', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Rangamati' },
+    { id: 154, name: 'District Veterinary Hospital, Rangpur', address: 'Rangpur Sadar', phone: '0521-63456', district: 'Rangpur', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Rangpur' },
+    { id: 155, name: 'District Veterinary Hospital, Satkhira', address: 'Satkhira Sadar', phone: '0471-62567', district: 'Satkhira', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Satkhira' },
+    { id: 156, name: 'District Veterinary Hospital, Shariatpur', address: 'Shariatpur Sadar', phone: '0601-61567', district: 'Shariatpur', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Shariatpur' },
+    { id: 157, name: 'District Veterinary Hospital, Sherpur', address: 'Sherpur Sadar', phone: '0931-61567', district: 'Sherpur', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Sherpur' },
+    { id: 158, name: 'District Veterinary Hospital, Sirajganj', address: 'Sirajganj Sadar', phone: '0751-62567', district: 'Sirajganj', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Sirajganj' },
+    { id: 159, name: 'District Veterinary Hospital, Sunamganj', address: 'Sunamganj Sadar', phone: '0871-61567', district: 'Sunamganj', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Sunamganj' },
+    { id: 160, name: 'District Veterinary Hospital, Sylhet', address: 'Tilagor, Sylhet', phone: '0821-713456', district: 'Sylhet', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Sylhet' },
+    { id: 161, name: 'District Veterinary Hospital, Tangail', address: 'Tangail Sadar', phone: '0921-62567', district: 'Tangail', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Tangail' },
+    { id: 162, name: 'District Veterinary Hospital, Thakurgaon', address: 'Thakurgaon Sadar', phone: '0561-52345', district: 'Thakurgaon', googleMapsUrl: 'https://maps.google.com/?q=District+Veterinary+Hospital+Thakurgaon' }
 ];

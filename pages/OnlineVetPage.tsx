@@ -1,5 +1,6 @@
+
 import React, { useState, useEffect } from 'react';
-import { getDistricts, MOCK_LOCAL_VETS } from '../constants';
+import { getDistricts, getDistrictEn, MOCK_LOCAL_VETS } from '../constants';
 import type { LocalVet } from '../types';
 import LocalVetCard from '../components/LocalVetCard';
 import { SearchIcon } from '../components/icons';
@@ -16,10 +17,8 @@ const OnlineVetPage: React.FC = () => {
   }, [language]);
 
   useEffect(() => {
-    // This mapping assumes MOCK_LOCAL_VETS districts are in English.
-    // A more robust solution would involve district IDs.
-    const districtsEn = getDistricts('en');
-    const selectedDistrictEn = districtsEn[districts.indexOf(selectedDistrict)];
+    // Resolve the selected district to English, regardless of current language
+    const selectedDistrictEn = getDistrictEn(selectedDistrict);
 
     if (selectedDistrictEn) {
       const vetsInDistrict = MOCK_LOCAL_VETS.filter(vet => vet.district === selectedDistrictEn);
@@ -27,7 +26,7 @@ const OnlineVetPage: React.FC = () => {
     } else {
       setFilteredVets([]);
     }
-  }, [selectedDistrict, districts]);
+  }, [selectedDistrict]);
 
   return (
     <>
