@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import Alert from './Alert';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface VolunteerFormModalProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface VolunteerFormModalProps {
 const VolunteerFormModal: React.FC<VolunteerFormModalProps> = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const { t } = useLanguage();
 
   if (!isOpen) return null;
 
@@ -32,9 +34,9 @@ const VolunteerFormModal: React.FC<VolunteerFormModalProps> = ({ isOpen, onClose
         {isSuccess ? (
           <div className="p-8 text-center flex flex-col justify-center items-center h-full">
             <div>
-                <Alert type="success" title="Application Received!" message="Thank you for your interest in volunteering! We've received your application and will be in touch with you soon." />
+                <Alert type="success" title={t('volunteerForm.success.title')} message={t('volunteerForm.success.message')} />
                 <button onClick={onClose} className="mt-6 bg-orange-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-orange-600">
-                    Close
+                    {t('buttons.close')}
                 </button>
             </div>
           </div>
@@ -42,8 +44,8 @@ const VolunteerFormModal: React.FC<VolunteerFormModalProps> = ({ isOpen, onClose
           <div className="p-8">
             <div className="flex justify-between items-start mb-4">
               <div>
-                  <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100">Volunteer Application</h2>
-                  <p className="text-slate-600 dark:text-slate-300 text-lg mt-1">Join our team and make a difference!</p>
+                  <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100">{t('volunteerForm.title')}</h2>
+                  <p className="text-slate-600 dark:text-slate-300 text-lg mt-1">{t('volunteerForm.subtitle')}</p>
               </div>
               <button onClick={onClose} className="text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-4xl font-light">&times;</button>
             </div>
@@ -51,42 +53,42 @@ const VolunteerFormModal: React.FC<VolunteerFormModalProps> = ({ isOpen, onClose
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Personal Info */}
               <fieldset className="border-t border-slate-300 dark:border-slate-700 pt-5">
-                  <legend className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-3">Your Information</legend>
+                  <legend className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-3">{t('volunteerForm.yourInfo.title')}</legend>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                          <label htmlFor="volunteerName" className={labelStyles}>Full Name <span className="text-red-500">*</span></label>
+                          <label htmlFor="volunteerName" className={labelStyles}>{t('volunteerForm.yourInfo.name')} <span className="text-red-500">*</span></label>
                           <input type="text" id="volunteerName" required className={inputStyles} />
                       </div>
                       <div>
-                          <label htmlFor="volunteerEmail" className={labelStyles}>Email Address <span className="text-red-500">*</span></label>
+                          <label htmlFor="volunteerEmail" className={labelStyles}>{t('volunteerForm.yourInfo.email')} <span className="text-red-500">*</span></label>
                           <input type="email" id="volunteerEmail" required className={inputStyles} />
                       </div>
                   </div>
                   <div className="mt-4">
-                      <label htmlFor="volunteerPhone" className={labelStyles}>Phone Number (Bangladesh) <span className="text-red-500">*</span></label>
+                      <label htmlFor="volunteerPhone" className={labelStyles}>{t('volunteerForm.yourInfo.phone')} <span className="text-red-500">*</span></label>
                       <input type="tel" id="volunteerPhone" pattern="(\+8801|01)[3-9]\d{8}" placeholder="+8801..." required className={inputStyles} />
                   </div>
               </fieldset>
 
               {/* Availability & Interests */}
               <fieldset className="border-t border-slate-300 dark:border-slate-700 pt-5">
-                  <legend className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-3">Your Availability & Interests</legend>
+                  <legend className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-3">{t('volunteerForm.availability.title')}</legend>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                          <label className={labelStyles}>Availability</label>
+                          <label className={labelStyles}>{t('volunteerForm.availability.label')}</label>
                           <div className="mt-2 space-y-2">
-                              <label className={checkboxLabelStyles}><input type="checkbox" name="availability" value="weekdays" className={checkboxInputStyles}/> Weekdays</label>
-                              <label className={checkboxLabelStyles}><input type="checkbox" name="availability" value="weekends" className={checkboxInputStyles}/> Weekends</label>
-                              <label className={checkboxLabelStyles}><input type="checkbox" name="availability" value="evenings" className={checkboxInputStyles}/> Evenings</label>
+                              <label className={checkboxLabelStyles}><input type="checkbox" name="availability" value="weekdays" className={checkboxInputStyles}/> {t('volunteerForm.availability.weekdays')}</label>
+                              <label className={checkboxLabelStyles}><input type="checkbox" name="availability" value="weekends" className={checkboxInputStyles}/> {t('volunteerForm.availability.weekends')}</label>
+                              <label className={checkboxLabelStyles}><input type="checkbox" name="availability" value="evenings" className={checkboxInputStyles}/> {t('volunteerForm.availability.evenings')}</label>
                           </div>
                       </div>
                       <div>
-                          <label className={labelStyles}>Areas of Interest</label>
+                          <label className={labelStyles}>{t('volunteerForm.interests.label')}</label>
                           <div className="mt-2 space-y-2">
-                              <label className={checkboxLabelStyles}><input type="checkbox" name="interest" value="animal-care" className={checkboxInputStyles}/> Animal Care</label>
-                              <label className={checkboxLabelStyles}><input type="checkbox" name="interest" value="events" className={checkboxInputStyles}/> Events & Outreach</label>
-                              <label className={checkboxLabelStyles}><input type="checkbox" name="interest" value="fundraising" className={checkboxInputStyles}/> Fundraising</label>
-                              <label className={checkboxLabelStyles}><input type="checkbox" name="interest" value="admin" className={checkboxInputStyles}/> Administrative Tasks</label>
+                              <label className={checkboxLabelStyles}><input type="checkbox" name="interest" value="animal-care" className={checkboxInputStyles}/> {t('volunteerForm.interests.animalCare')}</label>
+                              <label className={checkboxLabelStyles}><input type="checkbox" name="interest" value="events" className={checkboxInputStyles}/> {t('volunteerForm.interests.events')}</label>
+                              <label className={checkboxLabelStyles}><input type="checkbox" name="interest" value="fundraising" className={checkboxInputStyles}/> {t('volunteerForm.interests.fundraising')}</label>
+                              <label className={checkboxLabelStyles}><input type="checkbox" name="interest" value="admin" className={checkboxInputStyles}/> {t('volunteerForm.interests.admin')}</label>
                           </div>
                       </div>
                   </div>
@@ -94,20 +96,20 @@ const VolunteerFormModal: React.FC<VolunteerFormModalProps> = ({ isOpen, onClose
               
               {/* Motivation */}
               <fieldset className="border-t border-slate-300 dark:border-slate-700 pt-5">
-                  <legend className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-3">Share Your Motivation</legend>
+                  <legend className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-3">{t('volunteerForm.motivation.title')}</legend>
                   <div>
-                      <label htmlFor="motivation" className={labelStyles}>Why would you like to volunteer with CATWAALA? <span className="text-red-500">*</span></label>
-                      <textarea id="motivation" rows={4} required placeholder="Tell us a little about your passion for animal welfare..." className={inputStyles}></textarea>
+                      <label htmlFor="motivation" className={labelStyles}>{t('volunteerForm.motivation.label')} <span className="text-red-500">*</span></label>
+                      <textarea id="motivation" rows={4} required placeholder={t('volunteerForm.motivation.placeholder')} className={inputStyles}></textarea>
                   </div>
               </fieldset>
 
               <div className="pt-5 border-t border-slate-300 dark:border-slate-700">
                 <div className="flex justify-end space-x-3">
                   <button type="button" onClick={onClose} className="bg-slate-200 text-slate-700 font-bold py-2 px-6 rounded-lg hover:bg-slate-300 dark:bg-slate-600 dark:text-slate-200 dark:hover:bg-slate-500">
-                    Cancel
+                    {t('buttons.cancel')}
                   </button>
                   <button type="submit" disabled={isSubmitting} className="bg-orange-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed">
-                    {isSubmitting ? 'Submitting...' : 'Submit Application'}
+                    {isSubmitting ? t('buttons.submitting') : t('buttons.submitApplication')}
                   </button>
                 </div>
               </div>

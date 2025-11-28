@@ -1,14 +1,16 @@
 import React from 'react';
 import { MOCK_HAPPY_TAILS } from '../constants';
 import { HeartIcon } from '../components/icons';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const HappyTailsPage: React.FC = () => {
+  const { t } = useLanguage();
   return (
     <div className="container mx-auto px-6 py-16">
       <div className="text-center mb-16">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-100">Happy Tails</h1>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-100">{t('happyTails.title')}</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mt-4">
-          Every adoption is a new beginning. Here are some of our beloved alumni thriving in their forever homes, all thanks to supporters like you.
+          {t('happyTails.subtitle')}
         </p>
       </div>
       <div className="columns-1 sm:columns-2 lg:columns-3 gap-8 space-y-8">
@@ -20,7 +22,7 @@ const HappyTailsPage: React.FC = () => {
                 <div className="flex items-center justify-end mt-4 text-sm">
                     <HeartIcon className="w-4 h-4 text-red-500 mr-2" />
                     <p className="font-semibold text-slate-600 dark:text-slate-400">
-                        {tail.animalName}, adopted by {tail.adopterName}
+                        {tail.animalName}, {t('happyTails.adoptedBy')} {tail.adopterName}
                     </p>
                 </div>
             </div>

@@ -6,6 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { MOCK_POSTS } from '../constants';
 import type { Post } from '../types';
 import PostCardSkeleton from '../components/PostCardSkeleton';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const POSTS_STORAGE_KEY = 'catwaala_posts';
 
@@ -29,6 +30,7 @@ const CommunityPage: React.FC = () => {
   const { isAuthenticated } = useAuth();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useLanguage();
 
   useEffect(() => {
     // Simulate fetching posts to show loading state
@@ -56,9 +58,9 @@ const CommunityPage: React.FC = () => {
   return (
     <div className="container mx-auto px-6 py-12 max-w-3xl">
       <div className="text-center mb-10">
-        <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-100">Community Hub</h1>
+        <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-100">{t('community.title')}</h1>
         <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">
-          Share stories, ask questions, and connect with fellow animal lovers.
+          {t('community.subtitle')}
         </p>
       </div>
 
@@ -66,9 +68,9 @@ const CommunityPage: React.FC = () => {
         <CreatePostForm onAddPost={handleAddPost} />
       ) : (
         <div className="bg-orange-500/10 border-l-4 border-orange-500 text-orange-800 dark:text-orange-200 p-6 rounded-r-lg mb-8 text-center">
-          <p className="font-bold text-lg">Want to join the conversation?</p>
+          <p className="font-bold text-lg">{t('community.loginPrompt.title')}</p>
           <p className="mt-2">
-            <Link to="/login" className="font-bold text-orange-600 dark:text-orange-400 hover:underline">Log in</Link> or <Link to="/signup" className="font-bold text-orange-600 dark:text-orange-400 hover:underline">sign up</Link> to create your own posts.
+            <Link to="/login" className="font-bold text-orange-600 dark:text-orange-400 hover:underline">{t('nav.login')}</Link> {t('community.loginPrompt.or')} <Link to="/signup" className="font-bold text-orange-600 dark:text-orange-400 hover:underline">{t('nav.signup')}</Link> {t('community.loginPrompt.action')}
           </p>
         </div>
       )}

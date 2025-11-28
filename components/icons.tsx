@@ -8,14 +8,14 @@ export const CatIcon: React.FC<{ className?: string }> = ({ className }) => (
     className={className} 
     aria-hidden="true"
   >
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 8c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm-7 0c-.83 0-1.5.67-1.5 1.5S7.67 13 8.5 13s1.5-.67 1.5-1.5S9.33 10 8.5 10zm3.5 5.5c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5z"/>
+    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM4.09 15.37C5.3 16.91 7 18 9 18c.61 0 1.19-.1 1.74-.29.43-.15.86-.36 1.26-.61.4-.25.77-.55 1.1-.89.33-.34.62-.73.86-1.16.24-.43.43-.89.57-1.37.14-.49.22-1 .22-1.52 0-2.22-1.21-4.15-3-5.19V6.5c0-.83-.67-1.5-1.5-1.5S10 5.67 10 6.5v1.77c-1.79 1.04-3 2.97-3 5.19 0 .04.01.08.01.12C5.9 14.28 4.91 14.89 4.09 15.37zM16 14.5c0 .83-.67 1.5-1.5 1.5S13 15.33 13 14.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5z"/>
   </svg>
 );
 
 
 export const CatPawIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
-       <path d="M12.4,3.1c-0.4-0.4-1-0.4-1.4,0C9.4,4.7,8.5,6.7,8.5,8.1c0,1.3,0.8,3.1,2.5,3.1s2.5-1.8,2.5-3.1 C13.5,6.7,12.6,4.7,12.4,3.1z M5.1,10.2c-0.6-0.1-1.2,0.3-1.3,0.9c-0.3,1.4,0.4,3,1.7,3c1,0,1.8-1.2,1.8-2.3 C7.3,10.9,6.1,10.3,5.1,10.2z M19.2,11.1c-0.1-0.6-0.7-1-1.3-0.9c-1,0.1-2.2,0.7-2.2,1.9c0,1.1,0.8,2.3,1.8,2.3 c1.3,0,2-1.6,1.7-3C19.2,11.3,19.2,11.2,19.2,11.1z M8.1,16.2c-0.5-0.2-1,0-1.3,0.4c-0.8,1.1,0.2,2.6,1.4,2.6 c0.9,0,1.7-1,1.7-2.1C9.9,16.6,8.9,16.4,8.1,16.2z M16.2,16.6c-0.8,0.2-1.8,0.4-1.8,1.5c0,1.1,0.8,2.1,1.7,2.1 c1.2,0,2.2-1.5,1.4-2.6C17.2,16.6,16.7,16.4,16.2,16.6z"/>
+       <path d="M12.89 2.05c-1.2-.5-2.58-.5-3.78 0C6.73 3.08 5 5.52 5 8.25c0 2.22 1.21 4.15 3 5.19V19c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-5.56c1.79-1.04 3-2.97 3-5.19 0-2.73-1.73-5.17-4.11-6.2zM10 9.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm4 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/>
     </svg>
 );
 
@@ -108,7 +108,7 @@ export const MoonIcon: React.FC<{ className?: string }> = ({ className }) => (
 
 export const MenuIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-1.65 5.25h16.5" />
   </svg>
 );
 
@@ -237,4 +237,10 @@ export const TrashIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.134-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.067-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
   </svg>
+);
+
+export const LanguageIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 21l5.25-11.625M21 21l-5.25-11.625M3.75 5.25h16.5M4.5 19.5h15M5.625 5.25l5.25 11.625" />
+    </svg>
 );

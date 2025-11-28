@@ -16,44 +16,44 @@ export const MOCK_ANIMALS: Animal[] = [
     breed: 'Siamese',
     age: '1 year',
     gender: 'Female',
-    description: 'Luna is a vocal and intelligent Siamese who enjoys interactive toys and conversations. She is very social and loves being the center of attention.',
+    description: 'Luna is a vocal and intelligent Siamese. She is very playful and enjoys interactive toys and conversations with her humans.',
     imageUrl: 'https://picsum.photos/seed/luna-cat/400/300',
   },
   {
     id: 3,
-    name: 'Oliver',
+    name: 'Leo',
     breed: 'Local Crossbreed',
     age: '6 months',
     gender: 'Male',
-    description: 'Oliver is a playful and curious kitten with a lot of love to give. He is a bundle of joy and gets along well with everyone.',
-    imageUrl: 'https://picsum.photos/seed/oliver-cat/400/300',
-  },
-  {
-    id: 4,
-    name: 'Chloe',
-    breed: 'Ragdoll',
-    age: '3 years',
-    gender: 'Female',
-    description: 'Chloe is a gentle and sweet-natured Ragdoll. She enjoys quiet cuddles and will follow you from room to room. A perfect lap cat.',
-    imageUrl: 'https://picsum.photos/seed/chloe-cat/400/300',
-  },
-  {
-    id: 5,
-    name: 'Leo',
-    breed: 'Bengal',
-    age: '1.5 years',
-    gender: 'Male',
-    description: 'Leo is an active and adventurous Bengal. He loves climbing cat trees and chasing laser pointers. He needs a stimulating environment.',
+    description: 'Leo is a curious and adventurous kitten with a lot of love to give. He gets along well with other cats and is very playful.',
     imageUrl: 'https://picsum.photos/seed/leo-cat/400/300',
   },
   {
-    id: 6,
+    id: 4,
     name: 'Nala',
-    breed: 'Maine Coon',
+    breed: 'Bengal',
+    age: '3 years',
+    gender: 'Female',
+    description: 'Nala is a stunning Bengal with a wild look but a sweet heart. She is active, loves to climb, and needs a stimulating environment.',
+    imageUrl: 'https://picsum.photos/seed/nala-cat/400/300',
+  },
+  {
+    id: 5,
+    name: 'Milo',
+    breed: 'British Shorthair',
+    age: '1.5 years',
+    gender: 'Male',
+    description: 'Milo is a chill and easygoing British Shorthair. He is a gentle giant who enjoys a good nap and quiet companionship.',
+    imageUrl: 'https://picsum.photos/seed/milo-cat/400/300',
+  },
+  {
+    id: 6,
+    name: 'Cleo',
+    breed: 'Sphynx',
     age: '4 years',
     gender: 'Female',
-    description: 'Nala is a gentle giant with a loving personality. She is very patient and would make a wonderful family pet. She adores children.',
-    imageUrl: 'https://picsum.photos/seed/nala-cat/400/300',
+    description: 'Cleo is a unique and loving Sphynx. She craves attention and warmth, often seeking out laps and cozy blankets.',
+    imageUrl: 'https://picsum.photos/seed/cleo-cat/400/300',
   },
 ];
 
@@ -133,35 +133,44 @@ export const MOCK_HAPPY_TAILS: HappyTail[] = [
     id: 1,
     animalName: 'Simba',
     adopterName: 'The Rahman Family',
-    story: "Simba settled in immediately and is now the official ruler of the house. His favorite activities include napping in sunbeams and demanding treats at 3 AM. We wouldn't have it any other way!",
+    story: "Simba settled in immediately and is now the official ruler of the house. His favorite activities include napping in sunbeams and demanding chin scratches. We wouldn't have it any other way!",
     imageUrl: 'https://picsum.photos/seed/happy-simba/400/550',
   },
   {
     id: 2,
     animalName: 'Luna',
     adopterName: 'Sadia',
-    story: "I was looking for a chatty companion, and Luna is just perfect. She was very shy at the shelter, but now she's a confident girl who follows me everywhere. Adopting her was the best decision.",
+    story: "I was looking for a chatty companion, and Luna is just perfect. She was very shy at the shelter, but now she follows me everywhere, telling me about her day. Adopting her was the best decision.",
     imageUrl: 'https://picsum.photos/seed/happy-luna/400/500',
   },
   {
     id: 3,
-    animalName: 'Oliver',
+    animalName: 'Leo',
     adopterName: 'The Khans',
-    story: "Our kids call him the 'little prince' of our home. Oliver is the most gentle and patient cat, and he absolutely adores the children. He has completed our family.",
-    imageUrl: 'https://picsum.photos/seed/happy-oliver/400/600',
+    story: "Our kids call him the 'little prince' of our home. Leo is the most gentle and patient cat, and he absolutely adores the children. He has completed our family.",
+    imageUrl: 'https://picsum.photos/seed/happy-leo/400/600',
   },
   {
     id: 4,
-    animalName: 'Chloe',
+    animalName: 'Nala',
     adopterName: 'Jamal',
-    story: "Chloe is a ball of fluff and purrs! She keeps me on my toes and makes me laugh every single day with her antics. She's incredibly smart and has learned so many tricks. So glad I could give her the peaceful home she needed.",
-    imageUrl: 'https://picsum.photos/seed/happy-chloe/400/520',
+    story: "Nala is a ball of energy and happy chirps! She keeps me on my toes and makes me laugh every single day with her antics. She's incredibly smart and has learned to play fetch. So glad I could give her the active home she needed.",
+    imageUrl: 'https://picsum.photos/seed/happy-nala/400/520',
   },
 ];
 
-export const BANGLADESH_DISTRICTS = [
-    'Bagerhat', 'Bandarban', 'Barguna', 'Barishal', 'Bhola', 'Bogura', 'Brahmanbaria', 'Chandpur', 'Chapainawabganj', 'Chattogram', 'Chuadanga', 'Cox\'s Bazar', 'Cumilla', 'Dhaka', 'Dinajpur', 'Faridpur', 'Feni', 'Gaibandha', 'Gazipur', 'Gopalganj', 'Habiganj', 'Jamalpur', 'Jashore', 'Jhalokati', 'Jhenaidah', 'Joypurhat', 'Khagrachari', 'Khulna', 'Kishoreganj', 'Kurigram', 'Kushtia', 'Lakshmipur', 'Lalmonirhat', 'Madaripur', 'Magura', 'Manikganj', 'Meherpur', 'Moulvibazar', 'Munshiganj', 'Mymensingh', 'Naogaon', 'Narail', 'Narayanganj', 'Narsingdi', 'Natore', 'Netrokona', 'Nilphamari', 'Noakhali', 'Pabna', 'Panchagarh', 'Patuakhali', 'Pirojpur', 'Rajbari', 'Rajshahi', 'Rangamati', 'Rangpur', 'Satkhira', 'Shariatpur', 'Sherpur', 'Sirajganj', 'Sunamganj', 'Sylhet', 'Tangail', 'Thakurgaon'
-];
+const BANGLADESH_DISTRICTS_EN = [
+    'Bagerhat', 'Bandarban', 'Barguna', 'Barishal', 'Bhola', 'Bogura', 'Brahmanbaria', 'Chandpur', 'Chapainawabganj', 'Chattogram', 'Chuadanga', 'Cox\'s Bazar', 'Cumilla', 'Dhaka', 'Dinajpur', 'Faridpur', 'Feni', 'Gaibandha', 'Gazipur', 'Gopalganj', 'Habiganj', 'Jamalpur', 'Jashore', 'Jhalokati', 'Jhenaidah', 'Joypurhat', 'Khagrachari', 'Khulna', 'Kishoreganj', 'Kurigram', 'Kushtia', 'Lakshmipur', 'Lalmonirhat', 'Madaripur', 'Magura', 'Manikganj', 'Meherpur', 'Moulvibazar', 'Munshganj', 'Mymensingh', 'Naogaon', 'Narail', 'Narayanganj', 'Narsingdi', 'Natore', 'Netrokona', 'Nilphamari', 'Noakhali', 'Pabna', 'Panchagarh', 'Patuakhali', 'Pirojpur', 'Rajbari', 'Rajshahi', 'Rangamati', 'Rangpur', 'Satkhira', 'Shariatpur', 'Sherpur', 'Sirajganj', 'Sunamganj', 'Sylhet', 'Tangail', 'Thakurgaon'
+].sort();
+
+const BANGLADESH_DISTRICTS_BN = [
+    'বাগেরহাট', 'বান্দরবান', 'বরগুনা', 'বরিশাল', 'ভোলা', 'বগুড়া', 'ব্রাহ্মণবাড়িয়া', 'চাঁদপুর', 'চাপাইনবাবগঞ্জ', 'চট্টগ্রাম', 'চুয়াডাঙ্গা', 'কক্সবাজার', 'কুমিল্লা', 'ঢাকা', 'দিনাজপুর', 'ফরিদপুর', 'ফেনী', 'গাইবান্ধা', 'গাজীপুর', 'গোপালগঞ্জ', 'হবিগঞ্জ', 'জামালপুর', 'যশোর', 'ঝালকাঠি', 'ঝিনাইদহ', 'জয়পুরহাট', 'খাগড়াছড়ি', 'খুলনা', 'কিশোরগঞ্জ', 'কুড়িগ্রাম', 'কুষ্টিয়া', 'লক্ষ্মীপুর', 'লালমনিরহাট', 'মাদারীপুর', 'মাগুরা', 'মানিকগঞ্জ', 'মেহেরপুর', 'মৌলভীবাজার', 'মুন্সিগঞ্জ', 'ময়মনসিংহ', 'নওগাঁ', 'নড়াইল', 'নারায়ণগঞ্জ', 'নরসিংদী', 'নাটোর', 'নেত্রকোনা', 'নীলফামারী', 'নোয়াখালী', 'পাবনা', 'পঞ্চগড়', 'পটুয়াখালী', 'পিরোজপুর', 'রাজবাড়ী', 'রাজশাহী', 'রাঙ্গামাটি', 'রংপুর', 'সাতক্ষীরা', 'শরীয়তপুর', 'শেরপুর', 'সিরাজগঞ্জ', 'সুনামগঞ্জ', 'সিলেট', 'টাঙ্গাইল', 'ঠাকুরগাঁও'
+].sort((a, b) => a.localeCompare(b, 'bn'));
+
+export const getDistricts = (lang: 'en' | 'bn') => {
+    return lang === 'bn' ? BANGLADESH_DISTRICTS_BN : BANGLADESH_DISTRICTS_EN;
+};
+
 
 export const MOCK_LOCAL_VETS: LocalVet[] = [
     { id: 1, name: 'Central Veterinary Hospital', address: '48, Kazi Alauddin Road, Dhaka-1000', phone: '02-9563588', district: 'Dhaka', googleMapsUrl: 'https://maps.google.com/?q=Central+Veterinary+Hospital,Dhaka' },

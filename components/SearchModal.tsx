@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { MOCK_ANIMALS } from '../constants';
 import type { Animal } from '../types';
 import { SearchIcon } from './icons';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -34,6 +35,7 @@ const HighlightMatch: React.FC<{ text: string; highlight: string }> = ({ text, h
 const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState<Animal[]>([]);
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (searchTerm.trim() === '') {
@@ -66,7 +68,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
           <div className="relative">
             <input
               type="text"
-              placeholder="Search for a friend (e.g., Simba, Persian)..."
+              placeholder={t('search.placeholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               autoFocus
@@ -96,10 +98,10 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
               </ul>
             )}
             {searchTerm && results.length === 0 && (
-              <p className="text-center text-slate-600 dark:text-slate-400 py-8">No friends found matching your search.</p>
+              <p className="text-center text-slate-600 dark:text-slate-400 py-8">{t('search.noResults')}</p>
             )}
             {!searchTerm && (
-                <p className="text-center text-slate-500 dark:text-slate-400 py-8">Start typing to find your new best friend.</p>
+                <p className="text-center text-slate-500 dark:text-slate-400 py-8">{t('search.prompt')}</p>
             )}
           </div>
         </div>

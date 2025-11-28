@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import type { Post } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { UserIcon, ImageIcon } from './icons';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface CreatePostFormProps {
   onAddPost: (post: Post) => void;
@@ -12,6 +13,7 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({ onAddPost }) => {
   const [content, setContent] = useState('');
   const [image, setImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { t } = useLanguage();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -54,25 +56,25 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({ onAddPost }) => {
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder={`What's on your mind, ${currentUser?.name.split(' ')[0]}?`}
+            placeholder={t('community.createPostPlaceholder', { name: currentUser?.name.split(' ')[0] })}
             className="w-full p-3 bg-transparent border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-300 resize-none dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-slate-400"
             rows={3}
           ></textarea>
         </div>
         {image && (
             <div className="mt-4 pl-16 relative">
-                <img src={image} alt="Preview" className="max-h-60 w-full rounded-lg object-cover" />
+                <img src={image} alt={t('community.imagePreviewAlt')} className="max-h-60 w-full rounded-lg object-cover" />
                 <button onClick={() => setImage(null)} className="absolute top-2 right-2 bg-black/50 text-white rounded-full h-7 w-7 flex items-center justify-center font-bold text-lg hover:bg-black/80">&times;</button>
             </div>
         )}
         <div className="flex justify-between items-center mt-4 pl-16">
             <button type="button" onClick={() => fileInputRef.current?.click()} className="flex items-center space-x-2 text-orange-600 dark:text-orange-400 hover:text-orange-800 dark:hover:text-orange-300 font-semibold">
                 <ImageIcon className="w-6 h-6" />
-                <span>Add Photo</span>
+                <span>{t('community.addPhotoButton')}</span>
             </button>
             <input type="file" accept="image/*" ref={fileInputRef} onChange={handleImageChange} className="hidden" />
             <button type="submit" disabled={!content.trim()} className="bg-orange-500 text-white font-bold py-2 px-8 rounded-full hover:bg-orange-600 transition-colors disabled:bg-orange-300">
-                Post
+                {t('community.postButton')}
             </button>
         </div>
       </form>

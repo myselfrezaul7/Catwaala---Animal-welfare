@@ -3,6 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { GoogleIcon } from '../components/icons';
 import Alert from '../components/Alert';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -12,6 +13,7 @@ const LoginPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,9 +50,9 @@ const LoginPage: React.FC = () => {
   return (
     <div className="container mx-auto px-6 py-12 flex-grow flex items-center justify-center">
       <div className="w-full max-w-md bg-slate-100/30 dark:bg-slate-800/30 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 p-8 md:p-10 rounded-2xl shadow-xl">
-        <h1 className="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6">Welcome Back!</h1>
+        <h1 className="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6">{t('login.title')}</h1>
         
-        {error && <Alert type="error" title="Login Failed" message={error} className="mb-4" />}
+        {error && <Alert type="error" title={t('login.errorTitle')} message={error} className="mb-4" />}
 
         <div className="space-y-4">
             <button 
@@ -60,18 +62,18 @@ const LoginPage: React.FC = () => {
                 className="w-full flex justify-center items-center space-x-3 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 font-semibold py-3 px-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors disabled:opacity-50"
             >
                 <GoogleIcon className="w-6 h-6" />
-                <span>Login with Google</span>
+                <span>{t('login.googleButton')}</span>
             </button>
 
             <div className="flex items-center">
                 <div className="flex-grow border-t border-slate-300 dark:border-slate-600"></div>
-                <span className="flex-shrink mx-4 text-slate-500 dark:text-slate-400 text-sm">OR</span>
+                <span className="flex-shrink mx-4 text-slate-500 dark:text-slate-400 text-sm">{t('login.orSeparator')}</span>
                 <div className="flex-grow border-t border-slate-300 dark:border-slate-600"></div>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="email" className="block text-base font-semibold text-slate-700 dark:text-slate-300 mb-2">Email Address</label>
+                <label htmlFor="email" className="block text-base font-semibold text-slate-700 dark:text-slate-300 mb-2">{t('login.emailLabel')}</label>
                 <input 
                   type="email" 
                   id="email" 
@@ -82,7 +84,7 @@ const LoginPage: React.FC = () => {
                 />
               </div>
               <div>
-                <label htmlFor="password" className="block text-base font-semibold text-slate-700 dark:text-slate-300 mb-2">Password</label>
+                <label htmlFor="password" className="block text-base font-semibold text-slate-700 dark:text-slate-300 mb-2">{t('login.passwordLabel')}</label>
                 <input 
                   type="password" 
                   id="password" 
@@ -100,19 +102,19 @@ const LoginPage: React.FC = () => {
                         onChange={(e) => setRememberMe(e.target.checked)}
                         className="h-4 w-4 rounded border-slate-300 text-orange-600 focus:ring-orange-500"
                     />
-                    <span className="ml-2">Remember me</span>
+                    <span className="ml-2">{t('login.rememberMe')}</span>
                 </label>
-                <button type="button" onClick={() => alert('Password reset functionality is not implemented in this demo.')} className="text-sm font-semibold text-orange-600 dark:text-orange-400 hover:underline">Forgot password?</button>
+                <button type="button" onClick={() => alert('Password reset functionality is not implemented in this demo.')} className="text-sm font-semibold text-orange-600 dark:text-orange-400 hover:underline">{t('login.forgotPassword')}</button>
               </div>
               <div>
                 <button type="submit" disabled={isLoading} className="w-full bg-orange-500 text-white font-bold py-3 px-4 rounded-lg text-lg hover:bg-orange-600 transition-colors disabled:bg-orange-300">
-                  {isLoading ? 'Logging in...' : 'Login'}
+                  {isLoading ? t('login.loggingInButton') : t('login.loginButton')}
                 </button>
               </div>
             </form>
         </div>
         <p className="text-center mt-6 text-slate-600 dark:text-slate-400">
-          Don't have an account? <Link to="/signup" className="font-bold text-orange-600 dark:text-orange-400 hover:underline">Sign up now</Link>
+          {t('login.noAccount')} <Link to="/signup" className="font-bold text-orange-600 dark:text-orange-400 hover:underline">{t('login.signUpLink')}</Link>
         </p>
       </div>
     </div>

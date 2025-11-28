@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { XIcon, BkashIcon, NagadIcon, BankIcon, HealthIcon } from './icons';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface DonationModalProps {
   isOpen: boolean;
@@ -10,6 +11,7 @@ type PaymentMethod = 'bkash' | 'nagad' | 'bank' | 'medicine';
 
 const CopyButton: React.FC<{ textToCopy: string }> = ({ textToCopy }) => {
   const [copied, setCopied] = useState(false);
+  const { t } = useLanguage();
 
   const handleCopy = () => {
     navigator.clipboard.writeText(textToCopy);
@@ -22,13 +24,14 @@ const CopyButton: React.FC<{ textToCopy: string }> = ({ textToCopy }) => {
       onClick={handleCopy}
       className="bg-slate-200 dark:bg-slate-600 text-xs font-semibold px-2 py-1 rounded-md hover:bg-slate-300 dark:hover:bg-slate-500"
     >
-      {copied ? 'Copied!' : 'Copy'}
+      {copied ? t('buttons.copied') : t('buttons.copy')}
     </button>
   );
 };
 
 const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
   const [activeTab, setActiveTab] = useState<PaymentMethod>('bkash');
+  const { t } = useLanguage();
 
   if (!isOpen) return null;
 
@@ -37,66 +40,44 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
       case 'bkash':
         return (
           <div>
-            <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Donate via bKash</h3>
-            <p className="text-slate-600 dark:text-slate-400">You can send money to our official bKash merchant number.</p>
-            <div className="mt-4 p-4 bg-slate-200/50 dark:bg-slate-700/50 rounded-lg flex items-center justify-between">
-              <span className="font-mono text-lg text-slate-800 dark:text-slate-200">01700000000</span>
-              <CopyButton textToCopy="01700000000" />
+            <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">{t('donation.bkash.title')}</h3>
+            <p className="text-slate-600 dark:text-slate-400">{t('donation.bkash.description')}</p>
+            <div className="mt-4 bg-slate-200 dark:bg-slate-700/50 p-3 rounded-lg flex justify-between items-center">
+              <span className="font-mono text-lg text-slate-700 dark:text-slate-200">01234567890</span>
+              <CopyButton textToCopy="01234567890" />
             </div>
-            <p className="text-xs text-slate-500 dark:text-slate-500 mt-2">Please use the 'Send Money' option in your bKash app.</p>
           </div>
         );
       case 'nagad':
         return (
           <div>
-            <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Donate via Nagad</h3>
-            <p className="text-slate-600 dark:text-slate-400">You can send money to our official Nagad personal number.</p>
-            <div className="mt-4 p-4 bg-slate-200/50 dark:bg-slate-700/50 rounded-lg flex items-center justify-between">
-              <span className="font-mono text-lg text-slate-800 dark:text-slate-200">01800000000</span>
-              <CopyButton textToCopy="01800000000" />
+            <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">{t('donation.nagad.title')}</h3>
+            <p className="text-slate-600 dark:text-slate-400">{t('donation.nagad.description')}</p>
+            <div className="mt-4 bg-slate-200 dark:bg-slate-700/50 p-3 rounded-lg flex justify-between items-center">
+              <span className="font-mono text-lg text-slate-700 dark:text-slate-200">01987654321</span>
+              <CopyButton textToCopy="01987654321" />
             </div>
-            <p className="text-xs text-slate-500 dark:text-slate-500 mt-2">Please use the 'Send Money' option in your Nagad app.</p>
           </div>
         );
       case 'bank':
         return (
           <div>
-            <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Bank Transfer</h3>
-            <p className="text-slate-600 dark:text-slate-400">You can directly deposit into our bank account.</p>
-            <div className="mt-4 space-y-3 text-slate-700 dark:text-slate-300">
-              <div className="flex justify-between items-center"><span>Account Name:</span> <strong className="font-mono">CATWAALA Foundation</strong></div>
-              <div className="flex justify-between items-center"><span>Account Number:</span> <strong className="font-mono">1234567890123</strong></div>
-              <div className="flex justify-between items-center"><span>Bank Name:</span> <strong className="font-mono">Dhaka Bank</strong></div>
-              <div className="flex justify-between items-center"><span>Branch:</span> <strong className="font-mono">Gulshan Avenue</strong></div>
+            <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">{t('donation.bank.title')}</h3>
+            <p className="text-slate-600 dark:text-slate-400">{t('donation.bank.description')}</p>
+            <div className="mt-4 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+              <p><strong>{t('donation.bank.accountNameLabel')}:</strong> {t('donation.bank.accountName')}</p>
+              <p><strong>{t('donation.bank.accountNumberLabel')}:</strong> 1234567890123</p>
+              <p><strong>{t('donation.bank.bankNameLabel')}:</strong> Dhaka Bank</p>
+              <p><strong>{t('donation.bank.branchLabel')}:</strong> Dhanmondi</p>
+              <p><strong>{t('donation.bank.swiftCodeLabel')}:</strong> DHAKBDDH</p>
             </div>
           </div>
         );
       case 'medicine':
         return (
           <div>
-            <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Donate Essential Medicines</h3>
-            <p className="text-slate-600 dark:text-slate-400">
-                Your contribution of medical supplies can make a world of difference for an animal in recovery. We are always in need of:
-            </p>
-            <ul className="list-disc list-inside my-4 text-slate-700 dark:text-slate-300 space-y-1">
-                <li>Flea, tick, and worm treatments</li>
-                <li>Antiseptic sprays and wound care supplies</li>
-                <li>Cat-safe pain relief medication</li>
-                <li>Vitamins and supplements</li>
-            </ul>
-            <p className="text-slate-600 dark:text-slate-400">
-                To arrange a drop-off or for more details, please contact us at:
-            </p>
-            <div className="mt-4 p-4 bg-slate-200/50 dark:bg-slate-700/50 rounded-lg space-y-2">
-                <div className="flex items-center justify-between">
-                    <span className="font-semibold">Phone:</span>
-                    <a href="tel:01700000001" className="font-mono text-slate-800 dark:text-slate-200 hover:text-orange-600 dark:hover:text-orange-400 hover:underline">01700000001</a>
-                </div>
-                <div className="flex items-center justify-between">
-                    <span className="font-semibold">Email:</span>
-                    <a href="mailto:catwaala@gmail.com" className="font-mono text-slate-800 dark:text-slate-200 hover:text-orange-600 dark:hover:text-orange-400 hover:underline">catwaala@gmail.com</a>
-                </div>
-            </div>
+            <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">{t('donation.medicine.title')}</h3>
+            <p className="text-slate-600 dark:text-slate-400" dangerouslySetInnerHTML={{ __html: t('donation.medicine.description') }}></p>
           </div>
         );
       default:
@@ -104,35 +85,45 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  const getTabClass = (tab: PaymentMethod) => {
-    return `flex-1 p-2 text-sm sm:text-base sm:py-3 text-center font-bold border-b-4 transition-colors duration-300 flex items-center justify-center gap-2 ${
-      activeTab === tab 
-      ? 'border-orange-500 text-orange-600 dark:text-orange-400' 
-      : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
-    }`;
-  };
+  const TabButton: React.FC<{ method: PaymentMethod, icon: React.ReactNode, label: string }> = ({ method, icon, label }) => (
+      <button
+        onClick={() => setActiveTab(method)}
+        className={`flex-1 p-3 rounded-t-lg flex flex-col sm:flex-row items-center justify-center gap-2 font-semibold transition-colors ${
+          activeTab === method
+            ? 'bg-slate-100 dark:bg-slate-800 text-orange-600 dark:text-orange-400 border-b-2 border-orange-500'
+            : 'text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-700/50'
+        }`}
+      >
+        {icon}
+        <span>{label}</span>
+      </button>
+  );
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center p-4" onClick={onClose}>
-      <div className="bg-slate-100/70 dark:bg-slate-800/70 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 rounded-2xl shadow-2xl w-full max-w-md" onClick={(e) => e.stopPropagation()}>
-        <div className="p-6 relative">
-          <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">
-            <XIcon className="w-6 h-6" />
-          </button>
-          <h2 className="text-2xl font-bold text-center text-slate-800 dark:text-slate-100 mb-4">Support Our Cause</h2>
-          
-          <div className="border-b border-slate-300 dark:border-slate-700 mb-6">
-            <nav className="flex -mb-px">
-              <button onClick={() => setActiveTab('bkash')} className={getTabClass('bkash')}><BkashIcon className="w-5 h-5" /> bKash</button>
-              <button onClick={() => setActiveTab('nagad')} className={getTabClass('nagad')}><NagadIcon className="w-5 h-5" /> Nagad</button>
-              <button onClick={() => setActiveTab('bank')} className={getTabClass('bank')}><BankIcon className="w-5 h-5" /> Bank</button>
-              <button onClick={() => setActiveTab('medicine')} className={getTabClass('medicine')}><HealthIcon className="w-5 h-5" /> Medicine</button>
-            </nav>
-          </div>
+    <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center p-0 sm:p-4" onClick={onClose}>
+      <div 
+        className="bg-slate-100/70 dark:bg-slate-800/70 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 w-full h-full sm:rounded-2xl shadow-2xl sm:max-w-xl sm:h-auto overflow-y-auto" 
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="p-6 sm:p-8">
+            <div className="flex justify-between items-start mb-6">
+              <div>
+                  <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100">{t('donation.title')}</h2>
+                  <p className="text-slate-600 dark:text-slate-300 text-lg mt-1">{t('donation.subtitle')}</p>
+              </div>
+              <button onClick={onClose} className="text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-4xl font-light">&times;</button>
+            </div>
 
-          <div className="min-h-[150px]">
-            {renderContent()}
-          </div>
+            <div className="flex border-b border-slate-300 dark:border-slate-700 text-sm">
+                <TabButton method="bkash" icon={<BkashIcon className="w-6 h-6" />} label="bKash" />
+                <TabButton method="nagad" icon={<NagadIcon className="w-6 h-6" />} label="Nagad" />
+                <TabButton method="bank" icon={<BankIcon className="w-6 h-6" />} label={t('donation.tabs.bank')} />
+                <TabButton method="medicine" icon={<HealthIcon className="w-6 h-6" />} label={t('donation.tabs.medicine')} />
+            </div>
+
+            <div className="bg-slate-100 dark:bg-slate-800 p-6 rounded-b-lg">
+                {renderContent()}
+            </div>
         </div>
       </div>
     </div>

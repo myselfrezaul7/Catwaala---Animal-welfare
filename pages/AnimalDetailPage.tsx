@@ -4,6 +4,7 @@ import { MOCK_ANIMALS } from '../constants';
 import AdoptionForm from '../components/AdoptionForm';
 import { HeartIcon } from '../components/icons';
 import type { Animal } from '../types';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const AnimalDetailSkeleton: React.FC = () => (
     <div className="container mx-auto px-6 py-12 animate-pulse">
@@ -33,6 +34,7 @@ const AnimalDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [animal, setAnimal] = useState<Animal | undefined | null>(undefined); // undefined: loading, null: not found
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     // Simulate fetching animal data
@@ -50,10 +52,10 @@ const AnimalDetailPage: React.FC = () => {
   if (animal === null) {
     return (
       <div className="text-center py-20 flex-grow flex flex-col items-center justify-center">
-        <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100">Animal not found!</h1>
-        <p className="text-slate-600 dark:text-slate-400 mt-4">The animal you are looking for might have been adopted or the link is incorrect.</p>
+        <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100">{t('animalDetail.notFound.title')}</h1>
+        <p className="text-slate-600 dark:text-slate-400 mt-4">{t('animalDetail.notFound.message')}</p>
         <Link to="/adopt" className="mt-8 inline-block bg-orange-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-orange-600 transition-colors">
-            Back to Adoption Page
+            {t('animalDetail.notFound.button')}
         </Link>
       </div>
     );
@@ -83,7 +85,7 @@ const AnimalDetailPage: React.FC = () => {
                         className="w-full bg-orange-500 text-white font-bold py-4 px-6 rounded-lg text-xl hover:bg-orange-600 transition-all duration-300 flex items-center justify-center space-x-3 transform hover:scale-105 shadow-lg hover:shadow-xl"
                     >
                         <HeartIcon className="w-6 h-6" />
-                        <span>Apply to Adopt {animal.name}</span>
+                        <span>{t('animalDetail.applyButton', { name: animal.name })}</span>
                     </button>
                 </div>
             </div>

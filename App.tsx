@@ -1,9 +1,11 @@
-import React, { Suspense, lazy } from 'react';
+
+import React, { Suspense, lazy, type ErrorInfo, type ReactNode } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 import CookieConsentBanner from './components/CookieConsentBanner';
 import ScrollToTopButton from './components/ScrollToTopButton';
 import { AlertTriangleIcon } from './components/icons';
@@ -31,18 +33,21 @@ const PageLoader: React.FC = () => (
 );
 
 // Error Boundary Component to catch rendering errors and prevent app crash
-class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
-  // FIX: Replaced the class property for state initialization with a constructor. Explicitly calling `super(props)` ensures the component's props are set up correctly, resolving the error where `this.props` was not recognized.
-  constructor(props: { children: React.ReactNode }) {
-    super(props);
-    this.state = { hasError: false };
-  }
+interface ErrorBoundaryProps {
+  children?: ReactNode;
+}
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
 
-  static getDerivedStateFromError(_: Error): { hasError: boolean } {
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  state: ErrorBoundaryState = { hasError: false };
+
+  static getDerivedStateFromError(_: Error): ErrorBoundaryState {
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Uncaught error in ErrorBoundary:", error, errorInfo);
   }
 
@@ -68,39 +73,54 @@ class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { has
   }
 }
 
-function App() {
-  return (
-    <ThemeProvider>
-      <AuthProvider>
-        <HashRouter>
-          <div className="min-h-screen flex flex-col bg-transparent text-slate-800 dark:text-slate-200">
+const AppContent: React.FC = () => {
+    return (
+        <div className="min-h-screen flex flex-col bg-transparent text-slate-800 dark:text-slate-200">
             <Header />
-            <main className="flex-grow flex flex-col">
-              <ErrorBoundary>
-                <Suspense fallback={<PageLoader />}>
-                  <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/adopt" element={<AdoptPage />} />
-                    <Route path="/adopt/:id" element={<AnimalDetailPage />} />
-                    <Route path="/perfect-match" element={<PerfectMatchQuizPage />} />
-                    <Route path="/report" element={<ReportPage />} />
-                    <Route path="/online-vet" element={<OnlineVetPage />} />
-                    <Route path="/our-impact" element={<OurImpactPage />} />
-                    <Route path="/ai-vet" element={<AIAssistantPage />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/signup" element={<SignUpPage />} />
-                    <Route path="/happy-tails" element={<HappyTailsPage />} />
-                    <Route path="/faq" element={<FAQPage />} />
-                  </Routes>
-                </Suspense>
-              </ErrorBoundary>
+            <main className="flex-grow flex flex-col animate-[fadeIn_0.5s_ease-in-out]">
+                <style>{`
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                `}</style>
+                <ErrorBoundary>
+                    <Suspense fallback={<PageLoader />}>
+                        <Routes>
+                            <Route path="/" element={<HomePage />} />
+                            <Route path="/adopt" element={<AdoptPage />} />
+                            <Route path="/adopt/:id" element={<AnimalDetailPage />} />
+                            <Route path="/perfect-match" element={<PerfectMatchQuizPage />} />
+                            <Route path="/report" element={<ReportPage />} />
+                            <Route path="/online-vet" element={<OnlineVetPage />} />
+                            <Route path="/our-impact" element={<OurImpactPage />} />
+                            <Route path="/ai-vet" element={<AIAssistantPage />} />
+                            <Route path="/login" element={<LoginPage />} />
+                            <Route path="/signup" element={<SignUpPage />} />
+                            <Route path="/happy-tails" element={<HappyTailsPage />} />
+                            <Route path="/faq" element={<FAQPage />} />
+                        </Routes>
+                    </Suspense>
+                </ErrorBoundary>
             </main>
             <Footer />
             <ScrollToTopButton />
             <CookieConsentBanner />
-          </div>
-        </HashRouter>
-      </AuthProvider>
+        </div>
+    );
+}
+
+
+function App() {
+  return (
+    <ThemeProvider>
+      <LanguageProvider>
+        <AuthProvider>
+          <HashRouter>
+            <AppContent />
+          </HashRouter>
+        </AuthProvider>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }

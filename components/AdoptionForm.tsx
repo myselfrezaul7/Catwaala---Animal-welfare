@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import type { Animal } from '../types';
 import Alert from './Alert';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface AdoptionFormProps {
   animal: Animal;
@@ -12,6 +13,7 @@ const AdoptionForm: React.FC<AdoptionFormProps> = ({ animal, isOpen, onClose }) 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [hasOtherPets, setHasOtherPets] = useState('');
+  const { t } = useLanguage();
 
   if (!isOpen) return null;
 
@@ -33,9 +35,9 @@ const AdoptionForm: React.FC<AdoptionFormProps> = ({ animal, isOpen, onClose }) 
         {isSuccess ? (
             <div className="p-8 text-center flex flex-col justify-center items-center h-full">
                 <div>
-                    <Alert type="success" title="Application Submitted!" message={`Thank you for your interest in adopting ${animal.name}. We will review your application and be in touch soon!`} />
+                    <Alert type="success" title={t('adoptionForm.success.title')} message={t('adoptionForm.success.message', { name: animal.name })} />
                     <button onClick={onClose} className="mt-6 bg-orange-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-orange-600">
-                        Close
+                        {t('buttons.close')}
                     </button>
                 </div>
             </div>
@@ -43,8 +45,8 @@ const AdoptionForm: React.FC<AdoptionFormProps> = ({ animal, isOpen, onClose }) 
           <div className="p-8">
             <div className="flex justify-between items-start mb-4">
               <div>
-                  <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100">Adoption Application</h2>
-                  <p className="text-slate-600 dark:text-slate-300 text-lg mt-1">You are applying to adopt: <span className="font-bold text-slate-800 dark:text-slate-100">{animal.name}</span></p>
+                  <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100">{t('adoptionForm.title')}</h2>
+                  <p className="text-slate-600 dark:text-slate-300 text-lg mt-1">{t('adoptionForm.applyingFor')} <span className="font-bold text-slate-800 dark:text-slate-100">{animal.name}</span></p>
               </div>
               <button onClick={onClose} className="text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-4xl font-light">&times;</button>
             </div>
@@ -52,85 +54,85 @@ const AdoptionForm: React.FC<AdoptionFormProps> = ({ animal, isOpen, onClose }) 
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Personal Info */}
               <fieldset className="border-t border-slate-300 dark:border-slate-700 pt-5">
-                  <legend className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-3">Your Information</legend>
+                  <legend className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-3">{t('adoptionForm.yourInfo.title')}</legend>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                          <label htmlFor="fullName" className={labelStyles}>Full Name</label>
+                          <label htmlFor="fullName" className={labelStyles}>{t('adoptionForm.yourInfo.name')}</label>
                           <input type="text" id="fullName" required className={inputStyles} />
                       </div>
                       <div>
-                          <label htmlFor="phone" className={labelStyles}>Phone Number (Bangladesh)</label>
+                          <label htmlFor="phone" className={labelStyles}>{t('adoptionForm.yourInfo.phone')}</label>
                           <input type="tel" id="phone" pattern="(\+8801|01)[3-9]\d{8}" placeholder="+8801..." required className={inputStyles} />
                       </div>
                   </div>
                   <div className="mt-4">
-                      <label htmlFor="email" className={labelStyles}>Email Address</label>
+                      <label htmlFor="email" className={labelStyles}>{t('adoptionForm.yourInfo.email')}</label>
                       <input type="email" id="email" required className={inputStyles} />
                   </div>
                   <div className="mt-4">
-                      <label htmlFor="address" className={labelStyles}>Full Address (in Bangladesh)</label>
+                      <label htmlFor="address" className={labelStyles}>{t('adoptionForm.yourInfo.address')}</label>
                       <textarea id="address" rows={3} required className={inputStyles}></textarea>
                   </div>
                    <div className="mt-4">
-                        <label htmlFor="primaryCaregiver" className={labelStyles}>Who will be the primary caregiver?</label>
-                        <input type="text" id="primaryCaregiver" required className={inputStyles} placeholder="e.g., Myself, my family" />
+                        <label htmlFor="primaryCaregiver" className={labelStyles}>{t('adoptionForm.yourInfo.caregiver')}</label>
+                        <input type="text" id="primaryCaregiver" required className={inputStyles} placeholder={t('adoptionForm.yourInfo.caregiverPlaceholder')} />
                    </div>
               </fieldset>
 
               {/* Living Situation */}
               <fieldset className="border-t border-slate-300 dark:border-slate-700 pt-5">
-                  <legend className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-3">Living Situation & Lifestyle</legend>
+                  <legend className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-3">{t('adoptionForm.livingSituation.title')}</legend>
                   <div>
-                      <label htmlFor="livingSituationDesc" className={labelStyles}>Describe your living situation (e.g., house with yard, apartment)</label>
-                      <textarea id="livingSituationDesc" rows={3} required placeholder="e.g., House with a fenced yard, apartment with a balcony, who you live with, etc." className={inputStyles}></textarea>
+                      <label htmlFor="livingSituationDesc" className={labelStyles}>{t('adoptionForm.livingSituation.description')}</label>
+                      <textarea id="livingSituationDesc" rows={3} required placeholder={t('adoptionForm.livingSituation.descriptionPlaceholder')} className={inputStyles}></textarea>
                   </div>
                   <div className="mt-4">
-                      <label className={labelStyles}>Do you own or rent your home?</label>
+                      <label className={labelStyles}>{t('adoptionForm.livingSituation.ownOrRent')}</label>
                       <div className="mt-2 flex flex-wrap gap-x-6 gap-y-2 text-slate-700 dark:text-slate-300">
-                          <label className="flex items-center"><input type="radio" name="ownRent" value="own" required className="mr-2 h-4 w-4 text-orange-600 focus:ring-orange-500 border-slate-400"/> Own</label>
-                          <label className="flex items-center"><input type="radio" name="ownRent" value="rent" required className="mr-2 h-4 w-4 text-orange-600 focus:ring-orange-500 border-slate-400"/> Rent</label>
+                          <label className="flex items-center"><input type="radio" name="ownRent" value="own" required className="mr-2 h-4 w-4 text-orange-600 focus:ring-orange-500 border-slate-400"/> {t('adoptionForm.livingSituation.own')}</label>
+                          <label className="flex items-center"><input type="radio" name="ownRent" value="rent" required className="mr-2 h-4 w-4 text-orange-600 focus:ring-orange-500 border-slate-400"/> {t('adoptionForm.livingSituation.rent')}</label>
                       </div>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">If you rent, please be prepared to show proof of landlord's permission for pets.</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">{t('adoptionForm.livingSituation.landlordPermission')}</p>
                   </div>
                   <div className="mt-4">
-                      <label htmlFor="hoursAlone" className={labelStyles}>How many hours will the pet be alone on an average day?</label>
-                      <input type="text" id="hoursAlone" required placeholder="e.g., 2-4 hours" className={inputStyles} />
+                      <label htmlFor="hoursAlone" className={labelStyles}>{t('adoptionForm.livingSituation.hoursAlone')}</label>
+                      <input type="text" id="hoursAlone" required placeholder={t('adoptionForm.livingSituation.hoursAlonePlaceholder')} className={inputStyles} />
                   </div>
               </fieldset>
               
               {/* Pet Experience */}
               <fieldset className="border-t border-slate-300 dark:border-slate-700 pt-5">
-                  <legend className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-3">Pet Experience</legend>
+                  <legend className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-3">{t('adoptionForm.petExperience.title')}</legend>
                   <div>
-                    <label className={labelStyles}>Do you have other pets?</label>
+                    <label className={labelStyles}>{t('adoptionForm.petExperience.otherPets')}</label>
                     <div className="mt-2 flex flex-wrap gap-x-6 gap-y-2 text-slate-700 dark:text-slate-300">
                         <label className="flex items-center">
-                            <input type="radio" name="otherPets" value="yes" required onChange={(e) => setHasOtherPets(e.target.value)} className="mr-2 h-4 w-4 text-orange-600 focus:ring-orange-500 border-slate-400"/> Yes
+                            <input type="radio" name="otherPets" value="yes" required onChange={(e) => setHasOtherPets(e.target.value)} className="mr-2 h-4 w-4 text-orange-600 focus:ring-orange-500 border-slate-400"/> {t('adoptionForm.petExperience.yes')}
                         </label>
                         <label className="flex items-center">
-                            <input type="radio" name="otherPets" value="no" required onChange={(e) => setHasOtherPets(e.target.value)} className="mr-2 h-4 w-4 text-orange-600 focus:ring-orange-500 border-slate-400"/> No
+                            <input type="radio" name="otherPets" value="no" required onChange={(e) => setHasOtherPets(e.target.value)} className="mr-2 h-4 w-4 text-orange-600 focus:ring-orange-500 border-slate-400"/> {t('adoptionForm.petExperience.no')}
                         </label>
                     </div>
                   </div>
 
                   {hasOtherPets === 'yes' && (
                     <div className="mt-4">
-                        <label htmlFor="otherPetsDesc" className={labelStyles}>If yes, please list their species, age, and temperament.</label>
-                        <textarea id="otherPetsDesc" rows={3} required placeholder="e.g., One 5-year-old calm cat, one energetic puppy" className={inputStyles}></textarea>
+                        <label htmlFor="otherPetsDesc" className={labelStyles}>{t('adoptionForm.petExperience.otherPetsDescription')}</label>
+                        <textarea id="otherPetsDesc" rows={3} required placeholder={t('adoptionForm.petExperience.otherPetsPlaceholder')} className={inputStyles}></textarea>
                     </div>
                   )}
 
                   <div className="mt-4">
-                      <label htmlFor="experience" className={labelStyles}>Please describe your prior experience with pets.</label>
-                      <textarea id="experience" rows={4} required placeholder="Have you owned pets before? What kind? For how long?" className={inputStyles}></textarea>
+                      <label htmlFor="experience" className={labelStyles}>{t('adoptionForm.petExperience.priorExperience')}</label>
+                      <textarea id="experience" rows={4} required placeholder={t('adoptionForm.petExperience.priorExperiencePlaceholder')} className={inputStyles}></textarea>
                   </div>
               </fieldset>
 
               <fieldset className="border-t border-slate-300 dark:border-slate-700 pt-5">
-                  <legend className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-3">Adoption Motivation</legend>
+                  <legend className="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-3">{t('adoptionForm.motivation.title')}</legend>
                   <div>
-                      <label htmlFor="reasonToAdopt" className={labelStyles}>Why are you interested in adopting {animal.name}?</label>
-                      <textarea id="reasonToAdopt" rows={4} required placeholder="Tell us what drew you to this particular animal and what you're looking for in a companion." className={inputStyles}></textarea>
+                      <label htmlFor="reasonToAdopt" className={labelStyles}>{t('adoptionForm.motivation.reason', { name: animal.name })}</label>
+                      <textarea id="reasonToAdopt" rows={4} required placeholder={t('adoptionForm.motivation.reasonPlaceholder')} className={inputStyles}></textarea>
                   </div>
               </fieldset>
 
@@ -139,22 +141,22 @@ const AdoptionForm: React.FC<AdoptionFormProps> = ({ animal, isOpen, onClose }) 
                     <label className="flex items-start">
                         <input type="checkbox" required className="mt-1 h-4 w-4 flex-shrink-0 rounded border-slate-400 text-orange-600 focus:ring-orange-500"/>
                         <span className="ml-3 text-sm text-slate-600 dark:text-slate-300">
-                            I certify that I am 18 years of age or older and that the information provided is true and accurate.
+                           {t('adoptionForm.terms.age')}
                         </span>
                     </label>
                     <label className="flex items-start">
                         <input type="checkbox" required className="mt-1 h-4 w-4 flex-shrink-0 rounded border-slate-400 text-orange-600 focus:ring-orange-500"/>
                         <span className="ml-3 text-sm text-slate-600 dark:text-slate-300">
-                           I understand that a home visit from a CATWAALA representative may be required before my application is approved.
+                           {t('adoptionForm.terms.homeVisit')}
                         </span>
                     </label>
                 </div>
                 <div className="flex justify-end space-x-3 mt-6">
                   <button type="button" onClick={onClose} className="bg-slate-200 text-slate-700 font-bold py-2 px-6 rounded-lg hover:bg-slate-300 dark:bg-slate-600 dark:text-slate-200 dark:hover:bg-slate-500">
-                    Cancel
+                    {t('buttons.cancel')}
                   </button>
                   <button type="submit" disabled={isSubmitting} className="bg-orange-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed">
-                    {isSubmitting ? 'Submitting...' : 'Submit Application'}
+                    {isSubmitting ? t('buttons.submitting') : t('buttons.submitApplication')}
                   </button>
                 </div>
               </div>

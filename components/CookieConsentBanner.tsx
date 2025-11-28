@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const COOKIE_CONSENT_KEY = 'catwaala_cookie_consent';
 
 const CookieConsentBanner: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     try {
@@ -16,9 +18,9 @@ const CookieConsentBanner: React.FC = () => {
     }
   }, []);
 
-  const handleAccept = () => {
+  const handleAcceptAll = () => {
     try {
-        window.localStorage.setItem(COOKIE_CONSENT_KEY, 'true');
+        window.localStorage.setItem(COOKIE_CONSENT_KEY, 'all');
         setIsVisible(false);
     } catch (error) {
         console.error("Could not write to localStorage", error);
@@ -26,9 +28,9 @@ const CookieConsentBanner: React.FC = () => {
     }
   };
   
-  const handleDecline = () => {
+  const handleAcceptNecessary = () => {
     try {
-        window.localStorage.setItem(COOKIE_CONSENT_KEY, 'false');
+        window.localStorage.setItem(COOKIE_CONSENT_KEY, 'necessary');
         setIsVisible(false);
     } catch (error) {
         console.error("Could not write to localStorage", error);
@@ -47,20 +49,20 @@ const CookieConsentBanner: React.FC = () => {
     >
       <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
         <p className="text-sm text-slate-700 dark:text-slate-300 text-center sm:text-left">
-          We use cookies to enhance your experience and to remember your login session. By clicking 'Accept', you agree to our use of cookies.
+          {t('cookies.bannerText')}
         </p>
         <div className="flex-shrink-0 flex items-center gap-3">
             <button 
-                onClick={handleDecline}
+                onClick={handleAcceptNecessary}
                 className="font-bold py-2 px-6 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-500/10"
             >
-                Decline
+                {t('cookies.acceptNecessary')}
             </button>
             <button 
-                onClick={handleAccept}
+                onClick={handleAcceptAll}
                 className="bg-orange-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-orange-600 transition-colors"
             >
-                Accept
+                {t('cookies.acceptAll')}
             </button>
         </div>
       </div>
