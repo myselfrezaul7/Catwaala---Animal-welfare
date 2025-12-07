@@ -21,7 +21,7 @@ const CopyButton = ({ textToCopy }: { textToCopy: string }) => {
   return (
     <button
       onClick={handleCopy}
-      className="absolute top-3 right-3 p-2 bg-white/40 dark:bg-black/30 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-white/60 dark:hover:bg-black/50 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all duration-300 backdrop-blur-sm"
+      className="absolute top-2 right-2 p-2 bg-white/50 dark:bg-black/30 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-white/80 dark:hover:bg-black/50 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all duration-300 backdrop-blur-sm shadow-sm"
       aria-label={t('aiVet.copyAriaLabel')}
     >
       {isCopied ? (
@@ -112,9 +112,9 @@ const AIAssistantPage: React.FC = () => {
   }, [t, initialMessages]);
 
   return (
-    <div className="flex flex-col flex-grow container mx-auto px-4 py-8 max-w-5xl h-[calc(100vh-90px)]">
+    <div className="flex flex-col flex-grow container mx-auto px-4 py-6 max-w-5xl h-[calc(100vh-120px)]">
        {isWarningVisible && (
-         <div className="relative bg-red-500/10 border border-red-500/20 backdrop-blur-md dark:bg-red-900/30 text-red-800 dark:text-red-100 p-5 rounded-2xl mb-6 shadow-lg animate-fade-in-up">
+         <div className="relative bg-red-500/10 border border-red-500/20 backdrop-blur-md dark:bg-red-900/30 text-red-800 dark:text-red-100 p-4 md:p-5 rounded-2xl mb-6 shadow-lg animate-fade-in-up">
             <div className="flex items-start gap-4">
                 <div className="mt-0.5 p-2 bg-red-500/20 rounded-full"><AlertTriangleIcon className="w-5 h-5 text-red-600 dark:text-red-300"/></div>
                 <div>
@@ -133,25 +133,25 @@ const AIAssistantPage: React.FC = () => {
        )}
       
       <div className="text-center mb-6 animate-fade-in-up">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 dark:text-slate-100 flex items-center justify-center gap-3 drop-shadow-sm">
+        <h1 className="text-3xl md:text-5xl font-black text-slate-800 dark:text-slate-100 flex items-center justify-center gap-3 drop-shadow-sm">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-red-600">AI Vet</span> Assistant
         </h1>
         <p className="text-slate-600 dark:text-slate-300 mt-2 text-base md:text-lg font-light">{t('aiVet.subtitle')}</p>
       </div>
 
-      <div className="flex-grow bg-white/30 dark:bg-black/40 backdrop-blur-2xl border border-white/40 dark:border-white/10 rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden animate-fade-in-up">
-        <div className="flex-grow p-6 md:p-8 overflow-y-auto custom-scrollbar space-y-8">
+      <div className="flex-grow bg-white/40 dark:bg-black/30 backdrop-blur-2xl border border-white/40 dark:border-white/10 rounded-[2rem] shadow-2xl flex flex-col overflow-hidden animate-fade-in-up">
+        <div className="flex-grow p-4 md:p-8 overflow-y-auto custom-scrollbar space-y-6">
             {chatHistory.map((message, index) => (
-              <div key={index} className={`flex items-end gap-4 animate-fade-in ${message.sender === 'user' ? 'justify-end' : ''}`}>
+              <div key={index} className={`flex items-end gap-3 md:gap-4 animate-fade-in ${message.sender === 'user' ? 'justify-end' : ''}`}>
                 {message.sender === 'ai' && (
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-orange-400 to-red-500 flex items-center justify-center text-white shadow-lg flex-shrink-0 mb-1 ring-2 ring-white/50">
-                    <CatIcon className="w-6 h-6" />
+                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-tr from-orange-400 to-red-500 flex items-center justify-center text-white shadow-lg flex-shrink-0 mb-1 ring-2 ring-white/50">
+                    <CatIcon className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
                 )}
-                <div className={`relative group p-5 md:p-6 rounded-3xl max-w-[85%] md:max-w-[75%] whitespace-pre-wrap leading-relaxed shadow-sm backdrop-blur-md ${
+                <div className={`relative group p-4 md:p-6 rounded-3xl max-w-[85%] md:max-w-[75%] whitespace-pre-wrap leading-relaxed shadow-sm backdrop-blur-md transition-all duration-300 ${
                   message.sender === 'user' 
-                  ? 'bg-orange-500 text-white rounded-br-sm shadow-orange-500/20' 
-                  : 'bg-white/60 dark:bg-slate-800/60 text-slate-800 dark:text-slate-200 rounded-bl-sm border border-white/50 dark:border-white/10'
+                  ? 'bg-orange-500 text-white rounded-br-none shadow-orange-500/20' 
+                  : 'bg-white/70 dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 rounded-bl-none border border-white/50 dark:border-white/10'
                 }`}>
                   <p className="text-sm md:text-base">{message.text}</p>
                   {message.sender === 'ai' && <CopyButton textToCopy={message.text} />}
@@ -160,18 +160,18 @@ const AIAssistantPage: React.FC = () => {
             ))}
             
             {isLoading && (
-              <div className="flex items-end gap-4 animate-fade-in">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-orange-400 to-red-500 flex items-center justify-center text-white shadow-lg flex-shrink-0 mb-1 ring-2 ring-white/50">
-                  <CatIcon className="w-6 h-6" />
+              <div className="flex items-end gap-3 md:gap-4 animate-fade-in">
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-tr from-orange-400 to-red-500 flex items-center justify-center text-white shadow-lg flex-shrink-0 mb-1 ring-2 ring-white/50">
+                  <CatIcon className="w-5 h-5 md:w-6 md:h-6" />
                 </div>
-                <div className="bg-white/60 dark:bg-slate-800/60 p-5 rounded-3xl rounded-bl-sm border border-white/50 dark:border-white/10 shadow-sm backdrop-blur-md">
+                <div className="bg-white/70 dark:bg-slate-800/80 p-5 rounded-3xl rounded-bl-none border border-white/50 dark:border-white/10 shadow-sm backdrop-blur-md">
                   <div className="flex items-center space-x-2">
                     <div className="flex space-x-1.5">
-                        <div className="w-2.5 h-2.5 bg-orange-400 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-                        <div className="w-2.5 h-2.5 bg-orange-400 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                        <div className="w-2.5 h-2.5 bg-orange-400 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                        <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                        <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce"></div>
                     </div>
-                    <span className="text-sm text-slate-500 dark:text-slate-400 font-medium ml-3">{t('aiVet.thinking')}</span>
+                    <span className="text-sm text-slate-500 dark:text-slate-400 font-medium ml-3 animate-pulse">{t('aiVet.thinking')}</span>
                   </div>
                 </div>
               </div>
@@ -179,14 +179,14 @@ const AIAssistantPage: React.FC = () => {
             <div ref={chatEndRef} />
         </div>
         
-        <div className="p-5 bg-white/40 dark:bg-black/40 border-t border-white/30 dark:border-white/10 backdrop-blur-xl">
+        <div className="p-4 md:p-6 bg-white/40 dark:bg-black/40 border-t border-white/30 dark:border-white/10 backdrop-blur-xl">
           <form onSubmit={handleSubmit} className="flex items-center gap-3 relative">
             {chatHistory.length > 1 && (
                 <button
                     type="button"
                     onClick={handleClearChat}
                     disabled={isLoading}
-                    className="p-4 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded-full transition-all disabled:opacity-50"
+                    className="p-3 md:p-4 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded-full transition-all disabled:opacity-50"
                     aria-label={t('aiVet.clearChatAriaLabel')}
                 >
                     <TrashIcon className="w-6 h-6" />
@@ -198,13 +198,13 @@ const AIAssistantPage: React.FC = () => {
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
                 placeholder={t('aiVet.inputPlaceholder')}
-                className="w-full p-5 pr-14 bg-white/60 dark:bg-slate-900/60 border border-white/40 dark:border-white/10 rounded-full focus:ring-4 focus:ring-orange-500/20 focus:border-orange-500 outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-500 transition-all shadow-inner backdrop-blur-sm"
+                className="w-full py-4 pl-6 pr-14 bg-white/80 dark:bg-slate-900/80 border border-white/50 dark:border-white/10 rounded-full focus:ring-4 focus:ring-orange-500/20 focus:border-orange-500 outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-500 transition-all shadow-inner backdrop-blur-md"
                 disabled={isLoading}
                 />
                 <button 
                     type="submit" 
                     disabled={isLoading || !userInput.trim()} 
-                    className="absolute right-2 top-1/2 -translate-y-1/2 p-3 bg-orange-500 text-white rounded-full hover:bg-orange-600 disabled:bg-slate-400 disabled:cursor-not-allowed transition-all transform hover:scale-105 shadow-md"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-full hover:shadow-lg hover:scale-105 disabled:bg-slate-400 disabled:from-slate-400 disabled:to-slate-400 disabled:cursor-not-allowed transition-all shadow-md"
                 >
                 <SendIcon className="w-5 h-5" />
                 </button>
