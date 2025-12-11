@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { memo } from 'react';
 import type { Post } from '../types';
 import { UserIcon, ThumbsUpIcon, ChatBubbleIcon } from './icons';
 
@@ -41,7 +41,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
       {post.imageUrl && (
         <div className="bg-slate-500/5">
-          <img src={post.imageUrl} alt="Post content" className="w-full max-h-[500px] object-cover" />
+          <img src={post.imageUrl} alt="Post content" className="w-full max-h-[500px] object-cover" loading="lazy" />
         </div>
       )}
 
@@ -59,4 +59,4 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   );
 };
 
-export default PostCard;
+export default memo(PostCard);

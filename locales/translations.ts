@@ -1,4 +1,5 @@
 
+
 export const en = {
   "nav": {
     "home": "Home",
@@ -270,7 +271,7 @@ export const en = {
     "subtitle": "Join our team and make a difference!",
     "success": {
       "title": "Application Received!",
-      "message": "Thank you for your interest in volunteering! We've received your application and will be in touch with you soon."
+      "message": "Thank you for applying! An email draft has been created. Please send it to complete your application."
     },
     "yourInfo": {
       "title": "Your Information",
@@ -653,7 +654,7 @@ export const bn = {
     "subtitle": "আমাদের দলে যোগ দিন এবং পরিবর্তন আনুন!",
     "success": {
       "title": "আবেদন গৃহীত হয়েছে!",
-      "message": "স্বেচ্ছাসেবক হওয়ার আগ্রহ প্রকাশের জন্য ধন্যবাদ! আমরা আপনার আবেদন পেয়েছি এবং শীঘ্রই যোগাযোগ করব।"
+      "message": "আবেদন করার জন্য ধন্যবাদ! একটি ইমেল ড্রাফট তৈরি করা হয়েছে। আবেদন সম্পন্ন করতে অনুগ্রহ করে এটি পাঠান।"
     },
     "yourInfo": {
       "title": "আপনার তথ্য",
@@ -664,7 +665,7 @@ export const bn = {
     "availability": {
       "title": "আপনার প্রাপ্যতা ও আগ্রহ",
       "label": "প্রাপ্যতা",
-      "weekdays": "সপ্তাহের দিনগুলোতে",
+      "weekdays": "সপ্তাহের দিনগুলিতে",
       "weekends": "সাপ্তাহিক ছুটির দিনে",
       "evenings": "সন্ধ্যায়"
     },

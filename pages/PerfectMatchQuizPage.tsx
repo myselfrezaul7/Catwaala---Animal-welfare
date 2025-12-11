@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { getPerfectMatch } from '../services/geminiService';
@@ -6,6 +7,7 @@ import type { Animal } from '../types';
 import AnimalCard from '../components/AnimalCard';
 import { SparklesIcon } from '../components/icons';
 import Alert from '../components/Alert';
+import PawHeartLoader from '../components/PawHeartLoader';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface MatchResult {
@@ -124,10 +126,11 @@ const PerfectMatchQuizPage: React.FC = () => {
                     )}
                     
                     {isLoading && (
-                        <div className="text-center py-10">
-                            <SparklesIcon className="w-16 h-16 text-orange-500 mx-auto animate-pulse" />
-                            <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mt-6">{t('quiz.loading.title')}</h2>
-                            <p className="text-lg text-slate-600 dark:text-slate-400 mt-2">{t('quiz.loading.subtitle')}</p>
+                        <div className="py-10">
+                            <PawHeartLoader 
+                                text={t('quiz.loading.title')} 
+                                subText={t('quiz.loading.subtitle')} 
+                            />
                         </div>
                     )}
                     

@@ -30,18 +30,18 @@ const OnlineVetPage: React.FC = () => {
 
   return (
     <>
-      <div className="container mx-auto px-6 py-16">
-        <div className="text-center mb-12 max-w-4xl mx-auto">
+      <div className="container mx-auto px-2 sm:px-6 py-8 md:py-16">
+        <div className="text-center mb-8 md:mb-12 max-w-4xl mx-auto px-4">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-100">{t('findVet.title')}</h1>
-            <p className="text-lg text-slate-600 dark:text-slate-400 mt-4">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 mt-2 sm:mt-4">
               {t('findVet.subtitle')}
             </p>
-            <div className="mt-8 max-w-md mx-auto">
+            <div className="mt-6 sm:mt-8 max-w-md mx-auto">
               <div className="relative">
                  <select 
                     value={selectedDistrict}
                     onChange={(e) => setSelectedDistrict(e.target.value)}
-                    className="w-full p-4 pl-5 pr-10 bg-slate-100/50 dark:bg-slate-800/50 border-2 border-slate-300 dark:border-slate-600 rounded-full appearance-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-lg text-slate-800 dark:text-slate-100"
+                    className="w-full p-3 sm:p-4 pl-4 sm:pl-5 pr-10 bg-slate-100/50 dark:bg-slate-800/50 border-2 border-slate-300 dark:border-slate-600 rounded-full appearance-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-base sm:text-lg text-slate-800 dark:text-slate-100 shadow-sm"
                   >
                     <option value="">{t('findVet.selectDistrict')}</option>
                     {districts.map(district => (
@@ -56,7 +56,7 @@ const OnlineVetPage: React.FC = () => {
         </div>
         
         {selectedDistrict && filteredVets.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
             {filteredVets.map(vet => (
               <LocalVetCard key={vet.id} vet={vet} />
             ))}

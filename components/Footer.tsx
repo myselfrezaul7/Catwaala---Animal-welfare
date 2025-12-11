@@ -18,21 +18,53 @@ const Footer: React.FC = () => {
         </div>
         
         <div className="flex justify-center items-center space-x-6">
-          <a href="https://www.facebook.com/Catwaala/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+          <a 
+            href="https://www.facebook.com/Catwaala/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            aria-label="Facebook" 
+            title="Facebook"
+            className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+          >
             <FacebookIcon className="w-7 h-7" />
           </a>
-          <a href="https://www.instagram.com/catwaala/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+          <a 
+            href="https://www.instagram.com/catwaala/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            aria-label="Instagram" 
+            title="Instagram"
+            className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+          >
             <InstagramIcon className="w-7 h-7" />
           </a>
-          <a href="https://www.youtube.com/@catwaala" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+          <a 
+            href="https://www.youtube.com/@catwaala" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            aria-label="YouTube" 
+            title="YouTube"
+            className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+          >
             <YouTubeIcon className="w-7 h-7" />
           </a>
-          <a href="https://www.tiktok.com/@catwaala" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+          <a 
+            href="https://www.tiktok.com/@catwaala" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            aria-label="TikTok" 
+            title="TikTok"
+            className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+          >
             <TikTokIcon className="w-7 h-7" />
           </a>
         </div>
         
-        <a href="mailto:catwaala@gmail.com" className="inline-flex items-center justify-center space-x-2 text-slate-600 dark:text-slate-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
+        <a 
+            href="mailto:catwaala@gmail.com" 
+            title="Email Us"
+            className="inline-flex items-center justify-center space-x-2 text-slate-600 dark:text-slate-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+        >
           <EnvelopeIcon className="w-6 h-6" />
           <span>catwaala@gmail.com</span>
         </a>

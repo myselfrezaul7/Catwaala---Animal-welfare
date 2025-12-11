@@ -1,4 +1,3 @@
-
 import React, { useCallback, useState } from 'react';
 import Alert from './Alert';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -14,17 +13,41 @@ const VolunteerFormModal: React.FC<VolunteerFormModalProps> = ({ isOpen, onClose
   const [isSuccess, setIsSuccess] = useState(false);
   const { t } = useLanguage();
 
-  if (!isOpen) return null;
-
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
+  const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const phone = formData.get('phone') as string;
+    const motivation = formData.get('motivation') as string;
+    
+    const availability = formData.getAll('availability').join(', ');
+    const interests = formData.getAll('interest').join(', ');
+
+    const subject = `Volunteer Application: ${name}`;
+    const body = `Name: ${name}
+Email: ${email}
+Phone: ${phone}
+
+Availability: ${availability}
+Interests: ${interests}
+
+Motivation:
+${motivation}`;
+
+    const mailtoLink = `mailto:catwaala@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Redirect to mailto link to open email client
+    window.location.href = mailtoLink;
+
     setIsSubmitting(false);
     setIsSuccess(true);
   }, []);
   
+  if (!isOpen) return null;
+
   const inputStyles = "mt-1 block w-full p-3 bg-white/40 dark:bg-black/20 border border-white/30 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-slate-500 backdrop-blur-sm transition-all";
   const labelStyles = "block text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1 mb-1";
   const checkboxLabelStyles = "flex items-center text-slate-700 dark:text-slate-300 bg-white/30 dark:bg-black/20 p-3 rounded-lg border border-white/20 dark:border-white/5 hover:bg-white/50 dark:hover:bg-white/10 transition-colors cursor-pointer";
@@ -61,16 +84,16 @@ const VolunteerFormModal: React.FC<VolunteerFormModalProps> = ({ isOpen, onClose
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
                           <label htmlFor="volunteerName" className={labelStyles}>{t('volunteerForm.yourInfo.name')} <span className="text-red-500">*</span></label>
-                          <input type="text" id="volunteerName" required className={inputStyles} />
+                          <input type="text" id="volunteerName" name="name" required className={inputStyles} />
                       </div>
                       <div>
                           <label htmlFor="volunteerEmail" className={labelStyles}>{t('volunteerForm.yourInfo.email')} <span className="text-red-500">*</span></label>
-                          <input type="email" id="volunteerEmail" required className={inputStyles} />
+                          <input type="email" id="volunteerEmail" name="email" required className={inputStyles} />
                       </div>
                   </div>
                   <div className="mt-5">
                       <label htmlFor="volunteerPhone" className={labelStyles}>{t('volunteerForm.yourInfo.phone')} <span className="text-red-500">*</span></label>
-                      <input type="tel" id="volunteerPhone" pattern="(\+8801|01)[3-9]\d{8}" placeholder="+8801..." required className={inputStyles} />
+                      <input type="tel" id="volunteerPhone" name="phone" pattern="(\+8801|01)[3-9]\d{8}" placeholder="+8801..." required className={inputStyles} />
                   </div>
               </fieldset>
 
@@ -103,7 +126,7 @@ const VolunteerFormModal: React.FC<VolunteerFormModalProps> = ({ isOpen, onClose
                   <legend className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4 px-2">{t('volunteerForm.motivation.title')}</legend>
                   <div>
                       <label htmlFor="motivation" className={labelStyles}>{t('volunteerForm.motivation.label')} <span className="text-red-500">*</span></label>
-                      <textarea id="motivation" rows={4} required placeholder={t('volunteerForm.motivation.placeholder')} className={inputStyles}></textarea>
+                      <textarea id="motivation" name="motivation" rows={4} required placeholder={t('volunteerForm.motivation.placeholder')} className={inputStyles}></textarea>
                   </div>
               </fieldset>
 

@@ -1,7 +1,7 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { CatPawIcon, SearchIcon, SunIcon, MoonIcon, MenuIcon } from './icons';
+import { CatLogoIcon, SearchIcon, SunIcon, MoonIcon, MenuIcon } from './icons';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -22,11 +22,15 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const scrolled = window.scrollY > 20;
+      if (scrolled !== isScrolled) {
+        setIsScrolled(scrolled);
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isScrolled]);
 
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (location.pathname === '/') {
@@ -57,7 +61,7 @@ const Header: React.FC = () => {
         `}>
           <NavLink to="/" onClick={handleLogoClick} className="flex items-center space-x-2.5 text-2xl font-bold group">
             <div className="bg-gradient-to-tr from-orange-500 to-red-500 text-white p-2 rounded-xl shadow-lg shadow-orange-500/20 group-hover:rotate-12 transition-transform duration-300">
-                <CatPawIcon className="w-5 h-5" />
+                <CatLogoIcon className="w-5 h-5" />
             </div>
             <span className="tracking-tight text-slate-800 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
                 CATWAALA

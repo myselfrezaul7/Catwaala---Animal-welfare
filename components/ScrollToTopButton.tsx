@@ -1,16 +1,23 @@
+
 import React, { useState, useEffect } from 'react';
 import { ArrowUpIcon } from './icons';
 
 const ScrollToTopButton: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
 
-  const toggleVisibility = () => {
-    if (window.scrollY > 300) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
-  };
+  useEffect(() => {
+    const toggleVisibility = () => {
+        const shouldBeVisible = window.scrollY > 300;
+        if (shouldBeVisible !== isVisible) {
+            setIsVisible(shouldBeVisible);
+        }
+    };
+
+    window.addEventListener('scroll', toggleVisibility, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', toggleVisibility);
+    };
+  }, [isVisible]);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -18,13 +25,6 @@ const ScrollToTopButton: React.FC = () => {
       behavior: 'smooth',
     });
   };
-
-  useEffect(() => {
-    window.addEventListener('scroll', toggleVisibility);
-    return () => {
-      window.removeEventListener('scroll', toggleVisibility);
-    };
-  }, []);
 
   return (
     <button

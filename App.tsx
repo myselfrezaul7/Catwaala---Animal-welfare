@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect, type ErrorInfo, type ReactNode } from 'react';
+import React, { Component, Suspense, lazy, useEffect, type ErrorInfo, type ReactNode } from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -39,7 +39,7 @@ interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   public state: ErrorBoundaryState = { hasError: false };
 
   static getDerivedStateFromError(_: Error): ErrorBoundaryState {
@@ -89,12 +89,6 @@ const AppContent: React.FC = () => {
             <ScrollToTop />
             <Header />
             <main className="flex-grow flex flex-col animate-[fadeIn_0.5s_ease-in-out]">
-                <style>{`
-                @keyframes fadeIn {
-                    from { opacity: 0; transform: translateY(10px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                `}</style>
                 <ErrorBoundary>
                     <Suspense fallback={<PageLoader />}>
                         <Routes>
