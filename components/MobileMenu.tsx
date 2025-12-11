@@ -3,7 +3,7 @@ import React, { useEffect, useCallback } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
-import { CatLogoIcon, XIcon } from './icons';
+import { CreativeCatPawIcon, XIcon } from './icons';
 import LanguageSwitcher from './LanguageSwitcher';
 
 interface MobileMenuProps {
@@ -55,7 +55,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
             <div className="flex items-center justify-between mb-10">
                 <div className="flex items-center space-x-2 text-2xl font-bold text-slate-800 dark:text-slate-100">
                     <div className="bg-orange-500 text-white p-1.5 rounded-lg">
-                        <CatLogoIcon className="w-5 h-5" />
+                        <CreativeCatPawIcon className="w-5 h-5" />
                     </div>
                     <span>CATWAALA</span>
                 </div>

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { HeartIcon, FacebookIcon, InstagramIcon, YouTubeIcon, TikTokIcon, EnvelopeIcon } from './icons';
@@ -17,16 +18,16 @@ const Footer: React.FC = () => {
             <NavLink to="/faq" className="hover:text-orange-600 dark:hover:text-orange-400">{t('footer.faq')}</NavLink>
         </div>
         
-        <div className="flex justify-center items-center space-x-6">
+        <div className="flex justify-center items-center space-x-4 sm:space-x-6">
           <a 
             href="https://www.facebook.com/Catwaala/" 
             target="_blank" 
             rel="noopener noreferrer" 
             aria-label="Facebook" 
             title="Facebook"
-            className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+            className="group p-3 rounded-full bg-white/50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-xl hover:shadow-[#1877F2]/30 transition-all duration-300 transform hover:-translate-y-2 hover:scale-110"
           >
-            <FacebookIcon className="w-7 h-7" />
+            <FacebookIcon className="w-6 h-6 text-slate-600 dark:text-slate-400 group-hover:text-[#1877F2] transition-colors duration-300" />
           </a>
           <a 
             href="https://www.instagram.com/catwaala/" 
@@ -34,9 +35,9 @@ const Footer: React.FC = () => {
             rel="noopener noreferrer" 
             aria-label="Instagram" 
             title="Instagram"
-            className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+            className="group p-3 rounded-full bg-white/50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-xl hover:shadow-[#E4405F]/30 transition-all duration-300 transform hover:-translate-y-2 hover:scale-110"
           >
-            <InstagramIcon className="w-7 h-7" />
+            <InstagramIcon className="w-6 h-6 text-slate-600 dark:text-slate-400 group-hover:text-[#E4405F] transition-colors duration-300" />
           </a>
           <a 
             href="https://www.youtube.com/@catwaala" 
@@ -44,9 +45,9 @@ const Footer: React.FC = () => {
             rel="noopener noreferrer" 
             aria-label="YouTube" 
             title="YouTube"
-            className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+            className="group p-3 rounded-full bg-white/50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-xl hover:shadow-[#FF0000]/30 transition-all duration-300 transform hover:-translate-y-2 hover:scale-110"
           >
-            <YouTubeIcon className="w-7 h-7" />
+            <YouTubeIcon className="w-6 h-6 text-slate-600 dark:text-slate-400 group-hover:text-[#FF0000] transition-colors duration-300" />
           </a>
           <a 
             href="https://www.tiktok.com/@catwaala" 
@@ -54,9 +55,9 @@ const Footer: React.FC = () => {
             rel="noopener noreferrer" 
             aria-label="TikTok" 
             title="TikTok"
-            className="text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+            className="group p-3 rounded-full bg-white/50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-xl hover:shadow-black/20 dark:hover:shadow-white/20 transition-all duration-300 transform hover:-translate-y-2 hover:scale-110"
           >
-            <TikTokIcon className="w-7 h-7" />
+            <TikTokIcon className="w-6 h-6 text-slate-600 dark:text-slate-400 group-hover:text-black dark:group-hover:text-white transition-colors duration-300" />
           </a>
         </div>
         

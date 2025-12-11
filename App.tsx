@@ -1,4 +1,4 @@
-import React, { Component, Suspense, lazy, useEffect, type ErrorInfo, type ReactNode } from 'react';
+import React, { Suspense, lazy, useEffect, type ErrorInfo, type ReactNode } from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -7,7 +7,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import CookieConsentBanner from './components/CookieConsentBanner';
 import ScrollToTopButton from './components/ScrollToTopButton';
-import { AlertTriangleIcon } from './components/icons';
+import PawHeartLoader from './components/PawHeartLoader';
 
 // Lazy-loaded pages for code-splitting and faster initial loads
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -26,8 +26,8 @@ const FAQPage = lazy(() => import('./pages/FAQPage'));
 
 // Component for suspense fallback during lazy loading
 const PageLoader: React.FC = () => (
-  <div className="flex-grow flex items-center justify-center p-8">
-    <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-orange-500" aria-label="Loading page"></div>
+  <div className="flex-grow flex items-center justify-center p-8 min-h-[50vh]">
+    <PawHeartLoader text="Fetching Happiness..." subText="Getting things ready for you and the purrfect friends." />
   </div>
 );
 
@@ -39,7 +39,7 @@ interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   public state: ErrorBoundaryState = { hasError: false };
 
   static getDerivedStateFromError(_: Error): ErrorBoundaryState {
@@ -53,18 +53,14 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="text-center py-20 px-6 flex-grow flex flex-col items-center justify-center">
-            <AlertTriangleIcon className="w-16 h-16 text-red-400" />
-            <h1 className="text-3xl font-bold text-red-500 mt-4">Something went wrong.</h1>
-            <p className="text-slate-600 dark:text-slate-400 mt-4 max-w-md">
-              We're sorry for the inconvenience. Please try refreshing the page, or return to the homepage.
-            </p>
-            <button
-              onClick={() => window.location.reload()}
-              className="mt-8 bg-orange-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-orange-600 transition-colors"
-            >
-              Refresh Page
-            </button>
+        <div className="flex-grow flex flex-col items-center justify-center py-12">
+            <PawHeartLoader 
+                isError={true} 
+                text="Oops! Something went wrong." 
+                subText="We're sorry for the inconvenience. Please try refreshing the page."
+                onRetry={() => window.location.reload()}
+                retryText="Refresh Page"
+            />
         </div>
       );
     }

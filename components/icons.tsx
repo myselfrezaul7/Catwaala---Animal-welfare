@@ -13,6 +13,18 @@ export const CatIcon: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
+export const CreativeCatPawIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+        {/* Heart shaped pad */}
+        <path d="M12 21.5C12 21.5 17.5 18.5 17.5 15C17.5 12.8 15.8 11.5 13.5 11.5C12.7 11.5 12.2 11.8 12 12.2C11.8 11.8 11.3 11.5 10.5 11.5C8.2 11.5 6.5 12.8 6.5 15C6.5 18.5 12 21.5 12 21.5Z" />
+        {/* Toes */}
+        <circle cx="4" cy="9.5" r="2.5" />
+        <circle cx="8.5" cy="5.5" r="2.5" />
+        <circle cx="15.5" cy="5.5" r="2.5" />
+        <circle cx="20" cy="9.5" r="2.5" />
+    </svg>
+);
+
 export const CatLogoIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8zm4.5-10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm-9 0c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zM12 17.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
