@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { collection, getDocs, deleteDoc, doc, updateDoc, onSnapshot } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, updateDoc, onSnapshot, writeBatch } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import { Button } from "@/components/ui/button";
 import { Loader2, Hand, CheckCircle, XCircle, Trash, ArrowLeft, Mail, Search } from "lucide-react";
@@ -95,10 +95,13 @@ export default function AdminVolunteersPage() {
     const handleBulkStatus = async (status: 'Approved' | 'Rejected') => {
         if (!confirm(`${status === 'Approved' ? 'Approve' : 'Reject'} ${selectedIds.size} selected application(s)?`)) return;
         try {
-            await Promise.all(Array.from(selectedIds).map(id => updateDoc(doc(db, "volunteers", id), { status })));
+            const batch = writeBatch(db);
+            selectedIds.forEach(id => batch.update(doc(db, "volunteers", id), { status }));
+            await batch.commit();
             toast.success(`${selectedIds.size} applications ${status.toLowerCase()}`);
             setSelectedIds(new Set());
-        } catch {
+        } catch (e) {
+            console.error(e);
             toast.error(`Failed to bulk ${status.toLowerCase()}`);
         }
     };
@@ -106,10 +109,13 @@ export default function AdminVolunteersPage() {
     const handleBulkDelete = async () => {
         if (!confirm(`Delete ${selectedIds.size} selected application(s) permanently?`)) return;
         try {
-            await Promise.all(Array.from(selectedIds).map(id => deleteDoc(doc(db, "volunteers", id))));
+            const batch = writeBatch(db);
+            selectedIds.forEach(id => batch.delete(doc(db, "volunteers", id)));
+            await batch.commit();
             toast.success(`${selectedIds.size} applications deleted`);
             setSelectedIds(new Set());
-        } catch {
+        } catch (e) {
+            console.error(e);
             toast.error("Failed to bulk delete");
         }
     };

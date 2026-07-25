@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { collection, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, updateDoc, writeBatch } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import { Button } from "@/components/ui/button";
 import { Loader2, FileText, CheckCircle, XCircle, Trash, ArrowLeft, Mail, Search, Filter } from "lucide-react";
@@ -67,16 +67,16 @@ export default function AdminApplicationsPage() {
 
     const handleUpdateStatus = async (id: string, newStatus: string, catId?: string) => {
         try {
-            await updateDoc(doc(db, "adoptions", id), { status: newStatus });
+            const batch = writeBatch(db);
+            const adoptionRef = doc(db, "adoptions", id);
+            batch.update(adoptionRef, { status: newStatus });
 
             if (newStatus === 'Approved' && catId) {
-                try {
-                    await updateDoc(doc(db, "cats", catId), { tag: 'Adopted' });
-                } catch (e) {
-                    console.error("Failed to update cat status", e);
-                }
+                const catRef = doc(db, "cats", catId);
+                batch.update(catRef, { tag: 'Adopted' });
             }
 
+            await batch.commit();
             toast.success(`Application marked as ${newStatus}`);
             fetchApplications();
         } catch (error) {
@@ -101,19 +101,22 @@ export default function AdminApplicationsPage() {
     const handleBulkStatus = async (status: 'Approved' | 'Rejected') => {
         if (!confirm(`${status === 'Approved' ? 'Approve' : 'Reject'} ${selectedIds.size} selected application(s)?`)) return;
         try {
-            await Promise.all(Array.from(selectedIds).map(async (id) => {
-                await updateDoc(doc(db, "adoptions", id), { status });
+            const batch = writeBatch(db);
+            selectedIds.forEach((id) => {
+                batch.update(doc(db, "adoptions", id), { status });
                 if (status === 'Approved') {
                     const app = applications.find(a => a.id === id);
                     if (app?.catId) {
-                        await updateDoc(doc(db, "cats", app.catId), { tag: 'Adopted' }).catch(e => console.error("Failed to update cat", e));
+                        batch.update(doc(db, "cats", app.catId), { tag: 'Adopted' });
                     }
                 }
-            }));
+            });
+            await batch.commit();
             toast.success(`${selectedIds.size} applications ${status.toLowerCase()}`);
             setSelectedIds(new Set());
             fetchApplications();
-        } catch {
+        } catch (e) {
+            console.error(e);
             toast.error(`Failed to bulk ${status.toLowerCase()}`);
         }
     };
@@ -121,11 +124,14 @@ export default function AdminApplicationsPage() {
     const handleBulkDelete = async () => {
         if (!confirm(`Permanently delete ${selectedIds.size} selected application(s)?`)) return;
         try {
-            await Promise.all(Array.from(selectedIds).map(id => deleteDoc(doc(db, "adoptions", id))));
+            const batch = writeBatch(db);
+            selectedIds.forEach(id => batch.delete(doc(db, "adoptions", id)));
+            await batch.commit();
             toast.success(`${selectedIds.size} applications deleted`);
             setSelectedIds(new Set());
             fetchApplications();
-        } catch {
+        } catch (e) {
+            console.error(e);
             toast.error("Failed to bulk delete");
         }
     };

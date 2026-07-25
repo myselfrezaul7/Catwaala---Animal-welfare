@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { collection, getDocs, deleteDoc, doc, updateDoc, onSnapshot } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, updateDoc, onSnapshot, writeBatch } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import { Button } from "@/components/ui/button";
 import { Loader2, AlertTriangle, CheckCircle, Trash, MapPin, ArrowLeft, Filter } from "lucide-react";
@@ -84,10 +84,13 @@ export default function AdminReportsPage() {
     const handleBulkResolve = async () => {
         if (!confirm(`Resolve ${selectedIds.size} selected report(s)?`)) return;
         try {
-            await Promise.all(Array.from(selectedIds).map(id => updateDoc(doc(db, "reports", id), { status: "Resolved" })));
+            const batch = writeBatch(db);
+            selectedIds.forEach(id => batch.update(doc(db, "reports", id), { status: "Resolved" }));
+            await batch.commit();
             toast.success(`${selectedIds.size} reports resolved`);
             setSelectedIds(new Set());
-        } catch {
+        } catch (e) {
+            console.error(e);
             toast.error("Failed to bulk resolve");
         }
     };
@@ -95,10 +98,13 @@ export default function AdminReportsPage() {
     const handleBulkDelete = async () => {
         if (!confirm(`Delete ${selectedIds.size} selected report(s) permanently?`)) return;
         try {
-            await Promise.all(Array.from(selectedIds).map(id => deleteDoc(doc(db, "reports", id))));
+            const batch = writeBatch(db);
+            selectedIds.forEach(id => batch.delete(doc(db, "reports", id)));
+            await batch.commit();
             toast.success(`${selectedIds.size} reports deleted`);
             setSelectedIds(new Set());
-        } catch {
+        } catch (e) {
+            console.error(e);
             toast.error("Failed to bulk delete");
         }
     };

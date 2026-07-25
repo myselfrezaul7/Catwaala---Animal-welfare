@@ -1,5 +1,5 @@
 import { db } from "@/utils/firebase";
-import { collection, addDoc, getDocs, query, limit } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, limit, doc, writeBatch } from "firebase/firestore";
 import { MOCK_VET_CLINICS } from "@/data/vets";
 
 // Initial Cat Data suited for Bangladesh context
@@ -74,9 +74,12 @@ export const seedData = async () => {
 
         if (snapshot.empty) {
             console.log("Seeding Cats...");
+            const batch = writeBatch(db);
             for (const cat of INITIAL_CATS) {
-                await addDoc(collection(db, "cats"), cat);
+                const newDocRef = doc(collection(db, "cats"));
+                batch.set(newDocRef, cat);
             }
+            await batch.commit();
             console.log("Cats seeded successfully!");
         } else {
             console.log("Cats collection already has data. Skipping seed.");
@@ -88,14 +91,17 @@ export const seedData = async () => {
 
         if (vSnapshot.empty) {
             console.log("Seeding Vets...");
+            const batch = writeBatch(db);
             for (const vet of MOCK_VET_CLINICS) {
                 // Ensure vet matches generic Vet type structure roughly if needed, 
                 // or just store as is since Firestore is schemaless
-                await addDoc(collection(db, "vets"), {
+                const newDocRef = doc(collection(db, "vets"));
+                batch.set(newDocRef, {
                     ...vet,
                     created_at: new Date().toISOString()
                 });
             }
+            await batch.commit();
             console.log("Vets seeded successfully!");
         } else {
             console.log("Vets collection already has data. Skipping seed.");

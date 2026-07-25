@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { collection, getDocs, deleteDoc, doc, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, addDoc, serverTimestamp, writeBatch } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import { Button } from "@/components/ui/button";
 import { Loader2, Plus, Edit, Trash, Cat as CatIcon, ArrowLeft } from "lucide-react";
@@ -97,8 +97,12 @@ export default function AdminCatsPage() {
         ];
 
         try {
-            const promises = mockCats.map(c => addDoc(collection(db, "cats"), { ...c, created_at: serverTimestamp() }));
-            await Promise.all(promises);
+            const batch = writeBatch(db);
+            mockCats.forEach(c => {
+                const newDocRef = doc(collection(db, "cats"));
+                batch.set(newDocRef, { ...c, created_at: serverTimestamp() });
+            });
+            await batch.commit();
             toast.success("Test Cats added to Firebase!");
             fetchCats();
         } catch (error) {

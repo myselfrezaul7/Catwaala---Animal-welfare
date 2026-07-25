@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { collection, getDocs, deleteDoc, doc, addDoc } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, addDoc, writeBatch } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import { Button } from "@/components/ui/button";
 import { Loader2, Plus, Edit, Trash, Activity, ArrowLeft } from "lucide-react";
@@ -101,8 +101,12 @@ export default function AdminVetsPage() {
     const handleMockSeed = async () => {
         // Seed the hardcoded initial data to firebase
         try {
-            const promises = vets.map((v: any) => addDoc(collection(db, "vets"), { ...v }));
-            await Promise.all(promises);
+            const batch = writeBatch(db);
+            vets.forEach((v: any) => {
+                const newDocRef = doc(collection(db, "vets"));
+                batch.set(newDocRef, { ...v });
+            });
+            await batch.commit();
             toast.success("Migrated Test Vets to Firebase!");
             fetchVets();
         } catch (error) {
@@ -114,8 +118,12 @@ export default function AdminVetsPage() {
     const handleImportRealVets = async () => {
         if (!confirm(`Are you sure you want to import ${REAL_BD_VETS.length} real locations? This will add them to the live database.`)) return;
         try {
-            const promises = REAL_BD_VETS.map((v) => addDoc(collection(db, "vets"), { ...v }));
-            await Promise.all(promises);
+            const batch = writeBatch(db);
+            REAL_BD_VETS.forEach((v) => {
+                const newDocRef = doc(collection(db, "vets"));
+                batch.set(newDocRef, { ...v });
+            });
+            await batch.commit();
             toast.success(`Successfully mapped ${REAL_BD_VETS.length} real locations!`);
             fetchVets();
         } catch (error) {
