@@ -12,7 +12,7 @@ import { ReportService } from "@/services/ReportService";
 import { Memorial, Report } from "@/services/server-data";
 
 export default function ProfilePage() {
-    const { user, loading, signOut } = useAuth();
+    const { user, userData, loading, signOut } = useAuth();
     const router = useRouter();
     const [tributes, setTributes] = useState<Memorial[]>([]);
     const [reports, setReports] = useState<Report[]>([]);
@@ -60,11 +60,13 @@ export default function ProfilePage() {
                                 <Button onClick={() => alert("Coming soon!")} variant="outline" className="rounded-xl border-rose-200 text-rose-600 hover:bg-rose-50/70">
                                     Edit Profile
                                 </Button>
-                                <Link href="/admin">
-                                    <Button variant="outline" className="rounded-xl border-emerald-200 text-emerald-600 hover:bg-emerald-50/70">
-                                        Admin Dashboard
-                                    </Button>
-                                </Link>
+                                {(userData?.role === "admin" || user.email === "catwaala@gmail.com") && (
+                                    <Link href="/admin">
+                                        <Button variant="outline" className="rounded-xl border-emerald-200 text-emerald-600 hover:bg-emerald-50/70">
+                                            Admin Dashboard
+                                        </Button>
+                                    </Link>
+                                )}
                                 <Link href="/adopt">
                                     <Button className="rounded-xl bg-gradient-to-r from-rose-500 to-rose-600 text-white hover:from-rose-600 hover:to-rose-700 shadow-md shadow-rose-500/15">
                                         Find a Cat
