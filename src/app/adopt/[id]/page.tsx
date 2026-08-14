@@ -52,15 +52,15 @@ export default async function CatPage({ params }: Props) {
         location: dbCat.location,
         breed: dbCat.breed || "Domestic Short Hair",
         age: formatAge(dbCat.age),
-        imageUrl: dbCat.images?.[0] || `/assets/cat1.jpg`,
+        imageUrl: dbCat.images?.[0] || `/assets/cat1.png`,
         temperamentTags: [
-            dbCat.attributes.goodWithKids ? "Good with Kids" : "Quiet Home",
-            dbCat.attributes.vaccinated ? "Health Checked" : null,
-            dbCat.attributes.neutered ? "Sterilized" : null,
+            dbCat.attributes?.goodWithKids ? "Good with Kids" : "Quiet Home",
+            dbCat.attributes?.vaccinated ? "Health Checked" : null,
+            dbCat.attributes?.neutered ? "Sterilized" : null,
             dbCat.gender === 'Female' ? "Sweet Soul" : "Playful Spirit",
             "Cuddle Bug"
         ].filter(Boolean) as string[],
-        attributes: dbCat.attributes // Ensure attributes are passed through
+        attributes: dbCat.attributes || { vaccinated: false, neutered: false, goodWithKids: false }
     };
 
     return <CatDetailClient cat={adaptedCat} />;

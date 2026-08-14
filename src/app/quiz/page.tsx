@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { QUIZ_QUESTIONS } from "@/data/quiz";
 import { cats } from "@/data/cats";
 import { PetCard } from "@/components/shared/PetCard";
-import { RefreshCw, ArrowRight, CheckCircle, Sparkles, AlertCircle } from "lucide-react";
+import { RefreshCw, ArrowRight, CheckCircle, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function QuizPage() {
@@ -24,16 +24,12 @@ export default function QuizPage() {
                 setCurrentQuestionIndex(prev => prev + 1);
             }, 300); // Slight delay for visual feedback
         } else {
-            finishQuiz();
+            setIsCalculating(true);
+            setTimeout(() => {
+                setIsCalculating(false);
+                setCompleted(true);
+            }, 1200); // Simulate match calculation
         }
-    };
-
-    const finishQuiz = () => {
-        setIsCalculating(true);
-        setTimeout(() => {
-            setIsCalculating(false);
-            setCompleted(true);
-        }, 2000); // Fake calculation delay
     };
 
     const restartQuiz = () => {
@@ -43,18 +39,18 @@ export default function QuizPage() {
         setIsCalculating(false);
     };
 
-    // Calculate matches based on overlapping tags
-    const matchedCats = completed ? cats.map(cat => {
-        const catTags = [
-            cat.goodWithKids ? 'Good with Kids' : 'Quiet Home',
-            cat.gender === 'Female' ? 'Sweet' : 'Playful',
-            // Add more inferred tags from your data structure if available
-        ];
-        // Simple matching score: count how many selected tags appear in cat's attributes/description
-        // For demo purposes, we'll randomize a bit since our mock data tags are limited
-        const score = Math.random();
-        return { ...cat, score };
-    }).sort((a, b) => b.score - a.score).slice(0, 3) : [];
+    // Calculate matches based on overlapping tags (memoized to prevent re-shuffling on re-renders)
+    const matchedCats = useMemo(() => {
+        if (!completed) return [];
+        return cats.map(cat => {
+            const catTags = [
+                cat.goodWithKids ? 'Good with Kids' : 'Quiet Home',
+                cat.gender === 'Female' ? 'Sweet' : 'Playful',
+            ];
+            const score = Math.random();
+            return { ...cat, score };
+        }).sort((a, b) => b.score - a.score).slice(0, 3);
+    }, [completed]);
 
     return (
         <div className="min-h-screen bg-[#FFFDF8] py-12 md:py-20 px-4 flex flex-col items-center justify-center relative overflow-hidden">

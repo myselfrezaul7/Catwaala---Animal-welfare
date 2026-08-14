@@ -6,7 +6,7 @@ import { db } from "@/utils/firebase";
 import { Button } from "@/components/ui/button";
 import { Loader2, FileText, CheckCircle, XCircle, Trash, ArrowLeft, Mail, Search, Filter } from "lucide-react";
 import { toast } from "sonner";
-import { formatDistanceToNow } from "date-fns";
+import { safeTimeAgo } from "@/utils/safeDateFormat";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
@@ -255,7 +255,7 @@ export default function AdminApplicationsPage() {
                                             </div>
                                             <div className="flex flex-col md:items-end gap-3 w-full md:w-auto">
                                                 <p className="text-[11px] text-stone-400 font-medium px-2 py-1 rounded-md bg-white border border-stone-100 shadow-sm self-start md:self-end">
-                                                    {app.created_at ? formatDistanceToNow(new Date(app.created_at), { addSuffix: true }) : 'Recently'}
+                                                    {safeTimeAgo(app.created_at)}
                                                 </p>
                                                 <div className="flex gap-2 flex-wrap justify-end">
                                                     <a href={`mailto:${app.applicantEmail}?subject=Regarding your adoption application for ${app.catName || 'the cat'}`}>

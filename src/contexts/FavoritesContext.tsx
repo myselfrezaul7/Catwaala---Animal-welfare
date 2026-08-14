@@ -39,23 +39,35 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
                         const dbFavorites = docSnap.data().favorites || [];
                         setFavoriteIds(dbFavorites);
 
-                        // Check for local favorites to merge (one-time check usually, but good to keep logic safe)
-                        const localStored = localStorage.getItem("catwaala_favorites");
-                        if (localStored) {
-                            const localFavorites = JSON.parse(localStored);
-                            const combined = Array.from(new Set([...dbFavorites, ...localFavorites]));
-                            if (combined.length > dbFavorites.length) {
-                                await updateDoc(docRef, { favorites: combined });
-                                localStorage.removeItem("catwaala_favorites");
+                        // Check for local favorites to merge
+                        try {
+                            const localStored = localStorage.getItem("catwaala_favorites");
+                            if (localStored) {
+                                const localFavorites = JSON.parse(localStored);
+                                if (Array.isArray(localFavorites) && localFavorites.length > 0) {
+                                    const combined = Array.from(new Set([...dbFavorites, ...localFavorites]));
+                                    if (combined.length > dbFavorites.length) {
+                                        await updateDoc(docRef, { favorites: combined });
+                                        localStorage.removeItem("catwaala_favorites");
+                                    }
+                                }
                             }
+                        } catch (e) {
+                            console.warn("Failed to parse local favorites:", e);
                         }
                     } else {
                         // Initialize if empty but local storage has data
-                        const localStored = localStorage.getItem("catwaala_favorites");
-                        if (localStored) {
-                            const localFavorites = JSON.parse(localStored);
-                            await setDoc(docRef, { favorites: localFavorites }, { merge: true });
-                            localStorage.removeItem("catwaala_favorites");
+                        try {
+                            const localStored = localStorage.getItem("catwaala_favorites");
+                            if (localStored) {
+                                const localFavorites = JSON.parse(localStored);
+                                if (Array.isArray(localFavorites) && localFavorites.length > 0) {
+                                    await setDoc(docRef, { favorites: localFavorites }, { merge: true });
+                                    localStorage.removeItem("catwaala_favorites");
+                                }
+                            }
+                        } catch (e) {
+                            console.warn("Failed to parse local favorites:", e);
                         }
                     }
                 }, (error) => {
@@ -63,10 +75,18 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
                 });
 
             } else {
-                // Load from local storage for guests
-                const stored = localStorage.getItem("catwaala_favorites");
-                if (stored) {
-                    setFavoriteIds(JSON.parse(stored));
+                // Load from local storage for guests, or clear if none
+                try {
+                    const stored = localStorage.getItem("catwaala_favorites");
+                    if (stored) {
+                        const parsed = JSON.parse(stored);
+                        setFavoriteIds(Array.isArray(parsed) ? parsed : []);
+                    } else {
+                        setFavoriteIds([]);
+                    }
+                } catch (e) {
+                    console.warn("Failed to parse local favorites:", e);
+                    setFavoriteIds([]);
                 }
             }
         }

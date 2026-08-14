@@ -8,6 +8,7 @@ import { MapPin, Info, CheckCircle, ArrowLeft, Share2, Heart, Calendar, PawPrint
 import { AdoptionForm } from "@/components/adopt/AdoptionForm";
 import { SponsorshipModal } from "@/components/adopt/SponsorshipModal";
 import { motion, AnimatePresence } from "framer-motion";
+import { useFavorites } from "@/contexts/FavoritesContext";
 
 // Types matching the server data adaptation
 interface CatDetailProps {
@@ -32,6 +33,8 @@ interface CatDetailProps {
 
 export function CatDetailClient({ cat }: CatDetailProps) {
     const [scrolled, setScrolled] = useState(false);
+    const { isFavorite, toggleFavorite } = useFavorites();
+    const favorite = isFavorite(cat.id);
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 100);
@@ -43,17 +46,16 @@ export function CatDetailClient({ cat }: CatDetailProps) {
         if (navigator.share) {
             try {
                 await navigator.share({
-                    title: `Adopt ${cat.name} on Catwaala`,
-                    text: `Meet ${cat.name}, a ${cat.breed} looking for a home!`,
+                    title: `Adopt ${cat.name} | Catwaala`,
+                    text: `Check out ${cat.name}, an adorable cat looking for a home in Bangladesh!`,
                     url: window.location.href,
                 });
             } catch (err) {
-                console.log("Error sharing:", err);
+                // User cancelled or share failed
             }
         } else {
             // Fallback copy to clipboard
             navigator.clipboard.writeText(window.location.href);
-            // You might want to add a toast here
         }
     };
 
@@ -71,8 +73,13 @@ export function CatDetailClient({ cat }: CatDetailProps) {
                         <Button variant="ghost" size="icon" onClick={handleShare} className={`rounded-full ${scrolled ? "bg-white hover:bg-rose-50 text-stone-600" : "bg-black/20 hover:bg-black/30 text-white backdrop-blur-md"}`}>
                             <Share2 className="w-5 h-5" />
                         </Button>
-                        <Button variant="ghost" size="icon" className={`rounded-full ${scrolled ? "bg-white hover:bg-rose-50 text-rose-500" : "bg-black/20 hover:bg-black/30 text-white backdrop-blur-md"}`}>
-                            <Heart className="w-5 h-5" />
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => toggleFavorite(cat.id)}
+                            className={`rounded-full transition-all ${scrolled ? "bg-white hover:bg-rose-50 text-rose-500" : "bg-black/20 hover:bg-black/30 text-white backdrop-blur-md"} ${favorite ? "text-rose-500" : ""}`}
+                        >
+                            <Heart className={`w-5 h-5 ${favorite ? "fill-rose-500 text-rose-500" : ""}`} />
                         </Button>
                     </div>
                 </div>
@@ -244,7 +251,7 @@ export function CatDetailClient({ cat }: CatDetailProps) {
                                     Fill out the form below to start your journey with {cat.name}.
                                 </p>
                             </div>
-                            <AdoptionForm catName={cat.name} />
+                            <AdoptionForm catName={cat.name} catId={cat.id} />
                         </div>
 
                         {/* PetBhai Contextual Upsell */}

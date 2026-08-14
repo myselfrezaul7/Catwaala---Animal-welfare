@@ -1,6 +1,6 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -27,20 +27,23 @@ export function MemorialModal({ onAddTribute }: MemorialModalProps) {
 
     const [formData, setFormData] = useState({
         petName: "",
-        ownerName: "", // Will auto-fill in useEffect
+        ownerName: user?.displayName || "",
         tribute: "",
     });
 
     // Auto-fill owner name when user logs in
-    useState(() => {
+    useEffect(() => {
         if (user?.displayName) {
             setFormData(prev => ({ ...prev, ownerName: user.displayName || "" }));
         }
-    });
+    }, [user?.displayName]);
 
     const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
+            if (previewUrl) {
+                URL.revokeObjectURL(previewUrl);
+            }
             setSelectedFile(file);
             const url = URL.createObjectURL(file);
             setPreviewUrl(url);

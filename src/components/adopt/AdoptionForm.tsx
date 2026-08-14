@@ -7,7 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { db } from "@/utils/firebase";
 import { collection, addDoc } from "firebase/firestore";
 
-export function AdoptionForm({ catName }: { catName: string }) {
+export function AdoptionForm({ catName, catId }: { catName: string; catId?: string }) {
     const { user } = useAuth();
     const [submitted, setSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,7 +31,8 @@ export function AdoptionForm({ catName }: { catName: string }) {
         if (result.success) {
             try {
                 await addDoc(collection(db, "adoptions"), {
-                    dogName: catName, // Re-using property name for compatibility with admin page if they share DB structures, or changing to petName
+                    catId: catId || "",
+                    dogName: catName, // Re-using property name for compatibility with admin page
                     catName: catName,
                     applicantName: data.name,
                     applicantEmail: data.email || "",

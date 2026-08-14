@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { collection, getDocs, deleteDoc, doc, updateDoc, onSnapshot, writeBatch } from "firebase/firestore";
+import { collection, deleteDoc, doc, updateDoc, onSnapshot, writeBatch } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import { Button } from "@/components/ui/button";
 import { Loader2, Hand, CheckCircle, XCircle, Trash, ArrowLeft, Mail, Search } from "lucide-react";
@@ -31,14 +31,6 @@ export default function AdminVolunteersPage() {
     const [searchQuery, setSearchQuery] = useState("");
     const [filterStatus, setFilterStatus] = useState<"All" | "Pending" | "Approved" | "Rejected">("All");
     const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
-
-    useEffect(() => {
-        if (!authLoading) {
-            if (!user || (user.email !== "catwaala@gmail.com" && userData?.role !== "admin")) {
-                router.push("/");
-            }
-        }
-    }, [user, userData, authLoading, router]);
 
     useEffect(() => {
         if (!authLoading) {

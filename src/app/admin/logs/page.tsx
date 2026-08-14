@@ -8,7 +8,7 @@ import { Loader2, ArrowLeft, ScrollText, Search } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
-import { formatDistanceToNow } from "date-fns";
+import { safeTimeAgo } from "@/utils/safeDateFormat";
 
 type AuditLog = {
     id: string;
@@ -45,12 +45,20 @@ export default function AdminLogsPage() {
     const fetchLogs = async () => {
         setLoading(true);
         try {
-            const q = query(collection(db, "audit_logs"), orderBy("created_at", "desc"), limit(200));
+            const q = query(collection(db, "admin_audit_logs"), orderBy("created_at", "desc"), limit(200));
             const snap = await getDocs(q);
             const data = snap.docs.map(d => ({ id: d.id, ...d.data() })) as AuditLog[];
             setLogs(data);
         } catch (error) {
-            console.error("Error fetching logs:", error);
+            console.error("Error fetching logs from admin_audit_logs, trying audit_logs:", error);
+            try {
+                const fallbackQ = query(collection(db, "audit_logs"), orderBy("created_at", "desc"), limit(200));
+                const fallbackSnap = await getDocs(fallbackQ);
+                const fallbackData = fallbackSnap.docs.map(d => ({ id: d.id, ...d.data() })) as AuditLog[];
+                setLogs(fallbackData);
+            } catch (fallbackErr) {
+                console.error("Error fetching fallback logs:", fallbackErr);
+            }
         } finally {
             setLoading(false);
         }
@@ -130,7 +138,7 @@ export default function AdminLogsPage() {
                                                 {log.details && <p className="text-xs text-stone-400 dark:text-stone-500 mt-0.5">{log.details}</p>}
                                             </div>
                                             <span className="text-[11px] text-stone-400 dark:text-stone-500 font-medium whitespace-nowrap shrink-0">
-                                                {log.created_at ? formatDistanceToNow(new Date(log.created_at), { addSuffix: true }) : "Recently"}
+                                                {safeTimeAgo(log.created_at)}
                                             </span>
                                         </div>
                                     );

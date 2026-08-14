@@ -14,8 +14,10 @@ type UserData = {
     id: string;
     email: string;
     displayName?: string;
+    name?: string;
+    full_name?: string;
     role?: string;
-    created_at?: number;
+    created_at?: any;
 };
 
 export default function AdminUsersPage() {
@@ -122,7 +124,8 @@ export default function AdminUsersPage() {
                     ) : (() => {
                         const filteredUsers = users.filter(u => {
                             const term = searchQuery.toLowerCase();
-                            const matchName = u.displayName?.toLowerCase().includes(term);
+                            const resolvedName = (u.displayName || u.name || u.full_name || "").toLowerCase();
+                            const matchName = resolvedName.includes(term);
                             const matchEmail = u.email.toLowerCase().includes(term);
                             return matchName || matchEmail;
                         });
@@ -142,7 +145,7 @@ export default function AdminUsersPage() {
                                         {filteredUsers.map((u) => (
                                             <tr key={u.id} className="hover:bg-white/80 transition-colors">
                                                 <td className="px-6 py-4 font-bold text-stone-800">
-                                                    {u.displayName || "Anonymous User"}
+                                                    {u.displayName || u.name || u.full_name || "Community Member"}
                                                 </td>
                                                 <td className="px-6 py-4 text-stone-500">{u.email}</td>
                                                 <td className="px-6 py-4">
