@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag, X } from "lucide-react";
+import { ShoppingBag, X, ArrowRight } from "lucide-react";
 
 export function PetBhaiBanner() {
     const [isVisible, setIsVisible] = useState(false);
@@ -20,46 +20,46 @@ export function PetBhaiBanner() {
     const handleDismiss = () => {
         setIsVisible(false);
         localStorage.setItem("petbhai-banner-dismissed", "true");
+        window.dispatchEvent(new Event("petbhai-dismissed"));
     };
 
     return (
         <AnimatePresence>
             {isVisible && (
-                <motion.div
-                    initial={{ y: -50, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -50, opacity: 0 }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="relative z-50 bg-gradient-to-r from-purple-600 via-fuchsia-600 to-purple-600 text-white shadow-md overflow-hidden"
+                <motion.aside
+                    initial={{ y: 20, opacity: 0, scale: 0.95 }}
+                    animate={{ y: 0, opacity: 1, scale: 1 }}
+                    exit={{ y: 20, opacity: 0, scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 350, damping: 26 }}
+                    className="fixed bottom-24 md:bottom-6 left-4 md:left-6 z-40 max-w-sm print:hidden"
+                    aria-label="PetBhai Shop Announcement"
                 >
-                    <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-overlay"></div>
-                    <div className="container mx-auto px-4 py-3 flex items-center justify-center relative">
-                        <div className="flex items-center gap-3 text-sm md:text-base font-medium">
-                            <span className="flex items-center justify-center bg-white/20 p-1.5 rounded-full backdrop-blur-md">
-                                <ShoppingBag className="w-4 h-4 text-white" />
-                            </span>
-                            <span className="text-center">
-                                <span className="hidden sm:inline">Exciting news! </span>
-                                <strong className="font-bold">PetBhai.com</strong> is launching soon for all your pet needs!
-                            </span>
-                            <a 
-                                href="https://www.petbhai.com" 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="ml-2 inline-flex items-center justify-center rounded-full bg-white text-purple-700 px-4 py-1 text-xs font-bold shadow-sm hover:bg-stone-100 hover:scale-105 transition-all"
-                            >
-                                Visit Store
-                            </a>
+                    <div className="bg-zinc-900/90 dark:bg-zinc-800/90 backdrop-blur-xl border border-white/10 text-white rounded-full px-4 py-2.5 shadow-2xl flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-600 to-fuchsia-500 flex items-center justify-center shrink-0 shadow-md">
+                            <ShoppingBag className="w-4 h-4 text-white" />
                         </div>
-                        <button 
+                        <div className="flex flex-col leading-tight min-w-0 pr-1">
+                            <span className="font-bold text-xs text-white truncate">PetBhai Shop</span>
+                            <span className="text-[11px] text-zinc-400 truncate">Pet food & accessories</span>
+                        </div>
+                        <a
+                            href="https://www.petbhai.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="shrink-0 inline-flex items-center gap-1 rounded-full bg-white text-zinc-900 hover:bg-zinc-100 px-3 py-1 text-xs font-semibold shadow-sm transition-all hover:scale-105 active:scale-95"
+                        >
+                            <span>Visit Store</span>
+                            <ArrowRight className="w-3 h-3" />
+                        </a>
+                        <button
                             onClick={handleDismiss}
-                            className="absolute right-4 p-1 rounded-full hover:bg-white/20 transition-colors"
+                            className="shrink-0 w-6 h-6 rounded-full hover:bg-white/15 flex items-center justify-center text-zinc-400 hover:text-white transition-colors ml-0.5"
                             aria-label="Dismiss banner"
                         >
-                            <X className="w-4 h-4" />
+                            <X className="w-3.5 h-3.5" />
                         </button>
                     </div>
-                </motion.div>
+                </motion.aside>
             )}
         </AnimatePresence>
     );

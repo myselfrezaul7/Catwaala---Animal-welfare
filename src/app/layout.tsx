@@ -4,6 +4,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { FavoritesProvider } from "@/contexts/FavoritesContext";
 import { Header } from "@/components/layout/Header";
 import { PetBhaiBanner } from "@/components/layout/PetBhaiBanner";
+import { PWAInstallPrompt } from "@/components/layout/PWAInstallPrompt";
 import { Footer } from "@/components/layout/Footer";
 import { EmergencyFAB } from "@/components/shared/EmergencyFAB";
 import "./globals.css";
@@ -117,6 +118,7 @@ export default function RootLayout({
                                 <RemoteConfigProvider>
                                     <div className="flex flex-col min-h-screen">
                                         <PetBhaiBanner />
+                                        <PWAInstallPrompt />
                                         <Header />
                                         <main className="flex-grow pt-20 pb-24 md:pb-0">
                                             <PageTransition>

@@ -108,7 +108,6 @@ export function Header() {
         { name: t.nav.report, href: "/report" },
         { name: "Community", href: "/community" },
         { name: "PetBhai Shop", href: "https://www.petbhai.com", external: true },
-        { name: t.nav.dashboard, href: "/dashboard" },
     ];
 
     // Conditionally add Admin link
@@ -119,11 +118,11 @@ export function Header() {
 
     return (
         <>
-            <header className={`fixed top-4 left-0 right-0 z-50 mx-auto max-w-6xl w-[calc(100%-2rem)] transition-all duration-300 ease-out print:hidden ${scrolled
+            <header className={`fixed top-4 left-0 right-0 z-50 mx-auto max-w-6xl w-[calc(100%-2rem)] transition-all duration-300 ease-out print:hidden overflow-hidden ${scrolled
                 ? "bg-white/50 dark:bg-zinc-900/50 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border-border/40"
                 : "bg-white/40 dark:bg-zinc-900/40 border-transparent shadow-lg"
                 } ${navVisible ? "translate-y-0 opacity-100" : "-translate-y-[120%] opacity-0"} backdrop-blur-2xl border rounded-[100px]`}>
-                <div className="px-4 md:px-6 py-2.5 flex justify-between items-center">
+                <div className="px-5 md:px-6 lg:px-7 py-2.5 flex justify-between items-center">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2.5 group shrink-0">
                         <div className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-105 overflow-hidden bg-background">
@@ -156,9 +155,7 @@ export function Header() {
                     </nav>
 
                     {/* Actions */}
-                    <div className="hidden md:flex items-center gap-2 ml-auto">
-
-
+                    <div className="hidden md:flex items-center gap-1.5 lg:gap-2 shrink-0">
                         <LanguageToggle />
                         <ModeToggle />
                         <Link href="/dashboard" className="hidden lg:flex">
@@ -170,28 +167,28 @@ export function Header() {
                         {!loading && (
                             user ? (
                                 <Link href="/profile">
-                                    <Button variant="ghost" size="sm" className="gap-2 rounded-xl text-foreground hover:bg-muted/50 h-10 px-3">
+                                    <Button variant="ghost" size="sm" className="gap-2 rounded-full text-foreground hover:bg-muted/50 h-9 px-3.5">
                                         {user.photoURL ? (
                                             // eslint-disable-next-line @next/next/no-img-element
                                             <Image
                                                 src={user.photoURL}
                                                 alt="User"
-                                                width={28}
-                                                height={28}
-                                                className="rounded-lg object-cover"
+                                                width={26}
+                                                height={26}
+                                                className="rounded-full object-cover"
                                             />
                                         ) : (
-                                            <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
-                                                <User className="w-4 h-4 text-primary" />
+                                            <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                                                <User className="w-3.5 h-3.5 text-primary" />
                                             </div>
                                         )}
-                                        <span className="max-w-[80px] truncate font-medium">{user.displayName?.split(' ')[0] || "User"}</span>
+                                        <span className="max-w-[80px] truncate text-xs font-medium">{user.displayName?.split(' ')[0] || "User"}</span>
                                     </Button>
                                 </Link>
                             ) : (
                                 <Link href="/login">
-                                    <Button size="sm" className="gap-2 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm h-10 px-5 font-semibold transition-all">
-                                        <LogIn className="w-4 h-4" /> Login
+                                    <Button size="sm" className="gap-2 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm h-9 px-4 text-xs font-semibold transition-all">
+                                        <LogIn className="w-3.5 h-3.5" /> Login
                                     </Button>
                                 </Link>
                             )
